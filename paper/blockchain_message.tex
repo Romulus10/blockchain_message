@@ -1,0 +1,139 @@
+\documentclass[]{article}
+
+\usepackage[toc,page]{appendix}
+\usepackage{glossaries}
+\usepackage{makeidx}
+\usepackage{biblatex}
+\usepackage{graphicx}
+%\usepackage{hyperref}
+
+\makeglossaries{}
+\loadglsentries{entries}
+
+\makeindex
+\addbibresource{bib.bib}
+
+\title{A Peer-to-Peer Content-Sharing Service Built on the Ethereum Blockchain\\\large Version 2}
+\author{Sean T. Batzel\\\texttt{sean.batzel@scranton.edu}}
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+\pagebreak
+
+\begin{abstract}
+  In the past several years, the \gls{blockchain}\index{blockchain} paradigm has taken the world by storm. Its most common application, so far, has been in cryptographically-based currencies that take advantage of the immutable, transactional nature of the blockchain data structure to act as a public worldwide ledger. Recently, the value of these currencies have fallen rapidly, causing some loss of interest in their financial value. This paper aims to address other possible applications with focus on a proof-of-concept system for sharing small volumes of text, similar to a decentralized instant-messaging or email network. The proposed implementation will be a library that provides functions for sending and receiving signed and encrypted unicode-encoded messages between two clients connected to the blockchain\index{blockchain} implemented in Rust.
+\end{abstract}
+
+\section{Previous Work}
+The specification of the Ethereum\index{Ethereum} virtual machine as well as the definition of the native currency, Ether (ETH)\footnote{Ether as a currency is by nature highly speculative. A drawback to this system is the highly variable price of Ethereum; in a practical setting (i.e., not on one of the testing networks) an incredibly small volume of Ether would be used to send each message but the equivalency of that volume in fiat currencies would be highly variable.}, is set forth in the Ethereum\index{Ethereum} Yellow Paper \cite{yellowpaper}.\\
+The original inception of the database concept, dubbed YADQL (Yet Another Database Query Language) was created in part by the author in January of 2018 and resides on GitHub \cite{yadql}.\\
+Keybase\index{Keybase} is a cryptography\index{cryptography} service which inspired the identity-proof segment of this concept. \cite{keybase}\\
+The initial conception of the system relies on GNU Privacy Guard (GPG\index{GPG}) for RSA\index{RSA} encryption, decryption, signature, and key management \cite{gpg}.\\
+Blockcom\index{Blockcom} is a system by Reply which serves a roughly similar purpose. Reply aims to use the blockchain paradigm for data, property, ballot, insurance, and authentication purposes \cite{reply}.\\
+A Bulgaria-based service called Vibeo\index{Vibeo} exists under current development which will use their own ERC20 token to power a social platform. The application will include a similar instant messaging function to this project's, however the blockchain will only be involved in sending peer-to-peer payments and not in instant messaging functionality \cite{vibeo}.
+
+\section{Rust as a Development Language}
+Rust is a modern systems programming language that is intended to be an improvement on thread safety and the prevention of segmentation faults in comparison to other languages like C/C++. It also adds such features as pattern matching, type inference, and generics to serve as a more modern solution to the same problems that C has traditionally solved. Additionally, Rust is easily bound with C/C++ and by extension other programming languages, allowing for client applications to call library functions provided by Rust fairly simply. In addition, YADQL \cite{yadql} was written in Rust with connections made to the Ethereum network. Existing libraries such as web3 \cite{web3}, ethabi \cite{ethabi}, and gpgme \cite{gpgme} ease working with Ethereum and GNU Privacy Guard considerably without necessitating low-level wrappers to be written specifically for this project \cite{rust}.
+
+\section{Light Client}
+The system itself would be most effectively implemented as a light client\index{light client}. It would be ineffective (potentially even counterproductive) to download the entire history of the blockchain for this purpose. The system would not concern itself with anything on the blockchain prior to the creation of its own address, and on update would only need to track transactions associated with its own address from that point forward. Light clients are commonly used as cryptocurrency wallets in situations where it is undesireable or impractical to download and maintain a complete Ethereum node.
+
+\section{Smart Contract}
+\subsection{Message Representation}
+When a new message is committed to the blockchain, it is applied as an encrypted, signed and ASCII-armored string to the \verb!message! element of the packet sent to the smart contract. The contract itself is a simple accessible storage contract with an effectively unlimited volume of memory. The structure itself is stored as a linked list of message objects.
+
+\section{Local Database Management}
+The local database is a lightweight transactional model that operates on vectors of internal application structures. Once submitted to the database, the contents are immutable. No functions to modify or update existing messages will be provided, as the ability to modify messages after they are initially sent or received is contrary to the intended purpose of the application.
+\subsection{Insertion}
+Insertion is achieved on locally and on the blockchain. Initially, the message and its corresponding metadata will be inserted into the in-memory database. The \verb!send! function on the smart contract will be invoked with the encrypted and signed data as its argument. 
+\subsection{Deletion}
+Deletion of objects will be locally taken as a signal to erase the record from the local database. It will be impossible to erase messages from the blockchain as such an operation would remove the message from every endpoint database participating in the conversation.
+\subsection{Retrieval}
+The operation will occur entirely locally, simply drawing the requested data from the included database directly.
+\subsection{Update}
+The update function is purely used by the internal workings of the database client components. It will be used to periodically, or on request, check the blockchain for new messages applied to the address.
+
+\section{Message Processing}
+Messages will be sent as JSON payloads attached to Ethereum transactions in the format:
+\begin{verbatim}
+{
+  `to': <receiver_username>,
+  `from': <sender_username>,
+  `message': <message_text>
+}
+\end{verbatim}
+The \verb!to! and \verb!from! fields are left as plaintext, but the \verb!message! field is sent as a clearsigned and ASCII-armored encrypted payload. This clearly prevents casual browsers of the blockchain from simply being able to read anyone and everyone's messages, and adds to the assurance that a message originates with who it claims to be from.
+
+\section{Cryptographic Functions}
+Message encryption will be provided by OpenPGP, specifically the GNU Privacy Guard (GPG or gnupg). The package will need to list GPG as a required dependency. The system will manage its own keys, relying on GPG as the backend. In the case of an application like this, some level of encryption would be absolutely imperative due to the fact that any message sent between endpoints will be committed to the blockchain and at that point would hypothetically be completely visible to anyone to use the system.
+\subsection{Key Management}
+The application will abstract key management and provide just about every function for itself. Ostensibly, the user should never need to interact with GPG directly unless they specifically have a need or desire to.
+\subsection{Proof of Identity}
+In order to create valid interactions, users are required to verify the identity of the person they are communicating with. This is abstracted somewhat from the user, with signing and verifying being handled by the client itself rather than the express action of the user. Upon retrieving a user's key, the client will produce a rating of the trustworthiness of that identity based on signatures and trust levels. Once an identity's trustworthiness has been established, the signature on every message payload the client receives is verified based on the local keys.
+
+\section{Transaction Endpoints}
+Each transaction contains a data object that specifies who the message is from, who the message is addressed to, and the message's text payload itself. The local database will track each message that the client sends, and will locate and store messages that mark the database's owning address as the receiver. Due to the gas required for every transaction submission, sending any volume of messages could easily become quite expensive. This may be, at some point in the future, addressable with an addition to the blockchain such as the Lightning Network. Vitalik Buterin, Ethereum's creator, has mentioned plans to create a similar network to improve the performance of the Ethereum blockchain. This would ostensibly function by creating a number of ``mini-blockchains'' which could be interconnected in order to remove immediate load from the main platform. If it functions anything like Lightning, it would also allow channels to be opened directly between two addresses. This would ideally allow for a reduction in transaction fees.
+
+\section{Library Documentation}
+\subsection{Exposed Functions}
+\subsubsection{\texttt{pub fn send (msg: String, username: Vec<String>) -> i32}}
+\texttt{send} will be used to acheive submissions to the blockchain. It will only be necessary to call this function when there is a specific need to send a message. This function will call the \texttt{submit} function on the blockchain and the \texttt{insert} function on the database.
+\subsubsection{\texttt{pub fn recv () -> message}}
+This function will be called when a message is received. There will be no cost to the receive operation, as reading from the blockchain requires no fee payment, but this will be the most computationally expensive operation due to the time required to retrieve and read the entire set of all messages sent to the current device. This function calls the \texttt{retrieve} function on the blockchain and the \texttt{insert} function on the database.
+\subsection{Blockchain}
+\subsubsection{\texttt{pub fn submit (String transaction) -> i32}}
+\subsubsection{\texttt{pub fn retrieve () -> String}}
+\subsection{Contact}
+\subsubsection{\texttt{struct contact}}
+Represents an endpoint in a conversation.
+\paragraph{\texttt{address: String}}
+The address of an ethereum wallet.
+\paragraph{\texttt{uname: String}}
+A more easily-read identifying name by which contacts can be added and contacted.
+\subsection{Database}
+\subsubsection{\texttt{pub fn insert (message msg) -> i32}}
+Inserts a new \verb!message! into the database.
+\subsubsection{\texttt{pub fn delete (i32 msgid) -> i32}}
+Removes an existing \verb!message! from the database.
+\subsubsection{\texttt{pub fn read (i32 msgid) -> message}}
+Reads a \verb!message! from the database.
+\subsection{Message}
+\subsubsection{\texttt{struct message}}
+Represents a message sent between two contacts.
+\paragraph{\texttt{id: i32}}
+A unique identification number assigned to each message.
+\paragraph{\texttt{conv: conversation}}
+A conversation object to which the message belongs.
+\paragraph{\texttt{text: String}}
+The actual direct text of the message.
+\subsection{Cryptography}
+\subsubsection{\texttt{fn getkey (String name) -> }}
+Retrieves the public key associated with \verb|name| from the local installation of gnupg. This will be used only internally by the cryptography module.
+\subsubsection{\texttt{pub fn encrypt (String plaintext, String key) -> String}}
+Uses gpgme to encrypt the message provided for the desired contact. Correspondents should exchange public keys before beginning an exchange.
+\subsubsection{\texttt{pub fn decrypt (String plaintext) -> String}}
+Uses the users own private key to decrypt the provided message string.
+\subsubsection{\texttt{pub fn sign (String encrypted) -> String}}
+Signs the encrypted text to verify the identity of the sender.
+\subsubsection{\texttt{pub fn verify (String signed) -> String}}
+Verifies a signature applied to a message to ensure that the signature matches the expected device key.
+
+\section{Proposed Improvements}
+\begin{itemize}
+  \item There are most likely better and faster ways to handle updating the database than by reading the entire blockchain in every refresh.
+  \item It may be more effective to send encrypted hexidecimal data directly to the blockchain rather than to ASCII-armor the data before it is sent.
+\end{itemize}
+
+\pagebreak
+
+%\begin{appendices}
+  %\listoffigures
+  %\listoftables
+  %\printglossaries{}
+  %\printindex
+  \printbibliography{}
+%\end{appendices}
+
+\end{document}
