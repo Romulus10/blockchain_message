@@ -27,15 +27,15 @@
 \end{abstract}
 
 \section{Previous Work}
-The specification of the Ethereum\index{Ethereum} virtual machine as well as the definition of the native currency, Ether (ETH)\footnote{Ether as a currency is by nature highly speculative. A drawback to this system is the highly variable price of Ethereum; in a practical setting (i.e., not on one of the testing networks) an incredibly small volume of Ether would be used to send each message but the equivalency of that volume in fiat currencies would be highly variable.}, is set forth in the Ethereum\index{Ethereum} Yellow Paper \cite{yellowpaper}.\\
-The original inception of the database concept, dubbed YADQL (Yet Another Database Query Language) was created in part by the author in January of 2018 and resides on GitHub \cite{yadql}.\\
-Keybase\index{Keybase} is a cryptography\index{cryptography} service which inspired the identity-proof segment of this concept. \cite{keybase}\\
-The initial conception of the system relies on GNU Privacy Guard (GPG\index{GPG}) for RSA\index{RSA} encryption, decryption, signature, and key management \cite{gpg}.\\
-Blockcom\index{Blockcom} is a system by Reply which serves a roughly similar purpose. Reply aims to use the blockchain paradigm for data, property, ballot, insurance, and authentication purposes \cite{reply}.\\
-A Bulgaria-based service called Vibeo\index{Vibeo} exists under current development which will use their own ERC20 token to power a social platform. The application will include a similar instant messaging function to this project's, however the blockchain will only be involved in sending peer-to-peer payments and not in instant messaging functionality \cite{vibeo}.
+The specification of the Ethereum\index{Ethereum} virtual machine as well as the definition of the native currency, Ether (ETH)\footnote{Ether as a currency is by nature highly speculative. A drawback to this system is the highly variable price of Ethereum; in a practical setting (i.e., not on one of the testing networks) an incredibly small volume of Ether would be used to send each message but the equivalency of that volume in fiat currencies would be highly variable.}, is set forth in the Ethereum\index{Ethereum} Yellow Paper\cite{yellowpaper}.\\
+The original inception of the database concept, dubbed YADQL (Yet Another Database Query Language) was created in part by the author in January of 2018 and resides on GitHub\cite{yadql}.\\
+Keybase\index{Keybase} is a cryptography\index{cryptography} service which inspired the identity-proof segment of this concept.\cite{keybase}\\
+The initial conception of the system relies on GNU Privacy Guard (GPG\index{GPG}) for RSA\index{RSA} encryption, decryption, signature, and key management\cite{gpg}.\\
+Blockcom\index{Blockcom} is a system by Reply which serves a roughly similar purpose. Reply aims to use the blockchain paradigm for data, property, ballot, insurance, and authentication purposes\cite{reply}.\\
+A Bulgaria-based service called Vibeo\index{Vibeo} exists under current development which will use their own ERC20 token to power a social platform. The application will include a similar instant messaging function to this project's, however the blockchain will only be involved in sending peer-to-peer payments and not in instant messaging functionality\cite{vibeo}.
 
 \section{Rust as a Development Language}
-Rust is a modern systems programming language that is intended to be an improvement on thread safety and the prevention of segmentation faults in comparison to other languages like C/C++. It also adds such features as pattern matching, type inference, and generics to serve as a more modern solution to the same problems that C has traditionally solved. Additionally, Rust is easily bound with C/C++ and by extension other programming languages, allowing for client applications to call library functions provided by Rust fairly simply. In addition, YADQL \cite{yadql} was written in Rust with connections made to the Ethereum network. Existing libraries such as web3 \cite{web3}, ethabi \cite{ethabi}, and gpgme \cite{gpgme} ease working with Ethereum and GNU Privacy Guard considerably without necessitating low-level wrappers to be written specifically for this project \cite{rust}.
+Rust is a modern systems programming language that is intended to be an improvement on thread safety and the prevention of segmentation faults in comparison to other languages like C/C++. It also adds such features as pattern matching, type inference, and generics to serve as a more modern solution to the same problems that C has traditionally solved. Additionally, Rust is easily bound with C/C++ and by extension other programming languages, allowing for client applications to call library functions provided by Rust fairly simply. In addition, YADQL\cite{yadql} was written in Rust with connections made to the Ethereum network. Existing libraries such as web3\cite{web3}, ethabi\cite{ethabi}, and gpgme\cite{gpgme} ease working with Ethereum and GNU Privacy Guard considerably without necessitating low-level wrappers to be written specifically for this project\cite{rust}.
 
 \section{Light Client}
 The system itself would be most effectively implemented as a light client\index{light client}. It would be ineffective (potentially even counterproductive) to download the entire history of the blockchain for this purpose. The system would not concern itself with anything on the blockchain prior to the creation of its own address, and on update would only need to track transactions associated with its own address from that point forward. Light clients are commonly used as cryptocurrency wallets in situations where it is undesireable or impractical to download and maintain a complete Ethereum node.
@@ -77,14 +77,17 @@ In order to create valid interactions, users are required to verify the identity
 Each transaction contains a data object that specifies who the message is from, who the message is addressed to, and the message's text payload itself. The local database will track each message that the client sends, and will locate and store messages that mark the database's owning address as the receiver. Due to the gas required for every transaction submission, sending any volume of messages could easily become quite expensive. This may be, at some point in the future, addressable with an addition to the blockchain such as the Lightning Network. Vitalik Buterin, Ethereum's creator, has mentioned plans to create a similar network to improve the performance of the Ethereum blockchain. This would ostensibly function by creating a number of ``mini-blockchains'' which could be interconnected in order to remove immediate load from the main platform. If it functions anything like Lightning, it would also allow channels to be opened directly between two addresses. This would ideally allow for a reduction in transaction fees.
 
 \section{Library Documentation}
+
 \subsection{Exposed Functions}
-\subsubsection{\texttt{pub fn send (msg: String, username: Vec<String>) -> i32}}
+\subsubsection{\texttt{pub fn send (msg: String, to: Vec<Contact>) -> i32}}
 \texttt{send} will be used to acheive submissions to the blockchain. It will only be necessary to call this function when there is a specific need to send a message. This function will call the \texttt{submit} function on the blockchain and the \texttt{insert} function on the database.
-\subsubsection{\texttt{pub fn recv () -> message}}
+\subsubsection{\texttt{pub fn recv () -> Message}}
 This function will be called when a message is received. There will be no cost to the receive operation, as reading from the blockchain requires no fee payment, but this will be the most computationally expensive operation due to the time required to retrieve and read the entire set of all messages sent to the current device. This function calls the \texttt{retrieve} function on the blockchain and the \texttt{insert} function on the database.
+
 \subsection{Blockchain}
 \subsubsection{\texttt{pub fn submit (String transaction) -> i32}}
 \subsubsection{\texttt{pub fn retrieve () -> String}}
+
 \subsection{Contact}
 \subsubsection{\texttt{struct contact}}
 Represents an endpoint in a conversation.
@@ -92,6 +95,9 @@ Represents an endpoint in a conversation.
 The address of an ethereum wallet.
 \paragraph{\texttt{uname: String}}
 A more easily-read identifying name by which contacts can be added and contacted.
+\paragraph{\texttt{email: String}}
+Email addresses are used by gpgme to provide the system with a local keypair to use.
+
 \subsection{Database}
 \subsubsection{\texttt{pub fn insert (message msg) -> i32}}
 Inserts a new \verb!message! into the database.
@@ -99,6 +105,7 @@ Inserts a new \verb!message! into the database.
 Removes an existing \verb!message! from the database.
 \subsubsection{\texttt{pub fn read (i32 msgid) -> message}}
 Reads a \verb!message! from the database.
+
 \subsection{Message}
 \subsubsection{\texttt{struct message}}
 Represents a message sent between two contacts.
@@ -108,6 +115,7 @@ A unique identification number assigned to each message.
 A conversation object to which the message belongs.
 \paragraph{\texttt{text: String}}
 The actual direct text of the message.
+
 \subsection{Cryptography}
 \subsubsection{\texttt{fn getkey (String name) -> }}
 Retrieves the public key associated with \verb|name| from the local installation of gnupg. This will be used only internally by the cryptography module.

@@ -14,17 +14,25 @@ use crypt::crypt::Crypt;
 use core::core::Message;
 use core::core::Contact;
 
-struct BlockchainMessage {
-    database: Database,
-    crypt: Crypt,
-    blockchain: Blockchain
+pub struct BlockchainMessage {
+    max: i32,
+    id: Contact
 }
 
-pub fn send(msg: String, to: Vec<Contact>) -> i32 {
-    0
+// TODO BlockchainMessage implementation.
+
+pub fn send(i: BlockchainMessage, msg: String, to: Vec<Contact>) -> i32 {
+    i.max = i.max + 1;
+    let c = Crypt::new(String::from(i.id.email));
+    let msg_se = c.sign(c.encrypt(msg));
+    let message = Message {
+        id: i.max,
+        from: i.id,
+        message: msg_se
+    };
 }
 
-pub fn recv() -> Message {
+pub fn recv(i: BlockchainMessage) -> Message {
     Message {
         id: 0,
         from: 0, // TODO This is a filler.
