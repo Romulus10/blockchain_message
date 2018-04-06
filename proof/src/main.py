@@ -3,7 +3,7 @@
 import json
 import web3
 
-from web3 import Web3, HTTPProvider, TestRPCProvider
+from web3 import Web3, HTTPProvider
 from solc import compile_source
 from web3.contract import ConciseContract
 
