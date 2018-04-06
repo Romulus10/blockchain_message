@@ -5,7 +5,6 @@
 \usepackage{makeidx}
 \usepackage{biblatex}
 \usepackage{graphicx}
-%\usepackage{hyperref}
 
 \makeglossaries{}
 \loadglsentries{entries}
@@ -13,7 +12,7 @@
 \makeindex
 \addbibresource{bib.bib}
 
-\title{A Peer-to-Peer Content-Sharing Service Built on the Ethereum Blockchain\\\large Version 2}
+\title{A Peer-to-Peer Content-Sharing Service Built on the Ethereum Blockchain\\\large Version 3}
 \author{Sean T. Batzel\\\texttt{sean.batzel@scranton.edu}}
 
 \begin{document}
@@ -46,6 +45,8 @@ When a new message is committed to the blockchain, it is applied as an encrypted
 
 \section{Local Database Management}
 The local database is a lightweight transactional model that operates on vectors of internal application structures. Once submitted to the database, the contents are immutable. No functions to modify or update existing messages will be provided, as the ability to modify messages after they are initially sent or received is contrary to the intended purpose of the application.
+\subsection{Contact Management}
+Contacts will be stored as a vector.
 \subsection{Insertion}
 Insertion is achieved on locally and on the blockchain. Initially, the message and its corresponding metadata will be inserted into the in-memory database. The \verb!send! function on the smart contract will be invoked with the encrypted and signed data as its argument. 
 \subsection{Deletion}
@@ -85,8 +86,10 @@ Each transaction contains a data object that specifies who the message is from, 
 This function will be called when a message is received. There will be no cost to the receive operation, as reading from the blockchain requires no fee payment, but this will be the most computationally expensive operation due to the time required to retrieve and read the entire set of all messages sent to the current device. This function calls the \texttt{retrieve} function on the blockchain and the \texttt{insert} function on the database.
 
 \subsection{Blockchain}
-\subsubsection{\texttt{pub fn submit (String transaction) -> i32}}
+\subsubsection{\texttt{pub fn submit (transaction: String) -> i32}}
+Produces a Ethereum transaction based on the message to be sent and submits it to the blockchain.
 \subsubsection{\texttt{pub fn retrieve () -> String}}
+Retrieves a transaction from the Ethereum blockchain as a raw string.
 
 \subsection{Contact}
 \subsubsection{\texttt{struct contact}}
@@ -99,11 +102,18 @@ A more easily-read identifying name by which contacts can be added and contacted
 Email addresses are used by gpgme to provide the system with a local keypair to use.
 
 \subsection{Database}
-\subsubsection{\texttt{pub fn insert (message msg) -> i32}}
+\subsubsection{\texttt{pub struct Database}}
+\paragraph{\texttt{contacts: Vec<Contact>}} The record of every contact that's been added to the application. 
+\paragraph{\texttt{messages: Vec<Message>}} The record of every message sent and received by the system.
+\subsubsection{\texttt{pub fn Database::add\_contact (uname: String, addr: i32) -> bool}}
+Add a new contact to the local database.
+\subsubsection{\texttt{pub fn Database::del\_contact (name: String) -> bool}}
+Removes a record for the specified contact from the local database.
+\subsubsection{\texttt{pub fn Database::insert (msg: String) -> bool}}
 Inserts a new \verb!message! into the database.
-\subsubsection{\texttt{pub fn delete (i32 msgid) -> i32}}
+\subsubsection{\texttt{pub fn Database::delete (msgid: i32) -> bool}}
 Removes an existing \verb!message! from the database.
-\subsubsection{\texttt{pub fn read (i32 msgid) -> message}}
+\subsubsection{\texttt{pub fn Database::read (msgid: i32) -> message}}
 Reads a \verb!message! from the database.
 
 \subsection{Message}
@@ -117,31 +127,32 @@ A conversation object to which the message belongs.
 The actual direct text of the message.
 
 \subsection{Cryptography}
-\subsubsection{\texttt{fn getkey (String name) -> }}
+\subsubsection{\texttt{fn getkey (name: String) -> }}
 Retrieves the public key associated with \verb|name| from the local installation of gnupg. This will be used only internally by the cryptography module.
-\subsubsection{\texttt{pub fn encrypt (String plaintext, String key) -> String}}
+\subsubsection{\texttt{pub fn encrypt (plaintext: String, key: String) -> String}}
 Uses gpgme to encrypt the message provided for the desired contact. Correspondents should exchange public keys before beginning an exchange.
-\subsubsection{\texttt{pub fn decrypt (String plaintext) -> String}}
+\subsubsection{\texttt{pub fn decrypt (plaintext: String) -> String}}
 Uses the users own private key to decrypt the provided message string.
-\subsubsection{\texttt{pub fn sign (String encrypted) -> String}}
+\subsubsection{\texttt{pub fn sign (encrypted: String) -> String}}
 Signs the encrypted text to verify the identity of the sender.
-\subsubsection{\texttt{pub fn verify (String signed) -> String}}
+\subsubsection{\texttt{pub fn verify (signed: String) -> String}}
 Verifies a signature applied to a message to ensure that the signature matches the expected device key.
 
 \section{Proposed Improvements}
 \begin{itemize}
   \item There are most likely better and faster ways to handle updating the database than by reading the entire blockchain in every refresh.
   \item It may be more effective to send encrypted hexidecimal data directly to the blockchain rather than to ASCII-armor the data before it is sent.
+  \item Currently, gnupg keys will need to be exchanged at the same time as usernames. There might be a better, simpler way to trade keys. 
 \end{itemize}
 
 \pagebreak
 
-%\begin{appendices}
+\begin{appendices}
   %\listoffigures
   %\listoftables
   %\printglossaries{}
   %\printindex
   \printbibliography{}
-%\end{appendices}
+\end{appendices}
 
 \end{document}
