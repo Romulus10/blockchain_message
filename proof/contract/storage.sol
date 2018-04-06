@@ -6,4 +6,8 @@ contract Storage {
   function store(bytes32 key, string val) public {
     storg[key] = val;
   }
+  
+  function read(bytes32 key) public returns (string) {
+    return storg[key];
+  }
 }

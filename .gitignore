@@ -20,3 +20,5 @@ paper/blockchain_message.out
 paper/blockchain_message.lof
 paper/blockchain_message.lot
 paper/texput.log
+node_modules/
+package-lock.json

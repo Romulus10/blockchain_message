@@ -22,7 +22,7 @@
 \pagebreak
 
 \begin{abstract}
-  In the past several years, the \gls{blockchain}\index{blockchain} paradigm has taken the world by storm. Its most common application, so far, has been in cryptographically-based currencies that take advantage of the immutable, transactional nature of the blockchain data structure to act as a public worldwide ledger. Recently, the value of these currencies have fallen rapidly, causing some loss of interest in their financial value. This paper aims to address other possible applications with focus on a proof-of-concept system for sharing small volumes of text, similar to a decentralized instant-messaging or email network. The proposed implementation will be a library that provides functions for sending and receiving signed and encrypted unicode-encoded messages between two clients connected to the blockchain\index{blockchain} implemented in Rust.
+  In the past several years, the \gls{blockchain}\index{blockchain} paradigm has taken the world by storm. Its most common application, so far, has been in cryptographically-based currencies that take advantage of the immutable, transactional nature of the blockchain data classure to act as a public worldwide ledger. Recently, the value of these currencies have fallen rapidly, causing some loss of interest in their financial value. This paper aims to address other possible applications with focus on a proof-of-concept system for sharing small volumes of text, similar to a decentralized instant-messaging or email network. The proposed implementation will be a library that provides functions for sending and receiving signed and encrypted unicode-encoded messages between two clients connected to the blockchain\index{blockchain} implemented in Python.
 \end{abstract}
 
 \section{Previous Work}
@@ -33,18 +33,17 @@ The initial conception of the system relies on GNU Privacy Guard (GPG\index{GPG}
 Blockcom\index{Blockcom} is a system by Reply which serves a roughly similar purpose. Reply aims to use the blockchain paradigm for data, property, ballot, insurance, and authentication purposes\cite{reply}.\\
 A Bulgaria-based service called Vibeo\index{Vibeo} exists under current development which will use their own ERC20 token to power a social platform. The application will include a similar instant messaging function to this project's, however the blockchain will only be involved in sending peer-to-peer payments and not in instant messaging functionality\cite{vibeo}.
 
-\section{Rust as a Development Language}
-Rust is a modern systems programming language that is intended to be an improvement on thread safety and the prevention of segmentation faults in comparison to other languages like C/C++. It also adds such features as pattern matching, type inference, and generics to serve as a more modern solution to the same problems that C has traditionally solved. Additionally, Rust is easily bound with C/C++ and by extension other programming languages, allowing for client applications to call library functions provided by Rust fairly simply. In addition, YADQL\cite{yadql} was written in Rust with connections made to the Ethereum network. Existing libraries such as web3\cite{web3}, ethabi\cite{ethabi}, and gpgme\cite{gpgme} ease working with Ethereum and GNU Privacy Guard considerably without necessitating low-level wrappers to be written specifically for this project\cite{rust}.
+\section{Python as a Development Language}
 
 \section{Light Client}
 The system itself would be most effectively implemented as a light client\index{light client}. It would be ineffective (potentially even counterproductive) to download the entire history of the blockchain for this purpose. The system would not concern itself with anything on the blockchain prior to the creation of its own address, and on update would only need to track transactions associated with its own address from that point forward. Light clients are commonly used as cryptocurrency wallets in situations where it is undesireable or impractical to download and maintain a complete Ethereum node.
 
 \section{Smart Contract}
 \subsection{Message Representation}
-When a new message is committed to the blockchain, it is applied as an encrypted, signed and ASCII-armored string to the \verb!message! element of the packet sent to the smart contract. The contract itself is a simple accessible storage contract with an effectively unlimited volume of memory. The structure itself is stored as a linked list of message objects.
+When a new message is committed to the blockchain, it is applied as an encrypted, signed and ASCII-armored string to the \verb!message! element of the packet sent to the smart contract. The contract itself is a simple accessible storage contract with an effectively unlimited volume of memory. The classure itself is stored as a linked list of message objects.
 
 \section{Local Database Management}
-The local database is a lightweight transactional model that operates on vectors of internal application structures. Once submitted to the database, the contents are immutable. No functions to modify or update existing messages will be provided, as the ability to modify messages after they are initially sent or received is contrary to the intended purpose of the application.
+The local database is a lightweight transactional model that operates on vectors of internal application classures. Once submitted to the database, the contents are immutable. No functions to modify or update existing messages will be provided, as the ability to modify messages after they are initially sent or received is contrary to the intended purpose of the application.
 \subsection{Contact Management}
 Contacts will be stored as a vector.
 \subsection{Insertion}
@@ -80,19 +79,19 @@ Each transaction contains a data object that specifies who the message is from, 
 \section{Library Documentation}
 
 \subsection{Exposed Functions}
-\subsubsection{\texttt{pub fn send (msg: String, to: Vec<Contact>) -> i32}}
+\subsubsection{\texttt{def send (msg: String, to: Vec<Contact>) -> i32}}
 \texttt{send} will be used to acheive submissions to the blockchain. It will only be necessary to call this function when there is a specific need to send a message. This function will call the \texttt{submit} function on the blockchain and the \texttt{insert} function on the database.
-\subsubsection{\texttt{pub fn recv () -> Message}}
+\subsubsection{\texttt{def recv () -> Message}}
 This function will be called when a message is received. There will be no cost to the receive operation, as reading from the blockchain requires no fee payment, but this will be the most computationally expensive operation due to the time required to retrieve and read the entire set of all messages sent to the current device. This function calls the \texttt{retrieve} function on the blockchain and the \texttt{insert} function on the database.
 
 \subsection{Blockchain}
-\subsubsection{\texttt{pub fn submit (transaction: String) -> i32}}
+\subsubsection{\texttt{def submit (transaction: String) -> i32}}
 Produces a Ethereum transaction based on the message to be sent and submits it to the blockchain.
-\subsubsection{\texttt{pub fn retrieve () -> String}}
+\subsubsection{\texttt{def retrieve () -> String}}
 Retrieves a transaction from the Ethereum blockchain as a raw string.
 
 \subsection{Contact}
-\subsubsection{\texttt{struct contact}}
+\subsubsection{\texttt{class contact}}
 Represents an endpoint in a conversation.
 \paragraph{\texttt{address: String}}
 The address of an ethereum wallet.
@@ -102,22 +101,22 @@ A more easily-read identifying name by which contacts can be added and contacted
 Email addresses are used by gpgme to provide the system with a local keypair to use.
 
 \subsection{Database}
-\subsubsection{\texttt{pub struct Database}}
+\subsubsection{\texttt{class Database}}
 \paragraph{\texttt{contacts: Vec<Contact>}} The record of every contact that's been added to the application. 
 \paragraph{\texttt{messages: Vec<Message>}} The record of every message sent and received by the system.
-\subsubsection{\texttt{pub fn Database::add\_contact (uname: String, addr: i32) -> bool}}
+\subsubsection{\texttt{def Database::add\_contact (uname: String, addr: i32) -> bool}}
 Add a new contact to the local database.
-\subsubsection{\texttt{pub fn Database::del\_contact (name: String) -> bool}}
+\subsubsection{\texttt{def Database::del\_contact (name: String) -> bool}}
 Removes a record for the specified contact from the local database.
-\subsubsection{\texttt{pub fn Database::insert (msg: String) -> bool}}
+\subsubsection{\texttt{def Database::insert (msg: String) -> bool}}
 Inserts a new \verb!message! into the database.
-\subsubsection{\texttt{pub fn Database::delete (msgid: i32) -> bool}}
+\subsubsection{\texttt{def Database::delete (msgid: i32) -> bool}}
 Removes an existing \verb!message! from the database.
-\subsubsection{\texttt{pub fn Database::read (msgid: i32) -> message}}
+\subsubsection{\texttt{def Database::read (msgid: i32) -> message}}
 Reads a \verb!message! from the database.
 
 \subsection{Message}
-\subsubsection{\texttt{struct message}}
+\subsubsection{\texttt{class message}}
 Represents a message sent between two contacts.
 \paragraph{\texttt{id: i32}}
 A unique identification number assigned to each message.
@@ -127,15 +126,15 @@ A conversation object to which the message belongs.
 The actual direct text of the message.
 
 \subsection{Cryptography}
-\subsubsection{\texttt{fn getkey (name: String) -> }}
+\subsubsection{\texttt{def getkey (name: String) -> }}
 Retrieves the public key associated with \verb|name| from the local installation of gnupg. This will be used only internally by the cryptography module.
-\subsubsection{\texttt{pub fn encrypt (plaintext: String, key: String) -> String}}
+\subsubsection{\texttt{def encrypt (plaintext: String, key: String) -> String}}
 Uses gpgme to encrypt the message provided for the desired contact. Correspondents should exchange public keys before beginning an exchange.
-\subsubsection{\texttt{pub fn decrypt (plaintext: String) -> String}}
+\subsubsection{\texttt{def decrypt (plaintext: String) -> String}}
 Uses the users own private key to decrypt the provided message string.
-\subsubsection{\texttt{pub fn sign (encrypted: String) -> String}}
+\subsubsection{\texttt{def sign (encrypted: String) -> String}}
 Signs the encrypted text to verify the identity of the sender.
-\subsubsection{\texttt{pub fn verify (signed: String) -> String}}
+\subsubsection{\texttt{def verify (signed: String) -> String}}
 Verifies a signature applied to a message to ensure that the signature matches the expected device key.
 
 \section{Proposed Improvements}
@@ -147,12 +146,12 @@ Verifies a signature applied to a message to ensure that the signature matches t
 
 \pagebreak
 
-\begin{appendices}
+%\begin{appendices}
   %\listoffigures
   %\listoftables
   %\printglossaries{}
   %\printindex
   \printbibliography{}
-\end{appendices}
+%\end{appendices}
 
 \end{document}
