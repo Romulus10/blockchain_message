@@ -7,7 +7,7 @@ from web3 import Web3, HTTPProvider
 from solc import compile_source
 from web3.contract import ConciseContract
 
-contract_source_code = '''
+src = '''
 pragma solidity ^0.4.0;
 
 contract Greeter {
@@ -27,25 +27,25 @@ contract Greeter {
 }
 '''
 
-compiled_sol = compile_source(contract_source_code)
-contract_interface = compiled_sol['<stdin>:Greeter']
+compiled = compile_source(src)
+contract_interface = compiled['<stdin>:Greeter']
 
 w3 = Web3(HTTPProvider("http://localhost:8545"))
 
 contract = w3.eth.contract(abi=contract_interface['abi'], bytecode=contract_interface['bin'])
 
-tx_hash = contract.constructor().transact(transaction={'from': w3.eth.accounts[0], 'gas': 410000})
+tx = contract.constructor().transact(transaction={'from': w3.eth.accounts[0], 'gas': 410000})
 
-tx_receipt = w3.eth.getTransactionReceipt(tx_hash)
-contract_address = tx_receipt['contractAddress']
+receipt = w3.eth.getTransactionReceipt(tx)
+addr = receipt['contractAddress']
 
-print("Address: {}".format(contract_address))
+print("Address: {}".format(addr))
 
 abi = contract_interface['abi']
-contract_instance = w3.eth.contract(address=contract_address, abi=abi,ContractFactoryClass=ConciseContract)
+contract = w3.eth.contract(address=addr, abi=abi, ContractFactoryClass=ConciseContract)
 
-print('Contract value: {}'.format(contract_instance.greet()))
-contract_instance.setGreeting('Hello, World!', transact={'from': w3.eth.accounts[0]})
+print('Contract value: {}'.format(contract.greet()))
+contract.setGreeting('Hello, World!', transact={'from': w3.eth.accounts[0]})
 print('Setting value.')
-print('Contract value: {}'.format(contract_instance.greet()))
+print('Contract value: {}'.format(contract.greet()))
 
