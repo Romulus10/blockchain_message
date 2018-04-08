@@ -22,3 +22,4 @@ paper/blockchain_message.lot
 paper/texput.log
 node_modules/
 package-lock.json
+blockchain_message/.idea/
