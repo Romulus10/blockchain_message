@@ -23,3 +23,4 @@ paper/texput.log
 node_modules/
 package-lock.json
 blockchain_message/.idea/
+blockchain_message/src/keys

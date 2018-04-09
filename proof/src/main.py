@@ -30,7 +30,7 @@ contract Greeter {
 compiled = compile_source(src)
 contract_interface = compiled['<stdin>:Greeter']
 
-w3 = Web3(HTTPProvider("http://localhost:8545"))
+w3 = Web3(HTTPProvider("http://localhost:7545"))
 
 contract = w3.eth.contract(abi=contract_interface['abi'], bytecode=contract_interface['bin'])
 

@@ -11,3 +11,5 @@ class Contact (object):
         self.address = address
         self.uname = uname
         self.email = email
+        with open("./keys/{0}.asc".format(uname)) as f:
+            self.key = f.read()
