@@ -34,12 +34,8 @@ w3 = Web3(HTTPProvider("http://localhost:8545"))
 
 
 print(w3.eth.getBlock('latest').number)
-contract = w3.eth.contract(abi=contract_interface['abi'], bytecode=contract_interface['bin'])
 
-tx = contract.constructor().transact(transaction={'from': w3.eth.accounts[0], 'gas': 410000})
-
-receipt = w3.eth.getTransactionReceipt(tx)
-addr = receipt['contractAddress']
+addr = '0x1243a7cFCb0818A99f72bE0cbC0824702A0c2745'
 
 print("Address: {}".format(addr))
 
@@ -50,4 +46,3 @@ print('Contract value: {}'.format(contract.greet()))
 contract.setGreeting('Hello, World!', transact={'from': w3.eth.accounts[0]})
 print('Setting value.')
 print('Contract value: {}'.format(contract.greet()))
-

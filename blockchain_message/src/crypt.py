@@ -1,15 +1,21 @@
+"""Provides OpenPGP wrappers for blockchain_message."""
+
 import gnupg
 
 from src.core import Contact
 
 
 class KeyUnverifiedError(Exception):
-    def __init__(self, message, errors):
+    """
+    """
+    def __init__(self, message: str, errors: str):
         super().__init__(message)
         self.errors = errors
 
 
 class Crypt(object):
+    """
+    """
     def __init__(self, email: str):
         self.email = email
         self.gpg = gnupg.GPG(
@@ -18,12 +24,14 @@ class Crypt(object):
             secring='secring.gpg'
         )
 
-    def import_key(self, filename):
+    def import_key(self, addr: str, filename: str, email: str):
         """
-        :param filename:
+        Retrieves a key file, notes the fingerprint and owner, and imports it in to the
+        application's keystore.
+        :param filename: should be the key's username
         :return:
         """
-        pass
+        return Contact(addr, filename, email)
 
     def encrypt(self, message: str, recipient: Contact) -> str:
         """
@@ -31,8 +39,7 @@ class Crypt(object):
         :param recipient:
         :return:
         """
-        key = self.gpg.import_keys(recipient.key)
-        return message
+        return self.gpg.encrypt(message, recipient.email)
 
     def decrypt(self, message: str) -> str:
         """
@@ -41,7 +48,7 @@ class Crypt(object):
         :param message:
         :return:
         """
-        return message
+        return self.gpg.decrypt(str(message))
 
     def sign(self, message: str) -> str:
         """
@@ -56,6 +63,17 @@ class Crypt(object):
         :return:
         """
         pass
+
+    def generate_key(self, email: str):
+        """
+        :param email:
+        :return:
+        """
+        self.gpg.gen_key(
+            self.gpg.gen_key_input(
+                name_email=email
+                )
+            )
 
 
 if __name__ == '__main__':
