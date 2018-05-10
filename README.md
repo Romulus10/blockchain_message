@@ -103,18 +103,33 @@ reasonable transaction fees for users of the service.
 
 ### Further Reference
 Ethereum: A Secure Decentralized Generalized Transaction Ledger - Dr. Gavin Wood
+
 Understanding Following - https://keybase.io/docs/server_security/following
+
 Building Your Web of Trust - https://www.gnupg.org/gph/en/manual/x547.html
+
 Ethereum + Lightning? Buterin and Poon Unveil 'Plasma' Scaling Plan - Alyssa Hertig - https://www.coindesk.com/ethereum-lightning-buterin-poon-unveil-plasma-scaling-plan/
+
 A Blockchain Database Query Language - Andrew Plaza, Sean T. Batzel - https://www.github.com/ScrantonHacks/YADQL
+
 Blockcom - Reply - http://www.reply.com/en/content/blokcom
+
 Vibeo - Vibeo Ltd. - https://vibeo.io
+
 The Rust Programming Language - rust-lang - https://www.rust-lang.org
+
 rust-gpgme - John Schug - https://github.com/johnschug/rust-gpgme
+
 ethabi - Parity Technologies - https://github.com/paritytech/ethabi
+
 rust-web3 - Tomasz Drwiega - https://github.com/tomusdrw/rust-web3
+
 web3.py - The Ethereum Project - https://github.com/ethereum/web3.py
+
 The Ethereum Organization - The Ethereum Project - https://github.com/ethereum
+
 What is Blockchain Technology? A Step-by-Step Guide for Beginners - Ameer Rosic - https://blockgeeks.com/guides/what-is-blockchain-technology/
+
 Exactly How Emails Work - InterServer.net - https://www.interserver.net/tips/kb/exactly-emails-works-steps-explanation/
+
 What is Ethereum Gas - Ameer Rosic -  https://blockgeeks.com/guides/ethereum-gas-step-by-step-guide/
