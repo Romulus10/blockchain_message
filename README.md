@@ -101,6 +101,7 @@ usage considerably. I also hope to implement an efficient enough smart
 contract to optimize the gas usage of the system and thereby retain
 reasonable transaction fees for users of the service.
 
+### Further Reference
 Ethereum: A Secure Decentralized Generalized Transaction Ledger - Dr. Gavin Wood
 Understanding Following - https://keybase.io/docs/server_security/following
 Building Your Web of Trust - https://www.gnupg.org/gph/en/manual/x547.html
