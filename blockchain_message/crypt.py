@@ -2,7 +2,7 @@
 
 import gnupg
 
-from src.core import Contact
+from core import Contact
 
 
 class KeyUnverifiedError(Exception):

@@ -1,7 +1,7 @@
 import shelve
 from typing import List
 
-from src.core import Contact, Message
+from core import Contact, Message
 
 
 class MessageNotFoundException(Exception):
