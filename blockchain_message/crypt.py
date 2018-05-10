@@ -2,13 +2,17 @@
 
 import gnupg
 
-from core import Contact
+from blockchain_message.core import Contact
 
 
 class KeyUnverifiedError(Exception):
     """
     """
     def __init__(self, message: str, errors: str):
+        """
+        :param message:
+        :param errors:
+        """
         super().__init__(message)
         self.errors = errors
 
@@ -17,7 +21,10 @@ class Crypt(object):
     """
     """
     def __init__(self, email: str):
-        self.email = email
+        """
+        :param email:
+        """
+        self.email: str = email
         self.gpg = gnupg.GPG(
             homedir='./keys',
             keyring='pubring.gpg',
@@ -28,7 +35,9 @@ class Crypt(object):
         """
         Retrieves a key file, notes the fingerprint and owner, and imports it in to the
         application's keystore.
+        :param addr:
         :param filename: should be the key's username
+        :param email:
         :return:
         """
         return Contact(addr, filename, email)
