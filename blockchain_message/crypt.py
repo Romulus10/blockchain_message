@@ -26,7 +26,7 @@ class Crypt(object):
         """
         self.email: str = email
         self.gpg = gnupg.GPG(
-            homedir='./keys',
+            homedir='./.keys',
             keyring='pubring.gpg',
             secring='secring.gpg'
         )
@@ -48,7 +48,7 @@ class Crypt(object):
         :param recipient:
         :return:
         """
-        return self.gpg.encrypt(message, recipient.email)
+        return self.gpg.encrypt(message, recipient.key)
 
     def decrypt(self, message: str) -> str:
         """

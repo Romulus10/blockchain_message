@@ -1,5 +1,7 @@
 """Provides core data types."""
 
+import gnupg
+
 
 class Contact(object):
     """
@@ -10,11 +12,16 @@ class Contact(object):
         :param uname:
         :param email:
         """
+        gpg = gnupg.GPG(
+            homedir='./.keys',
+            keyring='pubring.gpg',
+            secring='secring.gpg'
+        )
         self.address = address
         self.uname = uname
         self.email = email
-        with open("./keys/{0}.asc".format(uname)) as f:
-            self.key = f.read()
+        with open("./.keys/{0}.asc".format(uname)) as f:
+            self.key = gpg.import_keys(f.read()).results[0]['fingerprints'][0]
 
 
 class Message(object):

@@ -5,9 +5,27 @@ from blockchain_message.core import Contact, Message
 
 
 class MessageNotFoundException(Exception):
-    def __init__(self, message, errors):
+    """
+
+    """
+    def __init__(self, message):
+        """
+
+        :param message:
+        """
         super().__init__(message)
-        self.errors = errors
+
+
+class ContactNotFoundException(Exception):
+    """
+
+    """
+    def __init__(self, message):
+        """
+
+        :param message:
+        """
+        super().__init__(message)
 
 
 class Database (object):
@@ -15,15 +33,20 @@ class Database (object):
         """
 
         """
-        with shelve.open("~/.blkchnmsg/db") as db:
-            self.contacts: List[Contact] = db['contacts']
-            self.messages: List[Message] = db['messages']
+        with shelve.open(".blkchnmsg/db") as db:
+            try:
+                self.contacts: List[Contact] = db['contacts']
+                self.messages: List[Message] = db['messages']
+            except KeyError:
+                self.contacts: List[Contact] = list()
+                self.messages: List[Message] = list()
 
     def __pull(self):
         """
 
         """
-        with shelve.open("~/.blkchnmsg/db") as db:
+        with shelve.open(".blkchnmsg/db") as db:
+            db.sync()
             self.contacts: List[Contact] = db['contacts']
             self.messages: List[Message] = db['messages']
 
@@ -31,9 +54,10 @@ class Database (object):
         """
 
         """
-        with shelve.open("~/.blkchnmsg/db") as db:
+        with shelve.open(".blkchnmsg/db") as db:
             db['contacts']: List[Contact] = self.contacts
             db['messages']: List[Message] = self.messages
+            db.sync()
 
     def __max_msgid(self) -> int:
         """
@@ -48,6 +72,7 @@ class Database (object):
 
     def add_contact(self, uname: str, addr: str, email: str) -> bool:
         """
+        Adds a new contact object to the database.
 
         :param uname:
         :param addr:
@@ -57,6 +82,17 @@ class Database (object):
         self.contacts.append(Contact(addr, uname, email))
         self.__commit()
         return True
+
+    def read_contact(self, uname: str) -> Contact:
+        """
+
+        :param uname:
+        :return:
+        """
+        for x in self.contacts:
+            if x.uname is uname:
+                return x
+        raise ContactNotFoundException("Contact {} does not exist.".format(uname))
 
     def del_contact(self, name: str) -> bool:
         """
@@ -71,17 +107,18 @@ class Database (object):
                 return True
         return False
 
-    def insert(self, to: Contact, fr: Contact, text: str) -> bool:
+    def insert(self, to: Contact, fr: Contact, text: str) -> int:
         """
+        Produces a message object and adds it to the internal database.
 
         :param to:
         :param fr:
         :param text:
         :return:
         """
-        self.messages.append(Message(self.__max_msgid()+1, to, fr, text))
+        self.messages.append(Message(self.__max_msgid() + 1, to, fr, text))
         self.__commit()
-        return True
+        return self.__max_msgid()
 
     def delete(self, msgid: int) -> bool:
         """
@@ -105,7 +142,7 @@ class Database (object):
         for x in self.messages:
             if x.id is msgid:
                 return x
-        raise MessageNotFoundException
+        raise MessageNotFoundException("Message {} not found.".format(msgid))
 
 
 if __name__ == '__main__':

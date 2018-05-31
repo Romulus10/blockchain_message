@@ -45,6 +45,7 @@ package-lock.json
 blockchain_message/.idea/
 blockchain_message/src/keys
 blockchain_message/__pycache__/
-blockchain_message/keys/
+blockchain_message/test/.keys/
+blockchain_message/test/.blkchnmsg/
 blockchain_message/build/
 .idea/
