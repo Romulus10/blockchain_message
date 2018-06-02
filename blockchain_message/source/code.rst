@@ -1,11 +1,11 @@
-.. automodule:: blockchain
+.. automodule:: src.blockchain
   :members:
-.. automodule:: core
+.. automodule:: src.core
   :members:
-.. automodule:: crypt
+.. automodule:: src.crypt
   :members:
-.. automodule:: database
+.. automodule:: src.database
   :members:
-.. automodule:: lib
+.. automodule:: src.lib
   :members:
 

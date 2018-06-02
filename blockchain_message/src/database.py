@@ -1,13 +1,14 @@
 import shelve
 from typing import List
 
-from blockchain_message.core import Contact, Message
+from blockchain_message.src.core import Contact, Message
 
 
 class MessageNotFoundException(Exception):
     """
 
     """
+
     def __init__(self, message):
         """
 
@@ -20,6 +21,7 @@ class ContactNotFoundException(Exception):
     """
 
     """
+
     def __init__(self, message):
         """
 
@@ -28,7 +30,7 @@ class ContactNotFoundException(Exception):
         super().__init__(message)
 
 
-class Database (object):
+class Database(object):
     def __init__(self):
         """
 
@@ -147,4 +149,5 @@ class Database (object):
 
 if __name__ == '__main__':
     import doctest
+
     doctest.testmod()

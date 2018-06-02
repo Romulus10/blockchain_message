@@ -1,6 +1,7 @@
 import unittest
-from blockchain_message.core import Contact
-from blockchain_message.database import Database, MessageNotFoundException, ContactNotFoundException
+
+from blockchain_message.src.core import Contact
+from blockchain_message.src.database import Database, MessageNotFoundException, ContactNotFoundException
 
 
 class TestDatabase(unittest.TestCase):

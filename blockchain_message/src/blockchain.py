@@ -1,6 +1,7 @@
 class Blockchain(object):
     """
     """
+
     def submit(self, transaction: str) -> int:
         """
         :param transaction:
@@ -17,4 +18,5 @@ class Blockchain(object):
 
 if __name__ == '__main__':
     import doctest
+
     doctest.testmod()
