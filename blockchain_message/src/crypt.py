@@ -50,7 +50,8 @@ class Crypt(object):
         """
         return Contact(addr, filename, email)
 
-    def encrypt(self, message: str, recipient: Contact) -> bytes:
+    @staticmethod
+    def encrypt(message: str, recipient: Contact) -> bytes:
         """
         :param message:
         :param recipient:
@@ -75,7 +76,8 @@ class Crypt(object):
         """
         return rsa.sign(message.encode('utf8'), self.key, 'SHA-1')
 
-    def verify(self, message: str, signature: str, sender: Contact) -> str:
+    @staticmethod
+    def verify(message: str, signature: str, sender: Contact) -> str:
         """
         :param message:
         :param signature:
