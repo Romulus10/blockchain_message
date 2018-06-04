@@ -33,9 +33,3 @@ class Message(object):
         self.to = to
         self.fr = fr
         self.text = text
-
-
-if __name__ == '__main__':
-    import doctest
-
-    doctest.testmod()

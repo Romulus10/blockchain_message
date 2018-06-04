@@ -42,10 +42,13 @@ docs/proposal/blockchain_message.lot
 docs/proposal/texput.log
 node_modules/
 package-lock.json
-blockchain_message/.idea/
 blockchain_message/src/keys
 blockchain_message/__pycache__/
 blockchain_message/test/.keys/
 blockchain_message/test/.blkchnmsg/
 blockchain_message/build/
 .idea/
+blockchain_message/source/_static/
+blockchain_message/source/_templates/
+blockchain_message/test/__pycache__/
+venv/

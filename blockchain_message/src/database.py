@@ -145,9 +145,3 @@ class Database(object):
             if x.id is msgid:
                 return x
         raise MessageNotFoundException("Message {} not found.".format(msgid))
-
-
-if __name__ == '__main__':
-    import doctest
-
-    doctest.testmod()
