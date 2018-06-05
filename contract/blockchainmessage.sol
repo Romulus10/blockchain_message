@@ -12,10 +12,10 @@ contract Storage {
   }
 }
 
-contract YadqlStorage {
+contract BlckChnMsgStorage {
   mapping (bytes16 => Storage) public db;
 
-  function store(bytes16 pubkey, bytes32 key, string val) public {
+  function store(string to_user, string from_user, bytes32 key, string val) public {
     if (db[pubkey] != address(0x0)) {
       db[pubkey].store(key, val);
     } else {
@@ -25,7 +25,7 @@ contract YadqlStorage {
     }
   }
 
-  function retrieve(bytes16 pubkey, bytes32 key) public returns (string) {
+  function retrieve(string username, bytes32 key) public returns (string) {
     value = db[pubkey].get(key);
   }
 }
