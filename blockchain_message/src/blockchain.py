@@ -1,8 +1,10 @@
+from typing import List
+
 from solc import compile_files
 from web3 import Web3, HTTPProvider
 from web3.contract import ConciseContract
 
-from blockchain_message.src.core import Message
+from blockchain_message.src.core import Message, Contact
 
 
 # noinspection PyUnresolvedReferences
@@ -13,11 +15,11 @@ class Blockchain(object):
     def __init__(self):
         """
         """
-        # TODO Read contract address somehow? Probably config file.
-        self.addr = ''
-        compiled = compile_files('./contract/storage.sol')
-        self.contract_interface = compiled('<stdin>:BlckChnMsgStorage')
-        self.w3 = Web3(HTTPProvider("http://localhost:8545"))
+        with open('./.blkchnmsg/contract', 'r') as f:
+            self.addr = f.read()
+        compiled = compile_files(['./../../contract/blockchain_message.sol'])
+        self.contract_interface = compiled['./../../contract/blockchain_message.sol:BlckChnMsgStorage']
+        self.w3 = Web3(HTTPProvider("http://localhost:7545"))
         self.contract = self.w3.eth.contract(abi=self.contract_interface['abi'],
                                              bytecode=self.contract_interface['bin'])
 
@@ -29,14 +31,15 @@ class Blockchain(object):
         abi = self.contract_interface['abi']
         contract = self.w3.eth.contract(address=self.addr, abi=abi, ContractFactoryClass=ConciseContract)
 
-        msg_id = message.id.encode('utf8')
+        msg_id = message.id
         to_user = message.to.uname.encode('utf8')
         fr_user = message.fr.uname.encode('utf8')
         msg_text = message.text.encode('utf8')
         message_body = '{0},{1},{2},{3}'.format(msg_id, to_user, fr_user, msg_text)
 
+        to_user = int(message.to.address)
         tx = contract.store(msg_id, to_user, message_body, transact={'from': self.w3.eth.accounts[0]})
-        receipt = w3.eth.getTransactionReceipt(tx)
+        receipt = self.w3.eth.getTransactionReceipt(tx)
         addr = receipt['contractAddress']
 
         if addr:
@@ -44,17 +47,14 @@ class Blockchain(object):
         else:
             return False
 
-    def retrieve(self, username, key) -> List[Message]:
+    def retrieve(self, user: Contact, last_message: int) -> List[Message]:
         """
         :return:
         """
         abi = self.contract_interface['abi']
         contract = self.w3.eth.contract(address=self.addr, abi=abi, ContractFactoryClass=ConciseContract)
 
-        # TODO Figure out how to tell what message ids we need to download.
-        # TODO We could probably get a list of all relevant messages from the contract...
-        # TODO That's going to get absurdly expensive.
-        result = contract.retrieve(username, key, transact={'from': self.w3.eth.accounts[0]})
+        result = contract.retrieve(int(user.address), last_message, transact={'from': self.w3.eth.accounts[0]})
 
         messages = list()
 
