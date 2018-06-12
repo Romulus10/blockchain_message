@@ -23,44 +23,52 @@ class Blockchain(object):
         self.contract = self.w3.eth.contract(abi=self.contract_interface['abi'],
                                              bytecode=self.contract_interface['bin'])
 
-    def submit(self, message: Message) -> bool:
+    def submit(self, message: Message):
         """
         :param message:
-        :return: Did our message send correctly?
         """
         abi = self.contract_interface['abi']
         contract = self.w3.eth.contract(address=self.addr, abi=abi, ContractFactoryClass=ConciseContract)
 
         msg_id = message.id
-        to_user = message.to.uname.encode('utf8')
-        fr_user = message.fr.uname.encode('utf8')
-        msg_text = message.text.encode('utf8')
-        message_body = '{0},{1},{2},{3}'.format(msg_id, to_user, fr_user, msg_text)
+        to_user = message.to.uname
+        fr_user = message.fr.uname
+        msg_text = message.text
+        message_body = ('{0},{1},{2},{3}'.format(msg_id, to_user, fr_user, msg_text)).encode('utf8')
 
         to_user = int(message.to.address)
-        tx = contract.store(msg_id, to_user, message_body, transact={'from': self.w3.eth.accounts[0]})
-        receipt = self.w3.eth.getTransactionReceipt(tx)
-        addr = receipt['contractAddress']
+        contract.store(msg_id, to_user, message_body, transact={'from': self.w3.eth.accounts[0]})
 
-        if addr:
-            return True
-        else:
-            return False
-
-    def retrieve(self, user: Contact, last_message: int) -> List[Message]:
+    def retrieve(self, user: Contact, last_message: int, contact_list: List[Contact]) -> List[Message]:
         """
         :return:
         """
         abi = self.contract_interface['abi']
         contract = self.w3.eth.contract(address=self.addr, abi=abi, ContractFactoryClass=ConciseContract)
 
-        result = contract.retrieve(int(user.address), last_message, transact={'from': self.w3.eth.accounts[0]})
+        result = contract.retrieve(int(user.address), last_message,
+                                   transact={'from': self.w3.eth.accounts[0]})
+
+        print(result)
+        print(type(result))
+        result = bytes(result)
+        print(result)
+        print(type(result))
+        result = result.decode('utf8')
+        print(result)
+        print(type(result))
 
         messages = list()
 
         res_list = result.split(';')
         for x in res_list:
             y = x.split(',')
-            messages.append(Message(y[0], y[1], y[2], y[3]))
+            c: Contact = None
+            for z in contact_list:
+                if z.address == y[2]:
+                    c = z
+            if c is None:
+                c = Contact(y[2], '', '')
+            messages.append(Message(int(y[0]), user, c, y[3]))
 
         return messages

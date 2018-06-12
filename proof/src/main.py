@@ -18,3 +18,6 @@ receipt = w3.eth.getTransactionReceipt(tx)
 addr = receipt['contractAddress']
 
 print("Address: {}".format(addr))
+
+with open('./blockchain_message/test/.blkchnmsg/contract', 'w') as f:
+    f.write(addr)
