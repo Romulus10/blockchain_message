@@ -30,12 +30,12 @@ class TestDatabase(unittest.TestCase):
 
     def test_read_contact(self):
         d = Database()
-        d.add_contact("test", "00000", "test@test.com")
+        d.add_contact("00000", "test", "test@test.com")
         self.assertEqual(d.read_contact("test").address, "00000")
 
     def test_delete_contact(self):
         d = Database()
-        d.add_contact("test", "00000", "test@test.com")
+        d.add_contact("00000", "test", "test@test.com")
         d.del_contact("test")
         with self.assertRaises(ContactNotFoundException):
             d.read_contact("test")

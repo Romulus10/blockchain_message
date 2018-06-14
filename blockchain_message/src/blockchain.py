@@ -34,29 +34,23 @@ class Blockchain(object):
         to_user = message.to.uname
         fr_user = message.fr.uname
         msg_text = message.text
-        message_body = ('{0},{1},{2},{3}'.format(msg_id, to_user, fr_user, msg_text)).encode('utf8')
+        sign = message.sign
+        message_body = ('{0},{1},{2},{3},{4}'.format(msg_id, to_user, fr_user, msg_text, sign)).encode('utf8')
 
         to_user = int(message.to.address)
-        contract.store(msg_id, to_user, message_body, transact={'from': self.w3.eth.accounts[0]})
+        contract.store(msg_id, to_user, message_body)
 
     def retrieve(self, user: Contact, last_message: int, contact_list: List[Contact]) -> List[Message]:
         """
         :return:
         """
         abi = self.contract_interface['abi']
-        contract = self.w3.eth.contract(address=self.addr, abi=abi, ContractFactoryClass=ConciseContract)
+        contract = self.w3.eth.contract(address=self.addr, abi=abi)
 
-        result = contract.retrieve(int(user.address), last_message,
-                                   transact={'from': self.w3.eth.accounts[0]})
+        result = contract.functions.retrieve(int(user.address), last_message).call()
 
-        print(result)
-        print(type(result))
-        result = bytes(result)
-        print(result)
-        print(type(result))
+        result = bytes(result, 'utf8')
         result = result.decode('utf8')
-        print(result)
-        print(type(result))
 
         messages = list()
 
@@ -64,11 +58,11 @@ class Blockchain(object):
         for x in res_list:
             y = x.split(',')
             c: Contact = None
-            for z in contact_list:
-                if z.address == y[2]:
-                    c = z
-            if c is None:
-                c = Contact(y[2], '', '')
-            messages.append(Message(int(y[0]), user, c, y[3]))
-
+            if len(y) == 5:
+                for z in contact_list:
+                    if z.uname == y[2]:
+                        c = z
+                if c is None:
+                    c = Contact(y[2], '', '')
+                messages.append(Message(int(y[0]), user, c, y[3], y[4]))
         return messages

@@ -66,13 +66,13 @@ class Database(object):
 
         :return:
         """
-        m: int = 0
+        m: int = -1
         for x in self.messages:
             if x.id > m:
                 m = x.id
         return m
 
-    def add_contact(self, uname: str, addr: str, email: str) -> bool:
+    def add_contact(self, addr: str, uname: str, email: str) -> bool:
         """
         Adds a new contact object to the database.
 
@@ -118,7 +118,7 @@ class Database(object):
         :param text:
         :return:
         """
-        self.messages.append(Message(self.__max_msgid() + 1, to, fr, text))
+        self.messages.append(Message(self.__max_msgid() + 1, to, fr, text, ''))
         self.__commit()
         return self.__max_msgid()
 
