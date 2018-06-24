@@ -17,8 +17,8 @@ class Blockchain(object):
         """
         with open('./.blkchnmsg/contract', 'r') as f:
             self.addr = f.read()
-        compiled = compile_files(['./../../contract/blockchain_message.sol'])
-        self.contract_interface = compiled['./../../contract/blockchain_message.sol:BlckChnMsgStorage']
+        compiled = compile_files(['./../contract/blockchain_message.sol'])
+        self.contract_interface = compiled['./../contract/blockchain_message.sol:BlckChnMsgStorage']
         self.w3 = Web3(HTTPProvider("http://localhost:7545"))
         self.contract = self.w3.eth.contract(abi=self.contract_interface['abi'],
                                              bytecode=self.contract_interface['bin'])
