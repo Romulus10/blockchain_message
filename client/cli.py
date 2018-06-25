@@ -65,8 +65,7 @@ def main():
     uname = input("uname > ")
     email = input("email > ")
     msg = BlockchainMessage(uname)
-    if len(msg.d.contacts) == 0:
-        msg.d.add_contact(addr, uname, email)
+    msg.d.add_contact(addr, uname, email)
     done: bool = False
     while not done:
         cmd: str = input("> ")

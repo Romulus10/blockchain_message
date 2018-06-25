@@ -92,7 +92,7 @@ class Database(object):
         :return:
         """
         for x in self.contacts:
-            if x.uname is uname:
+            if x.uname == uname:
                 return x
         raise ContactNotFoundException("Contact {} does not exist.".format(uname))
 
