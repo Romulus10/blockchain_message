@@ -8,7 +8,6 @@ contract_interface = compiled['./contract/blockchain_message.sol:BlckChnMsgStora
 
 w3 = Web3(HTTPProvider("http://localhost:7545"))
 
-
 print(w3.eth.getBlock('latest').number)
 contract = w3.eth.contract(abi=contract_interface['abi'], bytecode=contract_interface['bin'])
 
@@ -19,5 +18,5 @@ addr = receipt['contractAddress']
 
 print("Address: {}".format(addr))
 
-with open('./client/.blkchnmsg/contract', 'w') as f:
+with open('./test/.blkchnmsg/contract', 'w') as f:
     f.write(addr)

@@ -84,8 +84,8 @@ class Crypt(object):
         :param sender:
         :return:
         """
-        return rsa.verify(message.encode('utf8'),
-                          signature,
+        return rsa.verify(bytes(message, 'utf8'),
+                          bytes(signature, 'utf8'),
                           rsa.PublicKey.load_pkcs1(sender.key))
 
     @staticmethod

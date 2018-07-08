@@ -1,7 +1,7 @@
-from blockchain_message.src.database import Database
-from blockchain_message.src.crypt import Crypt
 from blockchain_message.src.blockchain import Blockchain
 from blockchain_message.src.core import Message
+from blockchain_message.src.crypt import Crypt
+from blockchain_message.src.database import Database
 
 
 class BlockchainMessage(object):
@@ -25,7 +25,7 @@ class BlockchainMessage(object):
         m = self.b.retrieve(self.d.read_contact(uname), len(self.d.messages), self.d.contacts)
         for g in m:
             self.c.verify(g.text, g.sign, g.fr)
-            g.text = self.c.decrypt(bytes(g.text))
+            g.text = self.c.decrypt(bytes(g.text, 'utf8'))
             self.d.insert(g.to, g.fr, g.text)
             n += 1
         return n
