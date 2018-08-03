@@ -29,7 +29,7 @@ contract BlckChnMsgStorage {
 
     function retrieve(uint to_user, uint key) public returns (string) {
         string memory messages;
-        for (uint i = key; i < db[to_user].length(); i++) {
+        for (uint i = (key - 1); i < db[to_user].length(); i++) {
             messages = strConcat(messages, db[to_user].get(i), "♠");
         }
         return messages;

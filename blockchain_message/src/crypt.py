@@ -84,9 +84,9 @@ class Crypt(object):
         :param sender:
         :return:
         """
-        return rsa.verify(bytes(bytes(message, 'utf8').decode('utf8'), 'utf8'),
-                          bytes(bytes(signature, 'utf8').decode('utf8'), 'utf8'),
-                          rsa.PublicKey.load_pkcs1(sender.key))
+        m = bytes(bytes(message, 'utf8').decode('utf8'), 'utf8')
+        s = bytes(bytes(signature, 'utf8').decode('utf8'), 'utf8')
+        return rsa.verify(m, s, rsa.PublicKey.load_pkcs1(sender.key))
 
     @staticmethod
     def generate_key(uname: str):

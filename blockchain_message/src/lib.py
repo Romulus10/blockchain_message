@@ -16,6 +16,7 @@ class BlockchainMessage(object):
         self.d = Database()
         self.c = Crypt(uname)
         self.b = Blockchain()
+        self.max = 0
 
     def pull_messages(self, uname: str) -> int:
         """
@@ -24,9 +25,9 @@ class BlockchainMessage(object):
         n = 0
         m = self.b.retrieve(self.d.read_contact(uname), len(self.d.messages), self.d.contacts)
         for g in m:
-            self.c.verify(g.text, g.sign, g.fr)
-            g.text = self.c.decrypt(bytes(g.text, 'utf8'))
-            self.d.insert(g.to, g.fr, g.text)
+            # self.c.verify(g.text, g.sign, g.fr)
+            # g.text = self.c.decrypt(bytes(g.text, 'utf8'))
+            self.max = self.d.insert(g.to, g.fr, g.text)
             n += 1
         return n
 
@@ -36,8 +37,9 @@ class BlockchainMessage(object):
         :param text:
         :return:
         """
-        t_c = self.c.encrypt(text, self.d.read_contact(uname))
-        self.b.submit(Message(0, self.d.read_contact(uname),
+        # t_c = self.c.encrypt(text, self.d.read_contact(uname)).decode('utf8')
+        # t_s = self.c.sign(str(t_c))
+        self.b.submit(Message(self.max, self.d.read_contact(uname),
                               self.d.read_contact(uname),
-                              str(t_c),
-                              str(self.c.sign(str(t_c)))))
+                              text,
+                              ''))

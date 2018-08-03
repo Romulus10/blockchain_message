@@ -53,7 +53,7 @@ def read(msg: BlockchainMessage):
     :return:
     """
     for x in msg.d.messages:
-        print("{0}: {1}".format(x.fr, x.text))
+        print("{0}: {1}".format(x.fr.uname, x.text))
 
 
 def main():
