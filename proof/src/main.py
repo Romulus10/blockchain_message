@@ -3,8 +3,8 @@
 from solc import compile_files
 from web3 import Web3, HTTPProvider
 
-compiled = compile_files(["./contract/blockchain_message.sol"])
-contract_interface = compiled['./contract/blockchain_message.sol:BlckChnMsgStorage']
+compiled = compile_files(["./contract/contracts/blockchain_message.sol"])
+contract_interface = compiled['./contract/contracts/blockchain_message.sol:BlckChnMsgStorage']
 
 w3 = Web3(HTTPProvider("http://localhost:7545"))
 
