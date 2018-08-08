@@ -9,7 +9,7 @@ contract Storage {
         length++;
     }
 
-    function get(uint key) public returns (string) {
+    function get(uint key) public view returns (string) {
         return storg[key];
     }
 }
@@ -27,16 +27,16 @@ contract BlckChnMsgStorage {
         }
     }
 
-    function retrieve(uint to_user, uint key) public returns (string) {
+    function retrieve(uint to_user, uint key) public view returns (string) {
         string memory messages;
-        for (uint i = (key - 1); i < db[to_user].length(); i++) {
+        for (uint i = key; i < db[to_user].length(); i++) {
             messages = strConcat(messages, db[to_user].get(i), "♠");
         }
         return messages;
         return db[to_user].get(key);
     }
 
-    function strConcat(string _a, string _b, string _c) internal returns (string){
+    function strConcat(string _a, string _b, string _c) internal pure returns (string){
         bytes memory _ba = bytes(_a);
         bytes memory _bb = bytes(_b);
         bytes memory _bc = bytes(_c);
