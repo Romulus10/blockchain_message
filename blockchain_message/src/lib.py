@@ -23,7 +23,7 @@ class BlockchainMessage(object):
         :return: The number of new messages returned from the blockchain.
         """
         n = 0
-        m = self.b.retrieve(self.d.read_contact(uname), len(self.d.messages), self.d.contacts)
+        m = self.b.retrieve(self.d.read_contact(uname), 0, self.d.contacts)
         for g in m:
             # self.c.verify(g.text, g.sign, g.fr)
             # g.text = self.c.decrypt(bytes(g.text, 'utf8'))
