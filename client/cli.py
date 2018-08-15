@@ -13,7 +13,6 @@ __author__ = "Sean Batzel"
 __email__ = "romulus108@protonmail.com"
 __license__ = "GPL"
 
-
 from blockchain_message.src.lib import BlockchainMessage
 
 
@@ -21,7 +20,7 @@ def contacts(msg: BlockchainMessage):
     """
     :return:
     """
-    for x in msg.d.contacts:
+    for x in msg.send.contacts:
         print(x.uname)
 
 
@@ -52,7 +51,7 @@ def read(msg: BlockchainMessage):
     :param msg:
     :return:
     """
-    for x in msg.d.messages:
+    for x in msg.recv.messages:
         print("{0}: {1}".format(x.fr.uname, x.text))
 
 
@@ -65,7 +64,7 @@ def main():
     uname = input("uname > ")
     email = input("email > ")
     msg = BlockchainMessage(uname)
-    msg.d.add_contact(addr, uname, email)
+    msg.send.add_contact(addr, uname, email)
     done: bool = False
     while not done:
         cmd: str = input("> ")
