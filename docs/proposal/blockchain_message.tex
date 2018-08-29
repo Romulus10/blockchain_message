@@ -1,4 +1,4 @@
-\documentclass[]{report}
+\documentclass[titlepage]{report}
 
 \usepackage[toc,page]{appendix}
 \usepackage{glossaries}
@@ -13,8 +13,9 @@
 \makeindex
 \addbibresource{bib.bib}
 
-\title{A Peer-to-Peer Content-Sharing Service Built on the Ethereum Blockchain\\\large CMPS 490 Project Proposal}
+\title{A Peer-to-Peer Content-Sharing Service Built on the Ethereum Blockchain\\\large Extended Abstract}
 \author{Sean T. Batzel\\Dr. Bishop}
+\date{\today\endgraf\bigskip Submitted in partial fulfillment of the requirements of CMPS/IT 490 --- Computer Projects}
 
 \begin{document}
 \maketitle
@@ -39,9 +40,9 @@ Consider two conversation partners, Alice and Bob. Bob sends a text message to A
     \caption{The Ethereum virtual machine functions by distributing bytecode to a number of connected computers, which then execute the given bytecode.}
 \end{figure}
 
-On the technical end, this project will ostensibly consist of a database module which will allow us to store content client-side, a cryptographical module using GPG\index{GPG}, and a blockchain\index{blockchain} module which will allow us to communciate directly with a local version of Ethereum through web3. These functions will all be internal, with a set of functions exposed to the end-user for interacting with the project as a library.\\
+On the technical end, this project will ostensibly consist of a database module which will allow us to store content client-side, a cryptographical module using Python's RSA\index{RSA} module, and a blockchain\index{blockchain} module which will allow us to communciate directly with a local version of Ethereum through web3. These functions will all be internal, with a set of functions exposed to the end-user for interacting with the project as a library.\\
 
-I intend for this project to be a proof-of-concept library written in Python\index{Python}. It will require a Python\index{Python} version greater than 3.6, as well as the \gls{web3}\index{web3} implementation for Python\index{Python}.\cite{web3-py} For testing purposes it will also require a \gls{test RPC}\index{test RPC} installed locally in order to test and debug the \gls{smart contract}s\index{smart contract} associated with the application. This smart contract will require a Solidity compiler to be installed in order to produce the compiled bytecode for the contract. In order to maintain the privacy of the messages sent to the blockchain, the library will make direct use of GNU Privacy Guard\index{GPG} and RSA\index{RSA} keypairs to send encrypted messages between users. The test RPC\index{test RPC} I plan on using (Ganache\index{ganache}) will require that the latest version of Node.js\index{Node} installed on the local system. The process of deploying the contract\index{smart contract} and interacting with it will be handled entirely by Python\index{Python} scripts, and in order to deploy the contract\index{smart contract} to the Ethereum\index{Ethereum} \gls{mainnet}\index{mainnet} an RPC pointed at the Ethereum Foundation's official blockchain will be necessary. All of these may be easily installed on most operating systems.\\
+I intend for this project to be a proof-of-concept library written in Python\index{Python}. It will require a Python\index{Python} version greater than 3.6, as well as the \gls{web3}\index{web3} implementation for Python\index{Python}.\cite{web3-py} For testing purposes it will also require a \gls{test RPC}\index{test RPC} installed locally in order to test and debug the \gls{smart contract}s\index{smart contract} associated with the application. This smart contract will require a Solidity compiler to be installed in order to produce the compiled bytecode for the contract. In order to maintain the privacy of the messages sent to the blockchain, the library will make direct use of RSA\index{RSA} keypairs to send encrypted messages between users. The test RPC\index{test RPC} I plan on using (Ganache\index{ganache}) will require that the latest version of Node.js\index{Node} installed on the local system. The process of deploying the contract\index{smart contract} and interacting with it will be handled entirely by Python\index{Python} scripts, and in order to deploy the contract\index{smart contract} to the Ethereum\index{Ethereum} \gls{mainnet}\index{mainnet} an RPC pointed at the Ethereum Foundation's official blockchain will be necessary. All of these may be easily installed on most operating systems.\\
 
 Given the time available to me, I am confident that I can implement the core functionality of the client. The database\index{database} and cryptographical\index{cryptographical} modules will be comparatively simple to implement. I am anticipating that the actual process of writing the smart contract\index{smart contract} to handle transaction\index{transaction} processing will be the largest challenge. In terms of goals I would like to reach but which may be more challenging, the current project uses a full local Ethereum\index{Ethereum} node to communicate with the network. The storage requirement for a full node is O(n) where n is the number of transactions\index{transaction} in the blockchain\index{blockchain}. This is impractical for devices with smaller available storage, so the implementation of a \gls{light client}\index{light client} (with storage requirement O(log(n))) integrated into the system would simplify setup and reduce resource usage considerably. I also hope to implement an efficient enough smart contract to optimize the gas usage of the system and thereby retain reasonable transaction fees for users of the service.
 

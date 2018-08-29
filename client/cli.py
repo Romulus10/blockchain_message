@@ -65,6 +65,7 @@ def main():
     email = input("email > ")
     msg = BlockchainMessage(uname)
     msg.send.add_contact(addr, uname, email)
+    msg.recv.add_contact(addr, uname, email)
     done: bool = False
     while not done:
         cmd: str = input("> ")
