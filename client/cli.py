@@ -64,8 +64,8 @@ def main():
     uname = input("uname > ")
     email = input("email > ")
     msg = BlockchainMessage(uname)
-    msg.send.add_contact(addr, uname, email)
-    msg.recv.add_contact(addr, uname, email)
+    msg.send.add_contact(addr, uname, email)  # TODO These two lines are pretty hacky.
+    msg.recv.add_contact(addr, uname, email)  # TODO Find a better way to handle contact identification.
     done: bool = False
     while not done:
         cmd: str = input("> ")

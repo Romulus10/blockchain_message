@@ -63,6 +63,6 @@ class Blockchain(object):
                     if z.uname == y[2]:
                         c = z
                 if c is None:
-                    c = Contact(y[2], '', '')
+                    c = Contact('', y[2], '')
                 messages.append(Message(int(y[0]), user, c, y[3], y[4]))
         return messages

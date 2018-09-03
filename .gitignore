@@ -58,3 +58,4 @@ blockchain_message/src/__pycache__/
 test/.blkchnmsg/
 test/.keys/
 test/__pycache__/
+.keys/
