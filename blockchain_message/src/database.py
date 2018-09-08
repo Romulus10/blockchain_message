@@ -146,3 +146,9 @@ class Database(object):
             if x.id is msgid:
                 return x
         raise MessageNotFoundException("Message {} not found.".format(msgid))
+
+    def message_index(self):
+        """
+        :return:
+        """
+        return self.__max_msgid()
