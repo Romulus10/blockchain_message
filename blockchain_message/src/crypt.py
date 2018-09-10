@@ -57,7 +57,7 @@ class Crypt(object):
         :param recipient:
         :return:
         """
-        return rsa.encrypt(message.encode('utf8'),
+        return rsa.encrypt(message.encode('latin-1'),
                            rsa.PublicKey.load_pkcs1(recipient.key))
 
     def decrypt(self, message: bytes) -> str:
@@ -67,14 +67,14 @@ class Crypt(object):
         :param message:
         :return:
         """
-        return rsa.decrypt(message, self.key).decode('utf8')
+        return rsa.decrypt(message, self.key).decode('latin-1')
 
     def sign(self, message: str) -> str:
         """
         :param message:
         :return:
         """
-        return rsa.sign(message.encode('utf8'), self.key, 'SHA-1')
+        return rsa.sign(message.encode('latin-1'), self.key, 'SHA-1')
 
     @staticmethod
     def verify(message: str, signature: str, sender: Contact) -> str:
@@ -84,8 +84,8 @@ class Crypt(object):
         :param sender:
         :return:
         """
-        m = bytes(bytes(message, 'utf8').decode('utf8'), 'utf8')
-        s = bytes(bytes(signature, 'utf8').decode('utf8'), 'utf8')
+        m = bytes(bytes(message, 'latin-1').decode('latin-1'), 'latin-1')
+        s = bytes(bytes(signature, 'latin-1').decode('latin-1'), 'latin-1')
         return rsa.verify(m, s, rsa.PublicKey.load_pkcs1(sender.key))
 
     @staticmethod

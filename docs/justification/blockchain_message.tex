@@ -1,0 +1,49 @@
+\documentclass[titlepage]{report}
+
+\usepackage[toc,page]{appendix}
+\usepackage{glossaries}
+\usepackage{makeidx}
+\usepackage{biblatex}
+\usepackage{graphicx}
+\usepackage{float}
+
+\makeglossaries{}
+\loadglsentries{entries}
+
+\makeindex
+\addbibresource{bib.bib}
+
+\title{blockchain\_message - A Peer-to-Peer Content-Sharing Service Built on the Ethereum Blockchain\\\large Justification \& Feasibility}
+\author{Sean T. Batzel\\Dr.\ Bishop}
+\date{\today\endgraf\bigskip Submitted in partial fulfillment of the requirements of CMPS/IT 490 --- Computer Projects}
+
+\begin{document}
+\maketitle
+
+\nocite{*}
+
+\section{Justification}
+The goal in writing this system is to present a substantial proof for the general-purpose utility of the Ethereum\index{Ethereum} \gls{smart contract}\index{smart contract} system when leveraged by a dedicated client. It also attempts to prove a reasonable feasibility for the possibility of fully-decentralized\index{decentralized} correspondence.
+
+The concept of a \gls{blockchain}\index{blockchain} itself has gained serious traction recently, with a number of concerns online that Bitcoin\index{Bitcoin}, Ethereum\index{Ethereum} and other cryptocurrency platforms are ``dead''\footnote{A quick look at Google results for ``Ethereum\index{Ethereum} dead'' returns a number of results, mostly market analyses claiming that the investment vehicle has become irrelevant.} since the price of the connected cryptocurrencies has dropped so rapidly in recent months. Though Ethereum\index{Ethereum} has gained a considerable following for its internal commodity Ether\index{Ether} (ETH), the original purpose of the network was as a ``world computer'' on which programs (called ``smart contracts''\index{smart contract}) could be run in a manner similar to the time-sharing done on early computers.
+
+The decentralization\index{decentralization} of the Ethereum\index{Ethereum} environment also presents a driving factor for the importance of this system. The vast majority of applications intended for sending content or, more generally, information between two endpoints rely heavily on the existence of a centralized server infrastructure where said information resides until such time as the body owning the server decides it should be purged. While it exists on the server, it can often be considered as transitively belonging to the organization to which the server belongs.\footnote{An End User License Agreement for most services will often outline the data rights of both the licensor and the licensee. Many of these may include language to allow use of data for various purposes. Refer to such articles as Singer, 2018.\cite{singer}} Worrying about such things may bear the appearance of fear-mongering or needless distrust, but there are genuine concerns for the privacy and safety of personal data. This service provides a simple and relevant example for how Ethereum\index{Ethereum} may be used to contribute to the improvement of straightforward data safety based on the general principles of how the blockchain\index{blockchain} paradigm functions.
+
+We can provide strong evidence for the cryptographical security of the blockchain\index{blockchain} paradigm as set forth in the original whitepaper for Bitcoin\index{Bitcoin}.\cite{nakamoto} Data embedded in the blockchain\index{blockchain} is proposed by a single \textit{\gls{node}}\index{node}. This node contains a full copy of the entire ledger for the ecosystem (such as Bitcoin\index{Bitcoin} or Ethereum\index{Ethereum}) which is distributed to all computers running nodes\index{node} along with a cryptographic justification for the adoption of that as the reality of the blockchain\index{blockchain}. Under the current consensus model, these justifications are exhaustively verified and proven by \textit{\glspl{miner}}\index{miner} which continuously prove the justifications for each new block of transactions introduced to the blockchain\index{blockchain}. This becomes relevant to a content-sharing framework in that every message committed to the network is etched permanently in the collective memory of the "world computer". As long as Ethereum\index{Ethereum} functions as set forth in the yellow paper\cite{yellowpaper}, these messages are unable to be removed or changed.
+
+In its current conception, blockchain\_message uses RSA public-key encryption in order to supplement the data and identity security of the messages sent through the application. The established purpose and process by and through which RSA\index{RSA} encryption is used creates an implicit identity network by which encryption keys can be used to verify the identity of their owner through a number of signatures\index{signature} affixed to the key. These signatures\index{signature} act as a personal `seal of approval' on the encryption key stating that payloads sent with this key's signature\index{signature} are verified as having come from the person claiming to send them. By collecting a number of signatures to a user's public key, blockchain\_message not only deals with hiding the content of messages from anyone who might intercept them, but also allows user's greater assurance in the identity of the people they come into contact with through blockchain\_message.
+
+Additionally, this project seeks to investigate the computing capabilities that the Ethereum network is built on and add another use case to the argument for the adoption of solutions such as Ethereum\index{Ethereum}.
+
+\section{Feasibility}
+In the past few months, the general structure for the library functions that will handle the heavy lifting for the system and the smart contract that will handle data storage and query have been constructed. Simple data storage has already been demonstrated using Ethereum\index{Ethereum}\cite{simple-storage}, and the system will build only slightly on top of the principles used in that smart contract\index{smart contract}. A number of sophisticated tools already exist for working with the network through the Python\index{Python} programming language, which I'll be using to interact directly with the smart contract.\cite{web3-py} A similar project was undertaken in January of 2018 which explored the possibility of using the \gls{blockchain}\index{blockchain} as a rudimentary database for small key-data pairs, and found that in practice it could, in theory, be done. Work outlining the process and the type of required smart contract was completed, though a working prototype was not created until the summer of 2018 when it was completed specifically for this project.\cite{yadql}
+
+Regarding the RSA\index{RSA} encryption portion of the project, such processes are well-established in communication. Using the RSA\index{RSA} module contained in the Python\index{Python} standard library, once the basic functionality is in place it should be fairly straightforward to make the extension from plaintext payloads to encrypted payloads.
+
+In terms of the timeframe, as of the end of the summer the database module is complete and functioning. The blockchain send/receive functionality is in place, with a few anomalies to be addressed. I expect that these issues should be resolved entirely in the next month. I anticipate the cryptography module, once I ensure reliable behavior of the send/receive functions with plaintext, to be stable within two weeks of the send/receive functionality being implemented fully.
+
+\printindex
+\printglossaries{}
+\printbibliography{}
+
+\end{document}
