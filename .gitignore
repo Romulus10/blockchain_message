@@ -52,10 +52,7 @@ blockchain_message/source/_static/
 blockchain_message/source/_templates/
 test/__pycache__/
 venv/
-/client/.blkchnmsg/
-/client/.keys/
 blockchain_message/src/__pycache__/
-test/.blkchnmsg/
-test/.keys/
-test/__pycache__/
 .keys/
+/contract/build/
+.blkchnmsg/
