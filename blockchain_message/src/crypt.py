@@ -86,6 +86,8 @@ class Crypt(object):
         """
         m = bytes(bytes(message, 'latin-1').decode('latin-1'), 'latin-1')
         s = bytes(bytes(signature, 'latin-1').decode('latin-1'), 'latin-1')
+        print(m)
+        print(s)
         return rsa.verify(m, s, rsa.PublicKey.load_pkcs1(sender.key))
 
     @staticmethod
