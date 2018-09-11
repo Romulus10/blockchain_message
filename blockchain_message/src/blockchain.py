@@ -64,5 +64,5 @@ class Blockchain(object):
                         c = z
                 if c is None:
                     c = Contact('', y[2], '')
-                messages.append(Message(int(y[0]), user, c, y[3], y[4]))
+                messages.append(Message(int(y[0]), user, c, y[3], y[4], False))
         return messages

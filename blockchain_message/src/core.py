@@ -22,7 +22,7 @@ class Message(object):
     """
     """
 
-    def __init__(self, msg_id: int, to: Contact, fr: Contact, text: str, sign: str):
+    def __init__(self, msg_id: int, to: Contact, fr: Contact, text: str, sign: str, verified: bool):
         """
         :param msg_id:
         :param to:
@@ -34,3 +34,4 @@ class Message(object):
         self.fr = fr
         self.text = text
         self.sign = sign
+        self.verified = verified

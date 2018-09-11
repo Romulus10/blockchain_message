@@ -109,7 +109,7 @@ class Database(object):
                 return True
         return False
 
-    def insert(self, to: Contact, fr: Contact, text: str, sign: str) -> Message:
+    def insert(self, to: Contact, fr: Contact, text: str, sign: str, verified: bool) -> Message:
         """
         Produces a message object and adds it to the internal database.
 
@@ -117,9 +117,10 @@ class Database(object):
         :param fr:
         :param text:
         :param sign:
+        :param verified:
         :return:
         """
-        m = Message(self.__max_msgid() + 1, to, fr, text, sign)
+        m = Message(self.__max_msgid() + 1, to, fr, text, sign, verified)
         self.messages.append(m)
         self.__commit()
         return m

@@ -52,7 +52,8 @@ def read(msg: BlockchainMessage):
     :return:
     """
     for x in msg.recv.messages:
-        print("{0}: {1}".format(x.fr.uname, x.text))
+        v = ":)" if x.verified else ":("
+        print("{0} {1} -> {2}".format(x.fr.uname, v, x.text))
 
 
 def main():
