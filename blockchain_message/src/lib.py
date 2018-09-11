@@ -26,9 +26,9 @@ class BlockchainMessage(object):
         n = 0
         m = self.b.retrieve(self.recv.read_contact(uname), self.recv.message_index() + 1, self.recv.contacts)
         for g in m:
-            self.c.verify(g.text, g.sign, g.fr)
+            # self.c.verify(g.text, g.sign, g.fr)
             g.text = self.c.decrypt(bytes(g.text, 'latin-1'))
-            self.recv.insert(g.to, g.fr, g.text, g.sign)
+            self.recv.insert(g.to, g.fr, g.text, '')
             n += 1
         return n
 
