@@ -8,7 +8,6 @@ contract_interface = compiled['./contract/contracts/blockchain_message.sol:BlckC
 
 w3 = Web3(HTTPProvider("http://localhost:7545"))
 
-
 print(w3.eth.getBlock('latest').number)
 contract = w3.eth.contract(abi=contract_interface['abi'], bytecode=contract_interface['bin'])
 
