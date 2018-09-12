@@ -10,10 +10,12 @@ from blockchain_message.src.core import Message, Contact
 # noinspection PyUnresolvedReferences
 class Blockchain(object):
     """
+    Provides functions for interacting directly with the smart contract.
     """
 
     def __init__(self):
         """
+        Sets up Ethereum interaction variables and compiles the contract, allowing web3 to call functions directly.
         """
         with open('./.blkchnmsg/contract', 'r') as f:
             self.addr = f.read()
@@ -25,7 +27,8 @@ class Blockchain(object):
 
     def submit(self, message: Message):
         """
-        :param message:
+        Commits a transaction to the blockchain that enacts sending a message.
+        :param message: The message object being sent across Ethereum.
         """
         abi = self.contract_interface['abi']
         contract = self.w3.eth.contract(address=self.addr, abi=abi, ContractFactoryClass=ConciseContract)
@@ -42,7 +45,11 @@ class Blockchain(object):
 
     def retrieve(self, user: Contact, last_message: int, contact_list: List[Contact]) -> List[Message]:
         """
-        :return:
+
+        :param user: The user to download new messages for.
+        :param last_message: The last message ID that the local database was aware of.
+        :param contact_list: The current database of known contacts.
+        :return: The list of all new messages.
         """
         abi = self.contract_interface['abi']
         contract = self.w3.eth.contract(address=self.addr, abi=abi)

@@ -7,13 +7,13 @@ from blockchain_message.src.database import Database
 
 class BlockchainMessage(object):
     """
-
+    Wrapper functions that abstract access to the library itself.
     """
 
     def __init__(self, uname: str):
         """
-
-        :param uname:
+        Application constructor that creates new objects for the system's functionality.
+        :param uname: The currently logged-in user's unique username.
         """
         self.uname = uname
         self.recv = Database()
@@ -23,6 +23,8 @@ class BlockchainMessage(object):
 
     def pull_messages(self, uname: str) -> int:
         """
+        Downloads all new messages for the current user from the smart contract.
+        :param uname: The currently logged-in user's unique username.
         :return: The number of new messages returned from the blockchain.
         """
         n = 0
@@ -40,9 +42,9 @@ class BlockchainMessage(object):
 
     def send_message(self, uname: str, text: str):
         """
-        :param uname:
-        :param text:
-        :return:
+        Encode and upload a new message to be sent to a contact.
+        :param uname: The username for the intended recipient of the message.
+        :param text: The text of the message being sent.
         """
         t_c = self.c.encrypt(text, self.recv.read_contact(uname)).decode('latin-1')
         t_s = self.c.sign(str(t_c))

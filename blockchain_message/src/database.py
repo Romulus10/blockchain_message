@@ -6,26 +6,26 @@ from blockchain_message.src.core import Contact, Message
 
 class MessageNotFoundException(Exception):
     """
-
+    Thrown when a message matching an ID does not exist in the database.
     """
 
     def __init__(self, message):
         """
-
-        :param message:
+        Default constructor.
+        :param message: The text of the exception detail.
         """
         super().__init__(message)
 
 
 class ContactNotFoundException(Exception):
     """
-
+    Thrown when a Contact database query fails.
     """
 
     def __init__(self, message):
         """
-
-        :param message:
+        Default constructor.
+        :param message: Exception detail text.
         """
         super().__init__(message)
 
