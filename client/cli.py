@@ -13,7 +13,7 @@ __author__ = "Sean Batzel"
 __email__ = "romulus108@protonmail.com"
 __license__ = "GPL"
 
-from blockchain_message.src.lib import BlockchainMessage
+from blockchain_message import BlockchainMessage
 
 
 def contacts(msg: BlockchainMessage):
