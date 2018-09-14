@@ -18,7 +18,6 @@ from blockchain_message import BlockchainMessage
 
 def contacts(msg: BlockchainMessage):
     """
-    :return:
     """
     for x in msg.send.contacts:
         print(x.uname)
@@ -28,7 +27,6 @@ def check(msg: BlockchainMessage, uname: str):
     """
     :param msg:
     :param uname:
-    :return:
     """
     n = msg.pull_messages(uname)
     print("{0} new messages.".format(n))
@@ -38,7 +36,6 @@ def write(msg: BlockchainMessage):
     """
 
     :param msg:
-    :return:
     """
     uname = input("send to: ")
     text = input("message text: ")
@@ -49,24 +46,35 @@ def read(msg: BlockchainMessage):
     """
 
     :param msg:
-    :return:
     """
     for x in msg.recv.messages:
         v = ":)" if x.verified else ":("
         print("{0} {1} -> {2}".format(x.fr.uname, v, x.text))
 
 
+def add_contact(msg: BlockchainMessage):
+    """
+
+    :param msg:
+    """
+    print("Adding a new contact:")
+    addr = input("addr: ")
+    uname = input("uname: ")
+    email = input("email: ")
+    msg.send.add_contact(addr, uname, email)
+    msg.recv.add_contact(addr, uname, email)
+
+
 def main():
     """
 
-    :return:
     """
     addr = input("addr > ")
     uname = input("uname > ")
     email = input("email > ")
     msg = BlockchainMessage(uname)
-    msg.send.add_contact(addr, uname, email)  # TODO These two lines are pretty hacky.
-    msg.recv.add_contact(addr, uname, email)  # TODO Find a better way to handle contact identification.
+    msg.send.add_contact(addr, uname, email)
+    msg.recv.add_contact(addr, uname, email)
     done: bool = False
     while not done:
         cmd: str = input("> ")
@@ -78,6 +86,8 @@ def main():
             read(msg)
         if cmd == "contacts":
             contacts(msg)
+        if cmd == "add_contact":
+            add_contact(msg)
         if cmd == "exit":
             done = True
 
