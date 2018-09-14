@@ -52,7 +52,7 @@ def read(msg: BlockchainMessage):
         print("{0} {1} -> {2}".format(x.fr.uname, v, x.text))
 
 
-def add_contact(msg: BlockchainMessage):
+def new_contact(msg: BlockchainMessage):
     """
 
     :param msg:
@@ -86,8 +86,8 @@ def main():
             read(msg)
         if cmd == "contacts":
             contacts(msg)
-        if cmd == "add_contact":
-            add_contact(msg)
+        if cmd == "new-contact":
+            new_contact(msg)
         if cmd == "exit":
             done = True
 
