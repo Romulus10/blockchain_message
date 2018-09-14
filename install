@@ -1,5 +1,10 @@
 echo 'This version of the install script only works on Ubuntu. If you know what you're doing, you can modify it to work under any Linux distribution.'
 
+if [ "$EUID" -ne 0 ]
+  then echo "Please run as root - 'sudo install'"
+  exit
+fi
+
 hash snap 2>/dev/null || {
     echo >&2 "snap is required, but wasn't found. Aborting."; exit 1;
 }
