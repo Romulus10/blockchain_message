@@ -1,0 +1,78 @@
+\documentclass[titlepage]{report}
+
+\usepackage[toc,page]{appendix}
+\usepackage{glossaries}
+\usepackage{makeidx}
+\usepackage{biblatex}
+\usepackage{graphicx}
+\usepackage{float}
+
+\makeglossaries{}
+\loadglsentries{entries}
+
+\makeindex
+\addbibresource{bib.bib}
+
+\title{blockchain\_message: A Peer-to-Peer Content-Sharing Service Built on the Ethereum Blockchain\\\large System Requirements Specification}
+\author{Sean T. Batzel\\Dr.\ Bishop}
+\date{\today\endgraf\bigskip Submitted in partial fulfillment of the requirements of CMPS/IT 490 --- Computer Projects}
+
+\begin{document}
+\maketitle
+
+\nocite{*}
+
+\section{Introduction}
+
+\section{System Model}
+
+\section{Functional Requirements}
+\subsection{Features Overview}
+\subsection{Security and Privacy}
+
+\section{User Interface Specification}
+The UI will have three levels during development, starting with a command-line interface.
+
+\subsection{Command-Line Interface}
+The CLI will accept a few simple commands for interacting with the blockchain\_message system. On running the program, you will be met by a login screen to prompt for a user address, a username, and an email address. These three elements will be used to identify you to the network while exchanging messages.
+The interface commands are as follows:
+
+\texttt{write}
+
+\texttt{check}
+
+\texttt{read}
+
+\texttt{new-contact}
+
+\texttt{exit}
+
+\subsection{HTML5 Interface}
+The HTML5-based interface will expose all of the same functionality as the command-line interface.
+
+\subsection{Android Application}
+
+\section{Non-functional Requirements}
+\subsection{Software Requirements}
+The first version of the blockchain\_message command-line interface is designed to run on Linux, but with tweaking can be made to run on any system with Python installed. 
+
+The system requires that an Ethereum node be accessible, which can be either set up on the local machine through Parity or Geth or exposed through a service such as Infura.io.
+
+\subsection{Hardware Requirements}
+\paragraph{If Using a Local Ethereum Node}
+If Parity, Geth, or a similar Ethereum node is running on the local machine, blockchain\_message requires available resources for both the appliation itself and the Ethereum node. The entire Ethereum blockchain will require approximately 300 gigabytes of disk space and 4 gigabyte of available memory.
+
+\paragraph{blockchain\_message Requirements}
+The blockchain\_message process itself will require 250 megabytes of available disk space.
+
+\subsection{Product Standards}
+\subsection{Process Standards}
+
+\section{System Evolution}
+\subsection{Cross-Platform Support}
+
+\printindex
+\printglossaries{}
+\printbibliography{}
+
+\end{document}
