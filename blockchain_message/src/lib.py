@@ -30,12 +30,12 @@ class BlockchainMessage(object):
         n = 0
         m = self.b.retrieve(self.recv.read_contact(uname), self.recv.message_index() + 1, self.recv.contacts)
         for g in m:
+            g.text = self.c.decrypt(bytes(g.text, 'latin-1'))
             try:
                 self.c.verify(g.text, g.sign, g.fr)
                 v = True
             except rsa.pkcs1.VerificationError:
                 v = False
-            g.text = self.c.decrypt(bytes(g.text, 'latin-1'))
             self.recv.insert(g.to, g.fr, g.text, '', v)
             n += 1
         return n
@@ -46,7 +46,7 @@ class BlockchainMessage(object):
         :param uname: The username for the intended recipient of the message.
         :param text: The text of the message being sent.
         """
+        t_s = self.c.sign(str(text))
         t_c = self.c.encrypt(text, self.recv.read_contact(uname)).decode('latin-1')
-        t_s = self.c.sign(str(t_c))
         m = self.send.insert(self.send.read_contact(uname), self.send.read_contact(self.uname), t_c, t_s, True)
         self.b.submit(m)

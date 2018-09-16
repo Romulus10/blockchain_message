@@ -24,4 +24,4 @@ class TestCrypt(unittest.TestCase):
         con = Contact("00001", "other", "other@test.com")
         message = "This is a test."
         signature = c.sign(message)
-        self.assertTrue(c.verify(message, signature, con))
+        c.verify(message, signature, con)

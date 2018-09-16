@@ -1,5 +1,4 @@
 """Provides OpenPGP wrappers for blockchain_message."""
-
 import rsa
 
 from blockchain_message.src.core import Contact
@@ -75,7 +74,7 @@ class Crypt(object):
         :param sender: The contact who the message claims to be sent by.
         """
         m = bytes(bytes(message, 'latin-1').decode('latin-1'), 'latin-1')
-        s = bytes(bytes(signature, 'latin-1').decode('latin-1'), 'latin-1')
+        s = bytes(signature, 'latin-1')
         rsa.verify(m, s, rsa.PublicKey.load_pkcs1(sender.key))
 
     @staticmethod
@@ -84,7 +83,7 @@ class Crypt(object):
         Produces a new keypair for encryption.
         :param uname: The user's chosen username - this will be used as the key's filename.
         """
-        (pubkey, privkey) = rsa.newkeys(2048, poolsize=8)
+        (pubkey, privkey) = rsa.newkeys(4096, poolsize=8)
         with open('./.keys/{0}.priv'.format(uname), 'wb') as f:
             f.write(privkey.save_pkcs1('PEM'))
         with open('./.keys/{0}.pub'.format(uname), 'wb') as f:
