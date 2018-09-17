@@ -1,5 +1,7 @@
 #!/bin/bash
 
 source ./venv/bin/activate
-python -m client.cli
+pushd ./client
+python -m cli
+popd
 deactivate

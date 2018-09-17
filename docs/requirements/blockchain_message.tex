@@ -129,7 +129,7 @@ websockets
 If you're using a node\index{node} set up on another system, ignore this paragraph. If Parity, Geth, or a similar Ethereum node is running on the local machine, blockchain\_message requires available resources for both the appliation itself and the Ethereum node. The entire Ethereum blockchain\index{blockchain} will require approximately 300 gigabytes of disk space and 4 gigabyte of available memory. Usually, it's preferable to have 2 CPU cores for blockchain\index{blockchain} operations
 
 \subsubsection{blockchain\_message Requirements}
-The blockchain\_message process itself will require a safe minimum of 250 megabytes of available disk space.
+The blockchain\_message process itself will require a safe minimum of 250 megabytes of available disk space and 50 megabytes of available memory.
 
 \subsection{Product Standards}
 \subsubsection{Data Representation}
@@ -141,6 +141,7 @@ A \texttt{Message} consists of a unique identifying number, the user address of 
 
 \subsubsection{User Manual}
 \subsubsection{Programming Manual}
+The documentation will be generated from standard Python docstrings by the Sphinx utility for Python.
 
 \subsection{Process Standards}
 \subsubsection{Code Quality/Convention}
@@ -158,11 +159,13 @@ A key set of assumptions must be made and proven in order for blockchain\_messag
 \end{itemize}
 
 \subsection{RSA Web-of-Trust}
+RSA's keysigning utilities will eventually be leveraged so that a user of the system can add a new contact and provably verify that that person is who they claim to be.
 
 \subsection{Cross-Platform CLI}
-At the time of writing, the CLI is explicitly written for easy installation and running under a Linux environment.
+At the time of writing, the CLI is explicitly written for easy installation and running under an Ubuntu Linux environment.
 
 \subsection{HTML5 Interface}
+The HTML5 interface will run on a local server with
 
 \subsection{Android Application}
 
