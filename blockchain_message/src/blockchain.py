@@ -38,7 +38,8 @@ class Blockchain(object):
         fr_user = message.fr.uname
         msg_text = message.text
         sign = message.sign
-        message_body = ('{0}♣{1}♣{2}♣{3}♣{4}'.format(msg_id, to_user, fr_user, msg_text, sign)).encode('utf8')
+        message_body = ('{0}♣{1}♣{2}♣{3}♣{4}'.format(msg_id, to_user, fr_user, msg_text, sign))
+        message_body.encode('utf8')
 
         to_user = int(message.to.address)
         contract.store(msg_id, to_user, message_body, transact={'from': self.w3.eth.accounts[0]})

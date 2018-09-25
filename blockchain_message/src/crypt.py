@@ -73,6 +73,7 @@ class Crypt(object):
         :param signature: The signature to verify.
         :param sender: The contact who the message claims to be sent by.
         """
+        signature.replace("\\\\", "\\")
         m = bytes(bytes(message, 'latin-1').decode('latin-1'), 'latin-1')
         s = bytes(signature, 'latin-1')
         rsa.verify(m, s, rsa.PublicKey.load_pkcs1(sender.key))

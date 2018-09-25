@@ -25,6 +25,7 @@
 \nocite{*}
 
 \section{Introduction}
+A major point of concern in computing in general recently has been privacy. What are companies doing with our data to leverage us as assets? If I send an email or a text message, or even make a phone call, who is privy to what's said in those communications? Can we conclusively trust the services we use? blockchain\_message is a platform which utilizes the new and growing blockchain model through Ethereum, along with time-tested encryption processes to allow for the transmission of information securely and directly, using a decentralized network to process the messages rather than a single entity. Using Ethereum, the system is designed to make messages as difficult to intercept, modify, delete, or otherwise disrupt as possible, working to make your communications as secure as they can be.
 
 \pagebreak
 \section{System Model}
@@ -156,18 +157,20 @@ A key set of assumptions must be made and proven in order for blockchain\_messag
 \begin{itemize}
 \item The Ethereum blockchain may be used to store arbitrary data in a structured format.
 \item RSA Encryption allows for identity verification through key signing.
+\item Ethereum transactions are conclusively 
 \end{itemize}
 
 \subsection{RSA Web-of-Trust}
 RSA's keysigning utilities will eventually be leveraged so that a user of the system can add a new contact and provably verify that that person is who they claim to be.
 
 \subsection{Cross-Platform CLI}
-At the time of writing, the CLI is explicitly written for easy installation and running under an Ubuntu Linux environment.
+At the time of writing, the CLI is explicitly written for easy installation and running under an Ubuntu Linux environment. Eventually, the existing installation scripts will be redesigned to install dependencies in a distribution-agnostic manner, and scripts (.ps1 or .bat) will be written to allow for simpler running on Windows.
 
 \subsection{HTML5 Interface}
-The HTML5 interface will run on a local server with
+The HTML5 interface will run on a local server with a web interface exposed on a specified port and using the blockchain\_message library as the bulk of the application logic.
 
 \subsection{Android Application}
+As a major stretch goal, this project will include an eventual Android application that leverages Ethereum's Light Client Specification to run the entire environment locally on a smartphone. Rather than loading the entire blockchain, a Light Client reads only transactions directly pertaining to its own loaded accounts, therefore reducing the amount of disk space needed and allowing the necessary transactions to be sent to the chain without relying on an external system to host the Ethereum node.
 
 \pagebreak
 
