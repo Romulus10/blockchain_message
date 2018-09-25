@@ -57,9 +57,6 @@ class Blockchain(object):
 
         result = contract.functions.retrieve(int(user.address), last_message).call()
 
-        result = bytes(result, 'utf8')
-        result = result.decode('utf8')
-
         messages = list()
 
         res_list = result.split('♠')

@@ -23,5 +23,5 @@ class TestCrypt(unittest.TestCase):
         c = Crypt("other")
         con = Contact("00001", "other", "other@test.com")
         message = "This is a test."
-        signature = c.sign(message)
+        signature = str(c.sign(message))
         c.verify(message, signature, con)
