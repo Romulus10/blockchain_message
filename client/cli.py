@@ -16,6 +16,8 @@ from blockchain_message import BlockchainMessage
 
 def contacts(msg: BlockchainMessage):
     """
+    Print the list of all registered contacts.
+    :param msg: A BlockchainMessage object.
     """
     for x in msg.send.contacts:
         print(x.uname)
@@ -23,8 +25,9 @@ def contacts(msg: BlockchainMessage):
 
 def check(msg: BlockchainMessage, uname: str):
     """
-    :param msg:
-    :param uname:
+    Downloads all new messages for the current user.
+    :param msg: A BlockchainMessage object.
+    :param uname: The current user's unique username.
     """
     n = msg.pull_messages(uname)
     print("{0} new messages.".format(n))
@@ -32,8 +35,8 @@ def check(msg: BlockchainMessage, uname: str):
 
 def write(msg: BlockchainMessage):
     """
-
-    :param msg:
+    Compose a new message.
+    :param msg: A BlockchainMessage object.
     """
     uname = input("send to: ")
     text = input("message text: ")
@@ -42,8 +45,8 @@ def write(msg: BlockchainMessage):
 
 def read(msg: BlockchainMessage):
     """
-
-    :param msg:
+    Read all messages the user has received.
+    :param msg: A BlockchainMessage object.
     """
     for x in msg.recv.messages:
         v = ":)" if x.verified else ":("
@@ -52,8 +55,8 @@ def read(msg: BlockchainMessage):
 
 def new_contact(msg: BlockchainMessage):
     """
-
-    :param msg:
+    Creates a new contact.
+    :param msg: A BlockchainMessage object.
     """
     print("Adding a new contact:")
     addr = input("addr: ")
@@ -65,7 +68,7 @@ def new_contact(msg: BlockchainMessage):
 
 def main():
     """
-
+    Sets up the application and begins the command interpreter.
     """
     addr = input("addr > ")
     uname = input("uname > ")
