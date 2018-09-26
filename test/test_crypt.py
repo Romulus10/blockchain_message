@@ -7,6 +7,7 @@ class TestCrypt(unittest.TestCase):
     def test_encrypt(self):
         c = Crypt("test")
         con = Contact("00000", "test", "test@test.com")
+        cipher = c.encrypt("This is a test.", con)
 
     def test_decrypt(self):
         c = Crypt("test")

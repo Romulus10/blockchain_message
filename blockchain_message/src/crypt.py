@@ -46,8 +46,7 @@ class Crypt(object):
         :param recipient: The individual whose public key to encrypt with.
         :return: A bytestring representing the encrypted message.
         """
-        return rsa.encrypt(message.encode('latin-1'),
-                           rsa.PublicKey.load_pkcs1(recipient.key))
+        return rsa.encrypt(message.encode('utf8'), rsa.PublicKey.load_pkcs1(recipient.key))
 
     def decrypt(self, message: bytes) -> str:
         """
@@ -55,7 +54,7 @@ class Crypt(object):
         :param message: The message to decrypt.
         :return: A plaintext message decrypted from 'message'.
         """
-        return rsa.decrypt(message, self.key).decode('latin-1')
+        return rsa.decrypt(message, self.key).decode('utf8')
 
     def sign(self, message: str) -> str:
         """
@@ -63,7 +62,7 @@ class Crypt(object):
         :param message: The message to sign.
         :return: The cryptographic signature for the given payload.
         """
-        return rsa.sign(message.encode('latin-1'), self.key, 'SHA-1')
+        return rsa.sign(message.encode('utf8'), self.key, 'SHA-512').hex()
 
     @staticmethod
     def verify(message: str, signature: str, sender: Contact):
@@ -73,9 +72,7 @@ class Crypt(object):
         :param signature: The signature to verify.
         :param sender: The contact who the message claims to be sent by.
         """
-        m = bytes(bytes(message, 'latin-1').decode('latin-1'), 'latin-1')
-        s = bytes(signature, 'latin-1')
-        rsa.verify(m, s, rsa.PublicKey.load_pkcs1(sender.key))
+        rsa.verify(message.encode('utf8'), bytes.fromhex(signature), rsa.PublicKey.load_pkcs1(sender.key))
 
     @staticmethod
     def generate_key(uname: str):
