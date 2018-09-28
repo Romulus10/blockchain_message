@@ -149,7 +149,7 @@ class Database(object):
                 return x
         raise MessageNotFoundException("Message {} not found.".format(msgid))
 
-    def message_index(self):
+    def message_index(self) -> int:
         """
         :return:
         """
