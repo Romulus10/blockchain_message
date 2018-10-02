@@ -69,8 +69,8 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
         }
         if (shouldShowRequestPermissionRationale(READ_CONTACTS)) {
             Snackbar.make(addr, R.string.permission_rationale, Snackbar.LENGTH_INDEFINITE)
-                    .setAction(android.R.string.ok,
-                            { requestPermissions(arrayOf(READ_CONTACTS), REQUEST_READ_CONTACTS) })
+                    .setAction(android.R.string.ok
+                    ) { requestPermissions(arrayOf(READ_CONTACTS), REQUEST_READ_CONTACTS) }
         } else {
             requestPermissions(arrayOf(READ_CONTACTS), REQUEST_READ_CONTACTS)
         }
@@ -105,41 +105,13 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
         password.error = null
 
         // Store values at the time of the login attempt.
-        val emailStr = addr.text.toString()
+        val addrStr = addr.text.toString()
+        val unameStr = uname.text.toString()
+        val emailAddrStr = email.text.toString()
         val passwordStr = password.text.toString()
 
         var cancel = false
         var focusView: View? = null
-
-        // Check for a valid password, if the user entered one.
-        if (!TextUtils.isEmpty(passwordStr) && !isPasswordValid(passwordStr)) {
-            password.error = getString(R.string.error_invalid_password)
-            focusView = password
-            cancel = true
-        }
-
-        // Check for a valid email address.
-        if (TextUtils.isEmpty(emailStr)) {
-            addr.error = getString(R.string.error_field_required)
-            focusView = addr
-            cancel = true
-        } else if (!isEmailValid(emailStr)) {
-            addr.error = getString(R.string.error_invalid_email)
-            focusView = addr
-            cancel = true
-        }
-
-        if (cancel) {
-            // There was an error; don't attempt login and focus the first
-            // form field with an error.
-            focusView?.requestFocus()
-        } else {
-            // Show a progress spinner, and kick off a background task to
-            // perform the user login attempt.
-            showProgress(true)
-            mAuthTask = UserLoginTask(emailStr, passwordStr)
-            mAuthTask!!.execute(null as Void?)
-        }
     }
 
     private fun isEmailValid(email: String): Boolean {

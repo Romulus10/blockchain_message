@@ -9,9 +9,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
-import io.github.romulus10.blckchnmsg.dummy.DummyContent
-import io.github.romulus10.blckchnmsg.dummy.DummyContent.DummyItem
+import io.github.romulus10.blckchnmsg.blckchnmsg.data.Message
 
 /**
  * A fragment representing a list of Items.
@@ -44,7 +42,7 @@ class MessageFragment : Fragment() {
                     columnCount <= 1 -> LinearLayoutManager(context)
                     else -> GridLayoutManager(context, columnCount)
                 }
-                adapter = MyMessageRecyclerViewAdapter(DummyContent.ITEMS, listener)
+                adapter = MyMessageRecyclerViewAdapter(Message.ITEMS, listener)
             }
         }
         return view
@@ -77,7 +75,7 @@ class MessageFragment : Fragment() {
      */
     interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        fun onListFragmentInteraction(item: DummyItem?)
+        fun onListFragmentInteraction(item: Message?)
     }
 
     companion object {

@@ -8,17 +8,17 @@ import android.widget.TextView
 
 
 import io.github.romulus10.blckchnmsg.MessageFragment.OnListFragmentInteractionListener
-import io.github.romulus10.blckchnmsg.dummy.DummyContent.DummyItem
+import io.github.romulus10.blckchnmsg.blckchnmsg.data.Message
 
 import kotlinx.android.synthetic.main.fragment_message.view.*
 
 /**
- * [RecyclerView.Adapter] that can display a [DummyItem] and makes a call to the
+ * [RecyclerView.Adapter] that can display a [Message] and makes a call to the
  * specified [OnListFragmentInteractionListener].
  * TODO: Replace the implementation with code for your data type.
  */
 class MyMessageRecyclerViewAdapter(
-        private val mValues: List<DummyItem>,
+        private val mValues: MutableList<Message.Message>,
         private val mListener: OnListFragmentInteractionListener?)
     : RecyclerView.Adapter<MyMessageRecyclerViewAdapter.ViewHolder>() {
 
@@ -26,7 +26,7 @@ class MyMessageRecyclerViewAdapter(
 
     init {
         mOnClickListener = View.OnClickListener { v ->
-            val item = v.tag as DummyItem
+            val item = v.tag as Message
             // Notify the active callbacks interface (the activity, if the fragment is attached to
             // one) that an item has been selected.
             mListener?.onListFragmentInteraction(item)

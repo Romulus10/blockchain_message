@@ -8,6 +8,7 @@ import android.widget.TextView
 
 
 import io.github.romulus10.blckchnmsg.ContactFragment.OnListFragmentInteractionListener
+import io.github.romulus10.blckchnmsg.blckchnmsg.data.Contact
 import io.github.romulus10.blckchnmsg.dummy.DummyContent.DummyItem
 
 import kotlinx.android.synthetic.main.fragment_contact.view.*
@@ -18,7 +19,7 @@ import kotlinx.android.synthetic.main.fragment_contact.view.*
  * TODO: Replace the implementation with code for your data type.
  */
 class MyContactRecyclerViewAdapter(
-        private val mValues: List<DummyItem>,
+        private val mValues: MutableList<Contact.Contact>,
         private val mListener: OnListFragmentInteractionListener?)
     : RecyclerView.Adapter<MyContactRecyclerViewAdapter.ViewHolder>() {
 
@@ -26,7 +27,7 @@ class MyContactRecyclerViewAdapter(
 
     init {
         mOnClickListener = View.OnClickListener { v ->
-            val item = v.tag as DummyItem
+            val item = v.tag as Contact
             // Notify the active callbacks interface (the activity, if the fragment is attached to
             // one) that an item has been selected.
             mListener?.onListFragmentInteraction(item)
