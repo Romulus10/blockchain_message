@@ -32,7 +32,7 @@ object Contact {
 
     private fun addItem(item: Contact) {
         ITEMS.add(item)
-        ITEM_MAP.put(item.id, item)
+        ITEM_MAP[item.id] = item
     }
 
     private fun createContact(position: Int): Contact {

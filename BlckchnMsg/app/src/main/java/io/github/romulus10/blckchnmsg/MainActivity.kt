@@ -6,6 +6,7 @@ import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_main.*
@@ -29,6 +30,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         toggle.syncState()
 
         nav_view.setNavigationItemSelectedListener(this)
+
+
+        Log.d("MainActivity", "Messages")
+        val fragmentManager = supportFragmentManager
+        val fragmentTransaction = fragmentManager.beginTransaction()
+        val fragment = MessageFragment()
+        val b = Bundle()
+        fragment.arguments = b
+        fragmentTransaction.replace(R.id.fragment_container, fragment)
+                .addToBackStack("Messages").commit()
     }
 
     override fun onBackPressed() {
@@ -49,32 +60,44 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        when (item.itemId) {
-            R.id.action_settings -> return true
-            else -> return super.onOptionsItemSelected(item)
+        return when (item.itemId) {
+            R.id.action_settings -> true
+            else -> super.onOptionsItemSelected(item)
         }
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Handle navigation view item clicks here.
         when (item.itemId) {
-            R.id.nav_camera -> {
-                // Handle the camera action
+            R.id.nav_messages -> {
+                Log.d("MainActivity", "Messages")
+                val fragmentManager = supportFragmentManager
+                val fragmentTransaction = fragmentManager.beginTransaction()
+                val fragment = MessageFragment()
+                val b = Bundle()
+                fragment.arguments = b
+                fragmentTransaction.replace(R.id.fragment_container, fragment)
+                        .addToBackStack("Messages").commit()
             }
-            R.id.nav_gallery -> {
-
+            R.id.nav_contacts -> {
+                Log.d("MainActivity", "Contacts")
+                val fragmentManager = supportFragmentManager
+                val fragmentTransaction = fragmentManager.beginTransaction()
+                val fragment = ContactFragment()
+                val b = Bundle()
+                fragment.arguments = b
+                fragmentTransaction.replace(R.id.fragment_container, fragment)
+                        .addToBackStack("Contacts").commit()
             }
-            R.id.nav_slideshow -> {
-
-            }
-            R.id.nav_manage -> {
-
-            }
-            R.id.nav_share -> {
-
-            }
-            R.id.nav_send -> {
-
+            R.id.nav_keys -> {
+                Log.d("MainActivity", "Keys")
+                val fragmentManager = supportFragmentManager
+                val fragmentTransaction = fragmentManager.beginTransaction()
+                val fragment = KeysFragment()
+                val b = Bundle()
+                fragment.arguments = b
+                fragmentTransaction.replace(R.id.fragment_container, fragment)
+                        .addToBackStack("Keys").commit()
             }
         }
 

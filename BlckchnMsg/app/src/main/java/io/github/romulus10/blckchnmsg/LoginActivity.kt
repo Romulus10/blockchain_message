@@ -23,6 +23,7 @@ import android.widget.TextView
 
 import java.util.ArrayList
 import android.Manifest.permission.READ_CONTACTS
+import android.content.Intent
 
 import kotlinx.android.synthetic.main.activity_login.*
 
@@ -266,7 +267,8 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
             showProgress(false)
 
             if (success!!) {
-                finish()
+                val loginIntent = Intent(this@LoginActivity, MainActivity::class.java)
+                startActivity(loginIntent)
             } else {
                 password.error = getString(R.string.error_incorrect_password)
                 password.requestFocus()
