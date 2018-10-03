@@ -7,26 +7,26 @@ import android.view.ViewGroup
 import android.widget.TextView
 
 
-import io.github.romulus10.blckchnmsg.ContactFragment.OnListFragmentInteractionListener
-import io.github.romulus10.blckchnmsg.blckchnmsg.data.Contact
+import io.github.romulus10.blckchnmsg.ListKeysFragment.OnListFragmentInteractionListener
+import io.github.romulus10.blckchnmsg.blckchnmsg.data.Key
 
-import kotlinx.android.synthetic.main.fragment_contact.view.*
+import kotlinx.android.synthetic.main.fragment_listkeys.view.*
 
 /**
- * [RecyclerView.Adapter] that can display a [Contact] and makes a call to the
+ * [RecyclerView.Adapter] that can display a [DummyItem] and makes a call to the
  * specified [OnListFragmentInteractionListener].
  * TODO: Replace the implementation with code for your data type.
  */
-class MyContactRecyclerViewAdapter(
-        private val mValues: MutableList<Contact.Contact>,
+class MyListKeysRecyclerViewAdapter(
+        private val mValues: List<Key.Key>,
         private val mListener: OnListFragmentInteractionListener?)
-    : RecyclerView.Adapter<MyContactRecyclerViewAdapter.ViewHolder>() {
+    : RecyclerView.Adapter<MyListKeysRecyclerViewAdapter.ViewHolder>() {
 
     private val mOnClickListener: View.OnClickListener
 
     init {
         mOnClickListener = View.OnClickListener { v ->
-            val item = v.tag as Contact.Contact
+            val item = v.tag as Key.Key
             // Notify the active callbacks interface (the activity, if the fragment is attached to
             // one) that an item has been selected.
             mListener?.onListFragmentInteraction(item)
@@ -35,7 +35,7 @@ class MyContactRecyclerViewAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.fragment_contact, parent, false)
+                .inflate(R.layout.fragment_listkeys, parent, false)
         return ViewHolder(view)
     }
 

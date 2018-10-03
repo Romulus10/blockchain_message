@@ -75,7 +75,7 @@ class MessageFragment : Fragment() {
      */
     interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        fun onListFragmentInteraction(item: Message?)
+        fun onListFragmentInteraction(item: Message.Message)
     }
 
     companion object {

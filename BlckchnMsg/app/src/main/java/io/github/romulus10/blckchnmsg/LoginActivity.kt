@@ -24,6 +24,7 @@ import android.widget.TextView
 import java.util.ArrayList
 import android.Manifest.permission.READ_CONTACTS
 import android.content.Intent
+import android.util.Log
 
 import kotlinx.android.synthetic.main.activity_login.*
 
@@ -107,11 +108,23 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
         // Store values at the time of the login attempt.
         val addrStr = addr.text.toString()
         val unameStr = uname.text.toString()
-        val emailAddrStr = email.text.toString()
+        val emailStr = email.text.toString()
         val passwordStr = password.text.toString()
 
         var cancel = false
         var focusView: View? = null
+
+        if (cancel) {
+            // There was an error; don't attempt login and focus the first
+            // form field with an error.
+            focusView?.requestFocus()
+        } else {
+            // Show a progress spinner, and kick off a background task to
+            // perform the user login attempt.
+            showProgress(true)
+            mAuthTask = UserLoginTask(emailStr, passwordStr)
+            mAuthTask!!.execute(null as Void?)
+        }
     }
 
     private fun isEmailValid(email: String): Boolean {
@@ -235,6 +248,9 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
         }
 
         override fun onPostExecute(success: Boolean?) {
+
+            Log.d("UserLoginActivity", "onPostExecute firing.")
+
             mAuthTask = null
             showProgress(false)
 

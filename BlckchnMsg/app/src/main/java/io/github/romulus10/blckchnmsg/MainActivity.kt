@@ -1,5 +1,6 @@
 package io.github.romulus10.blckchnmsg
 
+import android.net.Uri
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.design.widget.NavigationView
@@ -9,10 +10,35 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import io.github.romulus10.blckchnmsg.blckchnmsg.data.Contact
+import io.github.romulus10.blckchnmsg.blckchnmsg.data.Key
+import io.github.romulus10.blckchnmsg.blckchnmsg.data.Message
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 
-class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener,
+        MessageFragment.OnListFragmentInteractionListener,
+        ContactFragment.OnListFragmentInteractionListener,
+        ListKeysFragment.OnListFragmentInteractionListener,
+        NewContact.OnFragmentInteractionListener,
+        NewMessage.OnFragmentInteractionListener,
+        KeysFragment.OnFragmentInteractionListener {
+
+    override fun onFragmentInteraction(uri: Uri) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onListFragmentInteraction(item: Message.Message) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onListFragmentInteraction(item: Contact.Contact) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onListFragmentInteraction(item: Key.Key) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -93,7 +119,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 Log.d("MainActivity", "Keys")
                 val fragmentManager = supportFragmentManager
                 val fragmentTransaction = fragmentManager.beginTransaction()
-                val fragment = KeysFragment()
+                val fragment = ListKeysFragment()
                 val b = Bundle()
                 fragment.arguments = b
                 fragmentTransaction.replace(R.id.fragment_container, fragment)
