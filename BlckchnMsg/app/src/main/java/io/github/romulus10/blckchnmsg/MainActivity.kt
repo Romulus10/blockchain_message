@@ -45,9 +45,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
+        fab.setOnClickListener { _ ->
+            Log.d("MainActivity", "New Message")
+            val fragmentManager = supportFragmentManager
+            val fragmentTransaction = fragmentManager.beginTransaction()
+            val fragment = NewMessage()
+            val b = Bundle()
+            fragment.arguments = b
+            fragmentTransaction.replace(R.id.fragment_container, fragment)
+                    .addToBackStack("New Message").commit()
+            title = "New Message"
         }
 
         val toggle = ActionBarDrawerToggle(
@@ -66,6 +73,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         fragment.arguments = b
         fragmentTransaction.replace(R.id.fragment_container, fragment)
                 .addToBackStack("Messages").commit()
+        title = "Messages"
     }
 
     override fun onBackPressed() {
@@ -104,6 +112,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 fragment.arguments = b
                 fragmentTransaction.replace(R.id.fragment_container, fragment)
                         .addToBackStack("Messages").commit()
+                title = "Messages"
             }
             R.id.nav_contacts -> {
                 Log.d("MainActivity", "Contacts")
@@ -114,6 +123,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 fragment.arguments = b
                 fragmentTransaction.replace(R.id.fragment_container, fragment)
                         .addToBackStack("Contacts").commit()
+                title = "Contacts"
             }
             R.id.nav_keys -> {
                 Log.d("MainActivity", "Keys")
@@ -124,6 +134,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 fragment.arguments = b
                 fragmentTransaction.replace(R.id.fragment_container, fragment)
                         .addToBackStack("Keys").commit()
+                title = "Keys"
             }
         }
 

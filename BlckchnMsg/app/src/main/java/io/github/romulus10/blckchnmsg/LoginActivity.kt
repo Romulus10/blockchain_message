@@ -15,7 +15,6 @@ import android.os.AsyncTask
 import android.os.Build
 import android.os.Bundle
 import android.provider.ContactsContract
-import android.text.TextUtils
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.ArrayAdapter
@@ -132,11 +131,6 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
         return email.contains("@")
     }
 
-    private fun isPasswordValid(password: String): Boolean {
-        //TODO: Replace this with your own logic
-        return password.length > 4
-    }
-
     /**
      * Shows the progress UI and hides the login form.
      */
@@ -237,14 +231,7 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
                 return false
             }
 
-            return DUMMY_CREDENTIALS
-                    .map { it.split(":") }
-                    .firstOrNull { it[0] == mEmail }
-                    ?.let {
-                        // Account exists, return true if the password matches.
-                        it[1] == mPassword
-                    }
-                    ?: true
+            return true
         }
 
         override fun onPostExecute(success: Boolean?) {

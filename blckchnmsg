@@ -1,7 +1,8 @@
 #!/bin/bash
 
 source ./venv/bin/activate
+export PYTHONPATH="./blockchain_message/src"
 pushd ./client
-python -m cli
+python3 -m cli
 popd
 deactivate

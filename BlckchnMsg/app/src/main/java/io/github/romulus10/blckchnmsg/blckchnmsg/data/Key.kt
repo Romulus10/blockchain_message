@@ -17,11 +17,11 @@ object Key {
         ITEM_MAP[item.id] = item
     }
 
-    private fun createKey(id: String, user: Contact, key: String): Key {
+    private fun createKey(id: String, user: Contact.Contact, key: String): Key {
         return Key(id, user, key)
     }
 
-    data class Key(val id: String, val user: Contact, val key: String) {
+    data class Key(val id: String, val user: Contact.Contact, val key: String) {
         override fun toString(): String = id
     }
 }

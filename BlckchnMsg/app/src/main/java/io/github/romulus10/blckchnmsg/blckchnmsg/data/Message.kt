@@ -16,11 +16,11 @@ object Message {
         ITEM_MAP[item.id] = item
     }
 
-    private fun createMessage(id: String, to: Contact, from: Contact, message: String, signature: String): Message {
-        return Message(id, to, from, message, signature)
+    private fun createMessage(id: String, to: Contact.Contact, from: Contact.Contact, message: String, signature: String): Message {
+        return Message(id, to, from, message, signature, false)
     }
 
-    data class Message(val id: String, val to: Contact, val from: Contact, val message: String, val signature: String) {
+    data class Message(val id: String, val to: Contact.Contact, val from: Contact.Contact, val message: String, val signature: String, val verified: Boolean) {
         override fun toString(): String = message
     }
 }
