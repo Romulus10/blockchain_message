@@ -28,4 +28,11 @@
     <string name="messages">Messages</string>
     <string name="contacts">Contacts</string>
     <string name="keys">Keys</string>
+    <string name="new_message">New Message</string>
+    <string name="new_contact">New Contact</string>
+    <string name="contact_address">Contact Address</string>
+    <string name="contact_username">Contact Username</string>
+    <string name="contact_email_address">Contact Email Address</string>
+    <string name="create_new_contact">Create New Contact</string>
+    <string name="send_message">Send Message</string>
 </resources>

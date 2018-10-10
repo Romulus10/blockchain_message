@@ -2,7 +2,6 @@ package io.github.romulus10.blckchnmsg
 
 import android.net.Uri
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
@@ -44,18 +43,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
-
-        fab.setOnClickListener { _ ->
-            Log.d("MainActivity", "New Message")
-            val fragmentManager = supportFragmentManager
-            val fragmentTransaction = fragmentManager.beginTransaction()
-            val fragment = NewMessage()
-            val b = Bundle()
-            fragment.arguments = b
-            fragmentTransaction.replace(R.id.fragment_container, fragment)
-                    .addToBackStack("New Message").commit()
-            title = "New Message"
-        }
 
         val toggle = ActionBarDrawerToggle(
                 this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
@@ -135,6 +122,29 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 fragmentTransaction.replace(R.id.fragment_container, fragment)
                         .addToBackStack("Keys").commit()
                 title = "Keys"
+            }
+            R.id.nav_new_message -> {
+                Log.d("MainActivity", "New Message")
+                val fragmentManager = supportFragmentManager
+                val fragmentTransaction = fragmentManager.beginTransaction()
+                val fragment = NewMessage()
+                val b = Bundle()
+                fragment.arguments = b
+                fragmentTransaction.replace(R.id.fragment_container, fragment)
+                        .addToBackStack("New Message").commit()
+                title = "New Message"
+            }
+
+            R.id.nav_new_contact -> {
+                Log.d("MainActivity", "New Contact")
+                val fragmentManager = supportFragmentManager
+                val fragmentTransaction = fragmentManager.beginTransaction()
+                val fragment = NewContact()
+                val b = Bundle()
+                fragment.arguments = b
+                fragmentTransaction.replace(R.id.fragment_container, fragment)
+                        .addToBackStack("New Contact").commit()
+                title = "New Contact"
             }
         }
 
