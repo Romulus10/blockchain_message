@@ -9,18 +9,16 @@ object Message {
 
     val ITEM_MAP: MutableMap<String, Message> = HashMap()
 
-    private val COUNT = 25
-
-    private fun addItem(item: Message) {
+    fun addItem(item: Message) {
         ITEMS.add(item)
         ITEM_MAP[item.id] = item
     }
 
-    private fun createMessage(id: String, to: Contact.Contact, from: Contact.Contact, message: String, signature: String): Message {
+    fun createMessage(id: String, to: Contact.Contact, from: Contact.Contact?, message: String, signature: String): Message {
         return Message(id, to, from, message, signature, false)
     }
 
-    data class Message(val id: String, val to: Contact.Contact, val from: Contact.Contact, val message: String, val signature: String, val verified: Boolean) {
+    data class Message(val id: String, val to: Contact.Contact, val from: Contact.Contact?, val message: String, val signature: String, val verified: Boolean) {
         override fun toString(): String = message
     }
 }

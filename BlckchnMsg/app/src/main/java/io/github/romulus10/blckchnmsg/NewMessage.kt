@@ -4,48 +4,60 @@ import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import io.github.romulus10.blckchnmsg.blckchnmsg.Crypt
+import io.github.romulus10.blckchnmsg.blckchnmsg.data.Contact
+import io.github.romulus10.blckchnmsg.blckchnmsg.data.Message
+import kotlinx.android.synthetic.main.fragment_new_message.*
 
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+class NewMessage : Fragment(), View.OnClickListener {
 
-/**
- * A simple [Fragment] subclass.
- * Activities that contain this fragment must implement the
- * [NewMessage.OnFragmentInteractionListener] interface
- * to handle interaction events.
- * Use the [NewMessage.newInstance] factory method to
- * create an instance of this fragment.
- *
- */
-class NewMessage : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-    private var listener: OnFragmentInteractionListener? = null
+    private var contact: Int = 0
+    private var crypt: Crypt = Crypt()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+    override fun onClick(v: View?) {
+        Message.addItem(Message.createMessage(
+                (Message.ITEMS.size+1).toString(),
+                Contact.ITEMS[0],
+                Contact.getContact(contact),
+                crypt.encrypt(message_text.text.toString(), Contact.getContact(contact)).toString(),
+                crypt.sign(message_text.text.toString())))
     }
+
+    private var listener: OnFragmentInteractionListener? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_new_message, container, false)
-    }
+        message_send.setOnClickListener(this)
 
-    // TODO: Rename method, update argument and hook method into UI event
-    fun onButtonPressed(uri: Uri) {
-        listener?.onFragmentInteraction(uri)
+        val spinnerArrayAdapter = ArrayAdapter<Contact.Contact>(
+                activity!!.applicationContext,
+                contact_spinner.id,
+                Contact.ITEMS
+        )
+
+        spinnerArrayAdapter.setDropDownViewResource(contact_spinner.id)
+        contact_spinner?.adapter = spinnerArrayAdapter
+
+        contact_spinner?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parentView: AdapterView<*>, selectedItemView: View, position: Int, id: Long) {
+                Log.d("SPINNER", position.toString())
+                contact = (parentView.getItemAtPosition(position) as Contact.Contact).id
+            }
+
+            override fun onNothingSelected(parentView: AdapterView<*>) {
+                // your code here
+            }
+        }
+
+        return inflater.inflate(R.layout.fragment_new_message, container, false)
     }
 
     override fun onAttach(context: Context) {
@@ -62,39 +74,7 @@ class NewMessage : Fragment() {
         listener = null
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     *
-     *
-     * See the Android Training lesson [Communicating with Other Fragments]
-     * (http://developer.android.com/training/basics/fragments/communicating.html)
-     * for more information.
-     */
     interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         fun onFragmentInteraction(uri: Uri)
-    }
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment NewMessage.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-                NewMessage().apply {
-                    arguments = Bundle().apply {
-                        putString(ARG_PARAM1, param1)
-                        putString(ARG_PARAM2, param2)
-                    }
-                }
     }
 }

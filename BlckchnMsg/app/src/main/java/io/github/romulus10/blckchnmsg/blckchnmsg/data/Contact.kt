@@ -7,20 +7,22 @@ object Contact {
 
     val ITEMS: MutableList<Contact> = ArrayList()
 
-    val ITEM_MAP: MutableMap<String, Contact> = HashMap()
+    val ITEM_MAP: MutableMap<Int, Contact> = HashMap()
 
-    private val COUNT = 25
+    fun getContact(id: Int): Contact? {
+        return ITEM_MAP[id]
+    }
 
-    private fun addItem(item: Contact) {
+    fun addItem(item: Contact) {
         ITEMS.add(item)
         ITEM_MAP[item.id] = item
     }
 
-    private fun createContact(id: String, uname: String, email: String, key: String): Contact {
-        return Contact(id, uname, email, key)
+    fun createContact(id: Int, uname: String, email: String): Contact {
+        return Contact(id, uname, email)
     }
 
-    data class Contact(val id: String, val uname: String, val email: String, val key: String) {
+    data class Contact(val id: Int, val uname: String, val email: String) {
         override fun toString(): String = uname
     }
 }

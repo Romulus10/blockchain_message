@@ -34,7 +34,7 @@ class MyMessageRecyclerViewAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = mValues[position]
-        holder.mIdView.text = item.from.uname
+        holder.mIdView.text = item.from?.uname
         holder.mContentView.text = item.message
 
         with(holder.mView) {

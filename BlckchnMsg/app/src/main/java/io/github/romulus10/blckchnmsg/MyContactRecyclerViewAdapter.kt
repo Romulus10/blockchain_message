@@ -41,7 +41,7 @@ class MyContactRecyclerViewAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = mValues[position]
-        holder.mIdView.text = item.id
+        holder.mIdView.text = item.id.toString()
         holder.mContentView.text = item.uname
 
         with(holder.mView) {

@@ -9,15 +9,12 @@ object Key {
 
     val ITEM_MAP: MutableMap<String, Key> = HashMap()
 
-    private val COUNT = 25
-
-
-    private fun addItem(item: Key) {
+    fun addItem(item: Key) {
         ITEMS.add(item)
         ITEM_MAP[item.id] = item
     }
 
-    private fun createKey(id: String, user: Contact.Contact, key: String): Key {
+    fun createKey(id: String, user: Contact.Contact, key: String): Key {
         return Key(id, user, key)
     }
 

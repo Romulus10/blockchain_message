@@ -7,6 +7,8 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import io.github.romulus10.blckchnmsg.blckchnmsg.data.Contact
+import kotlinx.android.synthetic.main.fragment_new_contact.*
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -23,7 +25,7 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  *
  */
-class NewContact : Fragment() {
+class NewContact : Fragment(), View.OnClickListener {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -40,10 +42,10 @@ class NewContact : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
+        create_contact.setOnClickListener(this)
         return inflater.inflate(R.layout.fragment_new_contact, container, false)
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
     fun onButtonPressed(uri: Uri) {
         listener?.onFragmentInteraction(uri)
     }
@@ -60,6 +62,14 @@ class NewContact : Fragment() {
     override fun onDetach() {
         super.onDetach()
         listener = null
+    }
+
+    override fun onClick(v: View) {
+        Contact.addItem(Contact.createContact(
+                addr.text.toString().toInt(),
+                uname.text.toString(),
+                email.text.toString()
+        ))
     }
 
     interface OnFragmentInteractionListener {
