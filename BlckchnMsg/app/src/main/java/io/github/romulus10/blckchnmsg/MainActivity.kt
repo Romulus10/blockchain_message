@@ -10,8 +10,8 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import io.github.romulus10.blckchnmsg.blckchnmsg.data.Contact
-import io.github.romulus10.blckchnmsg.blckchnmsg.data.Key
 import io.github.romulus10.blckchnmsg.blckchnmsg.data.Message
+import io.github.romulus10.blckchnmsg.blckchnmsg.data.PublicKey
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 
@@ -22,6 +22,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         NewContact.OnFragmentInteractionListener,
         NewMessage.OnFragmentInteractionListener,
         KeysFragment.OnFragmentInteractionListener {
+    override fun onListFragmentInteraction(item: PublicKey.PublicKey) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 
     override fun onFragmentInteraction(uri: Uri) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
@@ -32,10 +35,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun onListFragmentInteraction(item: Contact.Contact) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun onListFragmentInteraction(item: Key.Key) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 

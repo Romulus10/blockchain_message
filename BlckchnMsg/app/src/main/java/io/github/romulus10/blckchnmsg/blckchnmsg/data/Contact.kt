@@ -1,7 +1,7 @@
 package io.github.romulus10.blckchnmsg.blckchnmsg.data
 
-import java.util.ArrayList
-import java.util.HashMap
+import java.security.PublicKey
+import java.util.*
 
 object Contact {
 
@@ -18,11 +18,11 @@ object Contact {
         ITEM_MAP[item.id] = item
     }
 
-    fun createContact(id: Int, uname: String, email: String): Contact {
-        return Contact(id, uname, email)
+    fun createContact(id: Int, uname: String, email: String, publicKey: PublicKey?): Contact {
+        return Contact(id, uname, email, publicKey)
     }
 
-    data class Contact(val id: Int, val uname: String, val email: String) {
+    data class Contact(val id: Int, val uname: String, val email: String, val publicKey: PublicKey?) {
         override fun toString(): String = uname
     }
 }

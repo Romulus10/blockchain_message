@@ -1,24 +1,17 @@
 package io.github.romulus10.blckchnmsg
 
+
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-
-
 import io.github.romulus10.blckchnmsg.ListKeysFragment.OnListFragmentInteractionListener
-import io.github.romulus10.blckchnmsg.blckchnmsg.data.Key
-
+import io.github.romulus10.blckchnmsg.blckchnmsg.data.PublicKey
 import kotlinx.android.synthetic.main.fragment_listkeys.view.*
 
-/**
- * [RecyclerView.Adapter] that can display a [DummyItem] and makes a call to the
- * specified [OnListFragmentInteractionListener].
- * TODO: Replace the implementation with code for your data type.
- */
 class MyListKeysRecyclerViewAdapter(
-        private val mValues: List<Key.Key>,
+        private val mValues: List<PublicKey.PublicKey>,
         private val mListener: OnListFragmentInteractionListener?)
     : RecyclerView.Adapter<MyListKeysRecyclerViewAdapter.ViewHolder>() {
 
@@ -26,9 +19,7 @@ class MyListKeysRecyclerViewAdapter(
 
     init {
         mOnClickListener = View.OnClickListener { v ->
-            val item = v.tag as Key.Key
-            // Notify the active callbacks interface (the activity, if the fragment is attached to
-            // one) that an item has been selected.
+            val item = v.tag as PublicKey.PublicKey
             mListener?.onListFragmentInteraction(item)
         }
     }

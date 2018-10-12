@@ -1,22 +1,18 @@
 package io.github.romulus10.blckchnmsg.blckchnmsg
 
 import android.os.Environment
-import android.util.Log
+import io.github.romulus10.blckchnmsg.blckchnmsg.Imports.import_priv_key
+import io.github.romulus10.blckchnmsg.blckchnmsg.Imports.import_pub_key
 import io.github.romulus10.blckchnmsg.blckchnmsg.data.Contact
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
-import java.io.PrintWriter
 import java.security.KeyPairGenerator
 import java.security.PrivateKey
 import java.security.PublicKey
 import javax.crypto.Cipher
 
 class Crypt {
-    constructor() {
-        this.publicKey = import_pub_key(Contact.ITEMS[0].uname)
-        this.privateKey = import_priv_key(Contact.ITEMS[0].uname)
-    }
 
     private var publicKey: PublicKey?
 
@@ -70,14 +66,6 @@ class Crypt {
         this.privateKey = kp.private
     }
 
-    fun import_pub_key(filename: String): PublicKey? {
-        return null
-    }
-
-    fun import_priv_key(filename: String): PrivateKey? {
-        return null
-    }
-
     fun encrypt(message: String, recipient: Contact.Contact?): ByteArray {
         val cipher = Cipher.getInstance("RSA")
         cipher.init(Cipher.ENCRYPT_MODE, publicKey)
@@ -97,5 +85,20 @@ class Crypt {
 
     fun verify(message: String, signature: String, sender: Contact): Boolean {
         return false
+    }
+
+    init {
+        this.publicKey = import_pub_key(Contact.ITEMS[0].uname)
+        this.privateKey = import_priv_key(Contact.ITEMS[0].uname)
+    }
+}
+
+object Imports {
+    fun import_pub_key(filename: String): PublicKey? {
+        return null
+    }
+
+    fun import_priv_key(filename: String): PrivateKey? {
+        return null
     }
 }

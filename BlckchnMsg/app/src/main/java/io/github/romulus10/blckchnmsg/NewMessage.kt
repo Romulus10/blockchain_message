@@ -23,18 +23,18 @@ class NewMessage : Fragment(), View.OnClickListener {
 
     override fun onClick(v: View?) {
         Message.addItem(Message.createMessage(
-                (Message.ITEMS.size+1).toString(),
+                (Message.TOP_MESSAGE_ID + 1),
                 Contact.ITEMS[0],
                 Contact.getContact(contact),
                 crypt.encrypt(message_text.text.toString(), Contact.getContact(contact)).toString(),
-                crypt.sign(message_text.text.toString())))
+                crypt.sign(message_text.text.toString()),
+                true))
     }
 
     private var listener: OnFragmentInteractionListener? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
         message_send.setOnClickListener(this)
 
         val spinnerArrayAdapter = ArrayAdapter<Contact.Contact>(
