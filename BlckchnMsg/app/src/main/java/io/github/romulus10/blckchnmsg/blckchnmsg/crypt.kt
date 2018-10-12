@@ -14,7 +14,7 @@ import javax.crypto.Cipher
 
 class Crypt {
 
-    private var publicKey: PublicKey?
+    internal var publicKey: PublicKey?
 
     private var privateKey: PrivateKey?
 
