@@ -18,8 +18,8 @@ object Contact {
         ITEM_MAP[item.id] = item
     }
 
-    fun createContact(id: Int, uname: String, email: String, publicKey: PublicKey?): Contact {
-        return Contact(id, uname, email, publicKey)
+    fun createContact(id: Int, uname: String, email: String): Contact {
+        return Contact(id, uname, email, null)
     }
 
     data class Contact(val id: Int, val uname: String, val email: String, val publicKey: PublicKey?) {

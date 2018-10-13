@@ -14,9 +14,9 @@ import javax.crypto.Cipher
 
 class Crypt {
 
-    internal var publicKey: PublicKey?
+    internal var publicKey: PublicKey? = null
 
-    private var privateKey: PrivateKey?
+    private var privateKey: PrivateKey? = null
 
     private fun write_private_file() {
         val path = Environment.getExternalStorageDirectory()
@@ -87,7 +87,7 @@ class Crypt {
         return false
     }
 
-    init {
+    fun setKeys() {
         this.publicKey = import_pub_key(Contact.ITEMS[0].uname)
         this.privateKey = import_priv_key(Contact.ITEMS[0].uname)
     }

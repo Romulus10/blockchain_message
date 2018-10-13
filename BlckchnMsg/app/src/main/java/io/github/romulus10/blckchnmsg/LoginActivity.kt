@@ -202,10 +202,13 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
             if (success!!) {
                 val crypt = Crypt()
                 crypt.generate_key(uname.toString())
-                Contact.createContact(addr.toString().toInt(),
-                        uname.toString(),
-                        email.toString(),
-                        crypt.publicKey)
+                Log.d("onPostExecute", addr.text.toString())
+                val contact = Contact.createContact(addr.text.toString().toInt(),
+                        uname.text.toString(),
+                        email.text.toString())
+                Contact.addItem(contact)
+                contact.publicKey
+                crypt.setKeys()
                 val loginIntent = Intent(this@LoginActivity, MainActivity::class.java)
                 startActivity(loginIntent)
             } else {

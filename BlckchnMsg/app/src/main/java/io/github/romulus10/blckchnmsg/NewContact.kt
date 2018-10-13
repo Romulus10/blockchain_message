@@ -7,7 +7,6 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import io.github.romulus10.blckchnmsg.blckchnmsg.Imports
 import io.github.romulus10.blckchnmsg.blckchnmsg.data.Contact
 import kotlinx.android.synthetic.main.fragment_new_contact.*
 
@@ -39,9 +38,7 @@ class NewContact : Fragment(), View.OnClickListener {
         Contact.addItem(Contact.createContact(
                 addr.text.toString().toInt(),
                 uname.text.toString(),
-                email.text.toString(),
-                Imports.import_pub_key(uname.text.toString())
-        ))
+                email.text.toString()))
     }
 
     interface OnFragmentInteractionListener {
