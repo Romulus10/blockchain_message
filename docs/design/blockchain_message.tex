@@ -1,0 +1,133 @@
+\documentclass[titlepage]{report}
+
+\usepackage[toc,page]{appendix}
+\usepackage{glossaries}
+\usepackage{makeidx}
+\usepackage{biblatex}
+\usepackage{graphicx}
+\usepackage{float}
+
+\makeglossaries{}
+\loadglsentries{entries}
+
+\makeindex
+\addbibresource{bib.bib}
+
+\title{blockchain\_message: A Peer-to-Peer Content-Sharing Service Built on the Ethereum Blockchain\\\large System Design}
+\author{Sean T. Batzel\\Dr.\ Bishop}
+\date{\today\endgraf\bigskip Submitted in partial fulfillment of the requirements of CMPS/IT 490 --- Computer Projects}
+
+\begin{document}
+\maketitle
+
+\tableofcontents
+
+\nocite{*}
+
+\begin{abstract}
+    Formally, blockchain\_message is the combination of the specification of a library interface which provides the ability to securely send untamperable messages through \gls{Ethereum}\index{Ethereum} and a set of smart contracts running on the \index{EVM} that implement remote communication.
+\end{abstract}
+
+\section{System Architectural Design}
+
+\subsection{Communication Implementation}
+
+\subsection{Identity Management}
+
+\subsection{Key Management}
+Key management is usually handled through well-known servers set up specifically for distributing public keys.
+
+\section{Component Architectural Design}
+
+\subsection{Blockchain Communication}
+
+\subsection{Low-Level Cryptography}
+
+\subsection{Database Design}
+
+\section{Real-Time Design}
+
+\section{User Interface Design}
+Any implementation of the system should provide a clear, user-friendly manner of exposing every function of the library to the user. It should also focus heavily on abstracting complex tasks such as key management from the user and presenting such intensive actions in as clear and simple a manner as possible. For the purposes of this project, two implementations are currently under development.
+
+\subsection{Command-Line Interface}
+
+\subsection{Graphical/Mobile}
+
+\section{Help System Design}
+
+\subsection{CLI}
+The CLI version will include a standard \verb|help| in that will print out the usage details for every component in the style of classical *nix command help dialogues. 
+
+\subsection{Graphical/Mobile}
+
+\section{Data Structure Overview}
+\subsection{Database}
+The database specification is to provide a language-native ``list'' implementation of each necessary object for comparably efficient and low-level data storage and retrieval. These will be frozen in place and saved to files (by way of libraries and utilities like Python's \texttt{shelve}) that will be read and written in chunks which will remove the need for large, complex database files with a more prohibitive overhead.
+
+\subsection{Contact}
+\subsubsection{addr}
+A numerical identifier providing the system with a simple way of addressing and indexing messages.
+
+\subsubsection{uname}
+The contact's chosen username, which will be used internally to connect an \texttt{addr} with a more intuitive name and ensure that each address is only used once per blockchain\_message environment.
+
+\subsubsection{emailAddress}
+The user's given email address, which will be used to identify public encryption keys.
+
+\subsubsection{publicKey}
+The public key associated with the given email address, stored as Java's internal PublicKey class.
+
+\subsection{Message}
+\subsubsection{id}
+A unique identifier supplied to each message.
+
+\subsubsection{to}
+The unique user address for the person receiving the message.
+
+\subsubsection{from}
+The unique user address for the person sending the message.
+
+\subsubsection{text}
+Used to store the plaintext \textit{and} ciphertext representations of the message being sent.
+
+\subsubsection{sign}
+Contains a text-encoded representation of the RSA signature applied to the plaintext message.
+
+\subsubsection{verified}
+This is used in client implementations to easily store whether or not the message has been cryptographically verified. When sending to Ethereum this will default to false.
+
+\pagebreak
+
+\section{Progress to Date}
+
+\begin{table}[ht]
+\begin{center}
+\caption{Progress on Individual Project Elements}
+\begin{tabular}{ | l | p{5cm} |}
+\hline
+Command-line Interface & \textbf{Complete} \\
+Local Database Implementation & \textbf{Complete} \\
+RSA Encryption/Decryption & \textbf{Complete} \\
+RSA Signing and Verification & \textbf{Complete} \\
+Smart Contract Message Handling & \textbf{Complete} \\
+\hline
+Public-key Sharing & \textbf{Currently manual} \\
+Key Signing & \textbf{Not Started} \\
+\hline
+Smart Contract Identity Assignment & \textbf{Not started} \\
+Server Implementation & \textbf{Not Started} \\
+HTML5 Interface & \textbf{Not Started} \\
+Android Application & \textbf{In Progress} \\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+\listoftables
+\listoffigures
+\printindex
+\printglossaries{}
+\printbibliography{}
+
+\end{document}

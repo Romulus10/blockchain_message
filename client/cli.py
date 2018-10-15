@@ -91,6 +91,18 @@ def main():
             new_contact(msg)
         if cmd == "exit":
             done = True
+        if cmd == "help":
+            print("""
+            
+            
+            \tcheck
+            \tread
+            \twrite
+            \tcontacts
+            \tnew-contact
+            \thelp
+            \texit
+            """)
 
 
 if __name__ == "__main__":
