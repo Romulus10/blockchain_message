@@ -25,46 +25,80 @@
 \nocite{*}
 
 \begin{abstract}
-    Formally, blockchain\_message is the combination of the specification of a library interface which provides the ability to securely send untamperable messages through \gls{Ethereum}\index{Ethereum} and a set of smart contracts running on the \index{EVM} that implement remote communication.
+    Formally, blockchain\_message is the combination of the specification of a library interface which provides the ability to securely send immutable messages through \gls{Ethereum}\index{Ethereum} and a set of smart contracts running on the EVM\index{EVM} that implement remote communication. The end goal for the senior project is to have a CLI client which is able to implement every function outlined in the description of the system's design. Eventually, my hope is to also have blockchain\_message implemented as an Android application and a graphical desktop application.
 \end{abstract}
 
 \section{System Architectural Design}
+The system's architecture is mostly based in the abstract standard for the client library (discussed in the \textbf{Component Architectural Design} section) and a set of smart contracts which create the actual body of the system.
 
-\subsection{Communication Implementation}
+\subsection{Accomplished Functionality}
+\subsubsection{Communication Implementation}
+Messages are handled by a simple smart contract which is capable of storing and retrieving messages from Ethereum permanent storage. Internally, this is accomplished with a two-dimensional array. When a message $x$ is sent, it is assigned to the array as follows:
 
-\subsection{Identity Management}
+$x[user\_id][msg\_id]$
 
-\subsection{Key Management}
-Key management is usually handled through well-known servers set up specifically for distributing public keys.
+\begin{figure}[tph!]
+    \centering
+    \includegraphics[width=0.7\linewidth]{message_storage}
+    \caption{A graphical representation of the BlckchnMsgStorage internal array. The array contains three initialized contacts with a variable number of messages each.}
+    \label{fig:messagestorage}
+\end{figure}
+
+\subsection{Functionality Goals}
+\subsubsection{Identity Management}
+\gls{Identity management} is one of the high-level stretch goals outlined in the original proposal, and will need a new \glossary{smart contract}\index{smart contract} written which will be capable of attaching a single unique user id (\texttt{addr}) with a single username/email/password set, thereby preventing messages from being sent to the wrong person, similar to a phone number. The \texttt{BlckchnMsgStorage} contract itself only deals with the user's address, and without some kind of user management and address assignment to act as a key any person would be able to tie in to any address and download every message in that address's associated ``mailbox''. The smart contract will contain a key-value lookup table where every new login (username, email, password) is assigned an address which is immutably tied to that username. When adding a contact, the only values supplied will be a username and email address, which the identity management contract will use to retrieve an address which is never exposed to the end user.
+
+\subsubsection{Key Management}
+Key management is usually handled through well-known servers set up specifically for distributing public keys. Because the keys used with this system are not OpenPGP-standardized, this method may not work as cleanly. Internally to a client application, keys are read from files and are then stored in memory as binary public key objects. Each implementation will require its own language's approach to this, for example the Android app will use net.java.Security.PublicKey and the Python implementation (CLI) will use rsa.PublicKey, both from their language's standard library. Keys, in the initial release of the application, must be exported (either by manually copying the keyfile from the keys directory or by using the eventual Export functionality)\footnote{At the time of writing, the ``Import'' and ``Export'' functionality groups are not yet implemented. When every basic feature of the applications is in place and working, abstraction functions like these will be added.} and sent (by email or similar medium) to the intended contact, who will then move it into their own keys directory (either manually or by using the eventual Import functionality) to be imported when the new Contact object is created.
 
 \section{Component Architectural Design}
 
 \subsection{Blockchain Communication}
+The Blockchain module is used to send and retrieve message packets serialized as string.
+
+\subsubsection{def submit(self, message: Message)}
+\subsubsection{def retrieve(user: Contact, last\_message: int, contact\_list: List[Contact]) -> List[Message]}
 
 \subsection{Low-Level Cryptography}
+This module will provide an abstraction level to an internal language-level implementation of RSA public/private key encryption.
+
+\subsubsection{def generate\_key(uname: str)}
+\subsubsection{def import\_key(uname: str)}
+\subsubsection{def encrypt(to: Contact, msg: str)}
+\subsubsection{def decrypt(msg: str)}
+\subsubsection{def sign(msg: Message): str}
+\subsubsection{def verify(from: Contact, msg: Message): bool}
 
 \subsection{Database Design}
+The database specification is to provide a language-native ``list'' implementation of each necessary object for comparably efficient and low-level data storage and retrieval. These will be frozen in place and saved to files (by way of libraries and utilities like Python's \texttt{shelve}) that will be read and written in chunks which will remove the need for large, complex database files with a more prohibitive overhead. The specific data structures and their interactions are outlined in the \textbf{Data Structure Overview}.
+
+\subsubsection{def insert(msg: Message): bool}
+\subsubsection{def read(id: int): Message}
+\subsubsection{def delete(id: int): bool}
+\subsubsection{def new\_contact(addr: int, uname: str, email: str): bool}
+\subsubsection{def del\_contact(addr: int): bool}
 
 \section{Real-Time Design}
+Real-time interactions are limited by the responsivity and reactivity of Ethereum. For multiple users sharing a local node, the transmission of messages across blockchain\_message is instantaneous. For a number of nodes connecting together the transmission of messages is limited by a myriad of factors including the user's network speed and the number of transactions being processed by Ethereum as a whole. When a message is sent, a new transaction is appended to the blockchain containing the information relevant to the message being sent. This must propagate through Ethereum before it can be loaded into blockchain\_message by the intended recipient, which introduces a delay which is noticeable but not strictly prohibitive.
 
 \section{User Interface Design}
 Any implementation of the system should provide a clear, user-friendly manner of exposing every function of the library to the user. It should also focus heavily on abstracting complex tasks such as key management from the user and presenting such intensive actions in as clear and simple a manner as possible. For the purposes of this project, two implementations are currently under development.
 
 \subsection{Command-Line Interface}
+The CLI implementation provides all of the basic functions of the system in a bare-bones, low abstraction manner.
 
 \subsection{Graphical/Mobile}
+Graphical implementations of blockchain\_message, including the Android application being developed for this project, should provide a highly user-friendly and abstracted way of interacting with the underlying platform.
 
 \section{Help System Design}
 
 \subsection{CLI}
-The CLI version will include a standard \verb|help| in that will print out the usage details for every component in the style of classical *nix command help dialogues. 
+The CLI version will include a standard \verb|help| directive that will print out the full list of commands available with usage details for every component in the style of classical *nix command help dialogues.
 
 \subsection{Graphical/Mobile}
+The graphical implementations (starting with the Android app) will contain a help menu, clearly labeled, that will display a clear overview of how every component of the UI will function as well as basic overviews of cryptographical functions and how to interact with an individual Ethereum account.
 
 \section{Data Structure Overview}
-\subsection{Database}
-The database specification is to provide a language-native ``list'' implementation of each necessary object for comparably efficient and low-level data storage and retrieval. These will be frozen in place and saved to files (by way of libraries and utilities like Python's \texttt{shelve}) that will be read and written in chunks which will remove the need for large, complex database files with a more prohibitive overhead.
-
 \subsection{Contact}
 \subsubsection{addr}
 A numerical identifier providing the system with a simple way of addressing and indexing messages.
@@ -76,7 +110,7 @@ The contact's chosen username, which will be used internally to connect an \text
 The user's given email address, which will be used to identify public encryption keys.
 
 \subsubsection{publicKey}
-The public key associated with the given email address, stored as Java's internal PublicKey class.
+The public key associated with the given email address, stored as Java's internal PublicKey class, Python's rsa.PublicKey class, or a similar data structure.
 
 \subsection{Message}
 \subsubsection{id}
@@ -95,7 +129,7 @@ Used to store the plaintext \textit{and} ciphertext representations of the messa
 Contains a text-encoded representation of the RSA signature applied to the plaintext message.
 
 \subsubsection{verified}
-This is used in client implementations to easily store whether or not the message has been cryptographically verified. When sending to Ethereum this will default to false.
+A Boolean value used in client implementations to easily store whether or not the message has been cryptographically verified. When sending to Ethereum this will default to false.
 
 \pagebreak
 
@@ -104,7 +138,9 @@ This is used in client implementations to easily store whether or not the messag
 \begin{table}[ht]
 \begin{center}
 \caption{Progress on Individual Project Elements}
-\begin{tabular}{ | l | p{5cm} |}
+\begin{tabular}{| l | p{5cm} |}
+\hline
+Proposed Project Specifications & \textbf{Complete} \\
 \hline
 Command-line Interface & \textbf{Complete} \\
 Local Database Implementation & \textbf{Complete} \\
@@ -112,10 +148,14 @@ RSA Encryption/Decryption & \textbf{Complete} \\
 RSA Signing and Verification & \textbf{Complete} \\
 Smart Contract Message Handling & \textbf{Complete} \\
 \hline
+Identity and Cryptography Stretch Goals & \textbf{To Be Completed by November First} \\
+\hline
+Smart Contract Identity Assignment & \textbf{Not started} \\
 Public-key Sharing & \textbf{Currently manual} \\
 Key Signing & \textbf{Not Started} \\
 \hline
-Smart Contract Identity Assignment & \textbf{Not started} \\
+Client Implementation Stretch Goals & \textbf{Concept Goal} \\
+\hline
 Server Implementation & \textbf{Not Started} \\
 HTML5 Interface & \textbf{Not Started} \\
 Android Application & \textbf{In Progress} \\
