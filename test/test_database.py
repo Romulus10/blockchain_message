@@ -9,24 +9,24 @@ class TestDatabase(unittest.TestCase):
         c0 = Contact("00000", "test", "test@test.com")
         c1 = Contact("00000", "other", "other@test.com")
         d = Database()
-        r = d.insert(c0, c1, "This is a test.")
+        r = d.insert(c0, c1, "This is a test.", '', False)
         self.assertTrue(r)
 
     def test_read(self):
         c0 = Contact("00000", "test", "test@test.com")
         c1 = Contact("00000", "other", "other@test.com")
         d = Database()
-        r = d.insert(c0, c1, "This is a test.")
-        self.assertEqual(d.read(r).text, "This is a test.")
+        r = d.insert(c0, c1, "This is a test.", '', False)
+        self.assertEqual(d.read(r.id).text, "This is a test.")
 
     def test_delete(self):
         c0 = Contact("00000", "test", "test@test.com")
         c1 = Contact("00000", "other", "other@test.com")
         d = Database()
-        r = d.insert(c0, c1, "This is a test.")
-        d.delete(r)
+        r = d.insert(c0, c1, "This is a test.", '', False)
+        d.delete(r.id)
         with self.assertRaises(MessageNotFoundException):
-            d.read(r)
+            d.read(r.id)
 
     def test_read_contact(self):
         d = Database()

@@ -70,10 +70,10 @@ def main():
     """
     Sets up the application and begins the command interpreter.
     """
-    addr = input("addr > ")
     uname = input("uname > ")
     email = input("email > ")
     msg = BlockchainMessage(uname)
+    addr = msg.get_identity(uname)
     msg.send.add_contact(addr, uname, email)
     msg.recv.add_contact(addr, uname, email)
     done: bool = False

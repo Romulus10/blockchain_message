@@ -18,12 +18,27 @@ class Blockchain(object):
         Sets up Ethereum interaction variables and compiles the contract, allowing web3 to call functions directly.
         """
         with open('./.blkchnmsg/contract', 'r') as f:
-            self.addr = f.read()
+            self.addr = f.readline()
+            self.addr_2 = f.readline()
         compiled = compile_files(['./../contract/contracts/blockchain_message.sol'])
+        compiled_manager = compile_files(["./contract/contracts/identity_manager.sol"])
         self.contract_interface = compiled['./../contract/contracts/blockchain_message.sol:BlckChnMsgStorage']
+        self.manager_interface = compiled_manager["./contract/contracts/identity_manager.sol:IdentityManager"]
         self.w3 = Web3(HTTPProvider("http://localhost:7545"))
         self.contract = self.w3.eth.contract(abi=self.contract_interface['abi'],
                                              bytecode=self.contract_interface['bin'])
+        self.manager_contract = self.w3.eth.contract(abi=self.manager_interface['abi'],
+                                                     bytecode=self.manager_interface['bin'])
+
+    def get_identity(self, uname) -> int:
+        """
+
+        :param uname:
+        :return:
+        """
+        abi = self.contract_interface['abi']
+        contract = self.w3.eth.contract(address=self.addr_2, abi=abi, ContractFactoryClass=ConciseContract)
+        return contract.get_identity(uname).call()
 
     def submit(self, message: Message):
         """

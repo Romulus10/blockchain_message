@@ -1,4 +1,4 @@
-pragma solidity ^0.4.0;
+pragma solidity ^0.4.7;
 
 contract BlckChnMsgStorage {
     string[10][10] db;

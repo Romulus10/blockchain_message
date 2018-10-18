@@ -21,6 +21,14 @@ class BlockchainMessage(object):
         self.c = Crypt(uname)
         self.b = Blockchain()
 
+    def get_identity(self, uname) -> int:
+        """
+
+        :param uname:
+        :return:
+        """
+        return self.b.get_identity(uname)
+
     def pull_messages(self, uname: str) -> int:
         """
         Downloads all new messages for the current user from the smart contract.
