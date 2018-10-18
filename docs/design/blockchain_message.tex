@@ -57,7 +57,7 @@ The Blockchain module is used to send and retrieve message packets serialized as
 \subsubsection{def get\_identity(self, uname: str) -> int}
 Either produces a new address by which a new user can be contacted or retrieves an existing user's unique address.
 \subsubsection{def get\_balance(self) -> float}
-Returns the volume of Ethereum the user has in their account.
+Returns the volume of \gls{Ether}\index{Ether} (ETH) the user has in their account. This is used to ensure that a user can always keep track of their ETH\index{ETH} and to keep from running out of currency to cover the gas fees associated with sending messages.
 \subsubsection{def submit(self, message: Message)}
 Produces a message packet from a database Message object and transmits it to the \gls{blockchain}\index{blockchain}.
 \subsubsection{def retrieve(user: Contact, last\_message: int, contact\_list: List[Contact]) -> List[Message]}
@@ -111,7 +111,7 @@ Graphical implementations of blockchain\_message, including the Android applicat
 The CLI\index{CLI} version will include a standard \verb|help| directive that will print out the full list of commands available with usage details for every component in the style of classical *nix command help dialogues. The user manual will also contain specific information on the usage of the CLI version, since that will most directly reflect the functionality described in the original proposal.
 
 \subsection{Graphical/Mobile}
-The graphical implementations (starting with the Android app) will contain a help menu, clearly labeled, that will display a clear overview of how every component of the UI will function as well as basic overviews of cryptographical functions and how to interact with an individual \gls{Ethereum}\index{Ethereum} account.
+The graphical implementations (starting with the Android app) will contain a help dialog, clearly labeled as part of an auxiliary menu, that will display a clear overview of how every component of the UI will function as well as basic overviews of cryptographical functions and how to interact with an individual \gls{Ethereum}\index{Ethereum} account.
 
 \section{Data Structure Overview}
 \subsection{Contact}

@@ -4,13 +4,12 @@ contract IdentityManager {
     string[100] users;
     uint latest;
 
-    function new_identity(string uname) public returns (uint) {
+    function new_identity(string uname) internal returns (uint) {
 
         if (latest >= 100) return 9999;
 
         users[latest] = uname;
-        latest++;
-        return latest;
+        return latest++;
     }
 
     function get_identity(string uname) public returns (uint) {
