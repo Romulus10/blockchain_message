@@ -54,13 +54,13 @@ Key management is usually handled through well-known servers set up specifically
 \subsection{Blockchain Communication}
 The Blockchain module is used to send and retrieve message packets serialized as strings.
 
-\subsubsection{def get\_identity(self, uname: str) -> int}
+\subsubsection{def get\_identity(self, uname: str) $\rightarrow$ int}
 Either produces a new address by which a new user can be contacted or retrieves an existing user's unique address.
-\subsubsection{def get\_balance(self) -> float}
+\subsubsection{def get\_balance(self) $\rightarrow$ float}
 Returns the volume of \gls{Ether}\index{Ether} (ETH) the user has in their account. This is used to ensure that a user can always keep track of their ETH\index{ETH} and to keep from running out of currency to cover the gas fees associated with sending messages.
 \subsubsection{def submit(self, message: Message)}
 Produces a message packet from a database Message object and transmits it to the \gls{blockchain}\index{blockchain}.
-\subsubsection{def retrieve(user: Contact, last\_message: int, contact\_list: List[Contact]) -> List[Message]}
+\subsubsection{def retrieve(user: Contact, last\_message: int, contact\_list: List[Contact]) $\rightarrow$ List[Message]}
 Requests every message packet with an ID later than \texttt{last\_message}, receives a string containing each message packet, and processes the string to pass of for cryptographical processing.
 
 \subsection{Low-Level Cryptography}
@@ -70,27 +70,27 @@ This module will provide an abstraction level to an internal language-level impl
 Used when logging in for the first time on a new device. Produces a new RSA\index{RSA} keypair.
 \subsubsection{def import\_key(uname: str)}
 Brings an existing RSA\index{RSA} keypair into memory for application use.
-\subsubsection{def encrypt(to: Contact, msg: str)-> str}
+\subsubsection{def encrypt(to: Contact, msg: str) $\rightarrow$ str}
 Encrypts a given string \texttt{msg} for decryption by \texttt{to}.
-\subsubsection{def decrypt(msg: str) -> str}
+\subsubsection{def decrypt(msg: str) $\rightarrow$ str}
 Decrypts messages encrypted with the currently signed-in user's encryption\index{encryption} key.
-\subsubsection{def sign(msg: Message) -> str}
+\subsubsection{def sign(msg: Message) $\rightarrow$ str}
 Produces a text-encoded signature\index{signature} for the given message which can then be used to verify the identity of the sender.
-\subsubsection{def verify(from: Contact, msg: Message) -> bool}
+\subsubsection{def verify(from: Contact, msg: Message) $\rightarrow$ bool}
 Verifies that a message originates with the sender it claims to be from.
 
 \subsection{Database Design}
 The database specification is to provide a language-native ``list'' implementation of each necessary object for comparably efficient and low-level data storage and retrieval. These will be frozen in place and saved to files (by way of libraries and utilities like Python's \texttt{shelve}) that will be read and written in chunks which will remove the need for large, complex database files with a more prohibitive overhead. The specific data structures and their interactions are outlined in the \textbf{Data Structure Overview}. Each operation that updates the state of the in-memory database (insert/delete) will cause the database to update on disk as well.
 
-\subsubsection{def insert(msg: Message) -> bool}
+\subsubsection{def insert(msg: Message) $\rightarrow$ bool}
 Creates a new database entry with the given Message object.
-\subsubsection{def read(id: int) -> Message}
+\subsubsection{def read(id: int) $\rightarrow$ Message}
 Returns the message with the given unique identifier.
-\subsubsection{def delete(id: int) -> bool}
+\subsubsection{def delete(id: int) $\rightarrow$ bool}
 Removes the message with the given unique identifier. DOES NOT modify the message records on the \gls{blockchain}\index{blockchain}.
-\subsubsection{def new\_contact(addr: int, uname: str, email: str) -> bool}
+\subsubsection{def new\_contact(addr: int, uname: str, email: str) $\rightarrow$ bool}
 Produces a new contact from the given information and adds it to the in-memory database.
-\subsubsection{def del\_contact(addr: int) -> bool}
+\subsubsection{def del\_contact(addr: int) $\rightarrow$ bool}
 Removes a given contact (identified by \texttt{addr} from the database.)
 
 \section{Real-Time Design}
@@ -169,7 +169,7 @@ Smart Contract Message Handling & \textbf{Complete} \\
 \hline
 Identity and Cryptography Stretch Goals & \textbf{To Be Completed by November First} \\
 \hline
-Smart Contract Identity Assignment & \textbf{Not started} \\
+Smart Contract Identity Assignment & \textbf{Complete} \\
 Public-key Sharing & \textbf{Currently manual} \\
 Key Signing & \textbf{Not Started} \\
 \hline
