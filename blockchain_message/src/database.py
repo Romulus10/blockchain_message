@@ -64,7 +64,7 @@ class Database(object):
     def __max_msgid(self) -> int:
         """
 
-        :return:
+        :return: The current maximum message ID.
         """
         m: int = -1
         for x in self.messages:
@@ -76,10 +76,10 @@ class Database(object):
         """
         Adds a new contact object to the database.
 
-        :param uname:
-        :param addr:
-        :param email:
-        :return:
+        :param uname: The contact's uname.
+        :param addr: The address retrieved from the Identity Manager contract.
+        :param email: The contact's email address, used to verify correct identity.
+        :return: Whether or not the contact was created successfully.
         """
         self.contacts.append(Contact(addr, uname, email))
         self.__commit()
@@ -88,8 +88,8 @@ class Database(object):
     def read_contact(self, uname: str) -> Contact:
         """
 
-        :param uname:
-        :return:
+        :param uname: The username to read data for.
+        :return: The Contact object associated with the given username.
         """
         for x in self.contacts:
             if x.uname == uname:
@@ -99,8 +99,8 @@ class Database(object):
     def del_contact(self, name: str) -> bool:
         """
 
-        :param name:
-        :return:
+        :param name: The uname of the contact to be deleted.s
+        :return: Was the deletion successful?
         """
         for x in self.contacts:
             if x.uname is name:
@@ -113,12 +113,12 @@ class Database(object):
         """
         Produces a message object and adds it to the internal database.
 
-        :param to:
-        :param fr:
-        :param text:
-        :param sign:
-        :param verified:
-        :return:
+        :param to: The Contact the message is being sent to.
+        :param fr: The Contact the message originated from.
+        :param text: The text of the message itself.
+        :param sign: The cryptographic signature of the unencrypted message text.
+        :param verified: Whether or not the message's signature has been verified successfully.
+        :return: The message object that has just been added to the database.
         """
         m = Message(self.__max_msgid() + 1, to, fr, text, sign, verified)
         self.messages.append(m)
@@ -128,8 +128,8 @@ class Database(object):
     def delete(self, msgid: int) -> bool:
         """
 
-        :param msgid:
-        :return:
+        :param msgid: The ID of the message to delete.
+        :return: Deleted successfully?
         """
         for x in self.messages:
             if x.id is msgid:
@@ -141,8 +141,8 @@ class Database(object):
     def read(self, msgid: int) -> Message:
         """
 
-        :param msgid:
-        :return:
+        :param msgid: The ID of the message to read.
+        :return: The message corresponding to msgid.
         """
         for x in self.messages:
             if x.id is msgid:
@@ -151,6 +151,6 @@ class Database(object):
 
     def message_index(self) -> int:
         """
-        :return:
+        :return: The highest current message index.
         """
         return self.__max_msgid()

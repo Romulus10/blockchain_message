@@ -1,24 +1,28 @@
 pragma solidity ^0.4.7;
 
 contract IdentityManager {
-    string[10] users;
+    string[100] users;
     uint latest;
 
     function new_identity(string uname) public returns (uint) {
+
+        if (latest >= 100) return 9999;
+
         users[latest] = uname;
         latest++;
+        return latest;
     }
 
-    function get_identity(string uname) public view returns (uint) {
-         uint result = 11;
+    function get_identity(string uname) public returns (uint) {
+         uint result = 999;
 
-         for (uint i = 0; i < 10; i++) {
+         for (uint i = 0; i < 100; i++) {
             if (stringsEqual(users[i], uname)) {
                 result = i;
             }
          }
 
-         if (result == 11) {
+         if (result == 999) {
             result = new_identity(uname);
          }
 

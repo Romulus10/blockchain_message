@@ -59,9 +59,12 @@ def new_contact(msg: BlockchainMessage):
     :param msg: A BlockchainMessage object.
     """
     print("Adding a new contact:")
-    addr = input("addr: ")
     uname = input("uname: ")
     email = input("email: ")
+    addr = msg.get_identity(uname)
+    if addr == 9999:
+        print(
+            "A new contact couldn't be created - the requested username doesn't exist, and the system is out of room.")
     msg.send.add_contact(addr, uname, email)
     msg.recv.add_contact(addr, uname, email)
 
@@ -74,6 +77,9 @@ def main():
     email = input("email > ")
     msg = BlockchainMessage(uname)
     addr = msg.get_identity(uname)
+    if addr == 9999:
+        print(
+            "A new contact couldn't be created - the requested username doesn't exist, and the system is out of room.")
     msg.send.add_contact(addr, uname, email)
     msg.recv.add_contact(addr, uname, email)
     done: bool = False
@@ -89,12 +95,15 @@ def main():
             contacts(msg)
         if cmd == "new-contact":
             new_contact(msg)
+        if cmd == "balance":
+            print(msg.get_balance())
         if cmd == "exit":
             done = True
         if cmd == "help":
             print("""
             
             
+            \tbalance
             \tcheck
             \tread
             \twrite

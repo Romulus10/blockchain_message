@@ -1,7 +1,7 @@
 echo 'This version of the install script only works on Ubuntu. If you know what you're doing, you can modify it to work under any Linux distribution.'
 
 if [ "$EUID" -ne 0 ]
-  then echo "Please run as root - 'sudo install'"
+  then echo "Please run as root - 'sudo ./install'"
   exit
 fi
 
@@ -75,5 +75,6 @@ pip install toolz
 pip install urllib3
 pip install web3
 pip install websockets
+pip install .
 
 deactivate

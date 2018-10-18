@@ -1,8 +1,8 @@
 pragma solidity ^0.4.7;
 
 contract BlckChnMsgStorage {
-    string[10][10] db;
-    uint256[10] lengths;
+    string[100][100] db;
+    uint256[100] lengths;
 
     function store(uint key, uint to_user, string val) public {
         db[to_user][key] = val;

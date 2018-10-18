@@ -7,6 +7,19 @@ from web3.contract import ConciseContract
 from blockchain_message.src.core import Message, Contact
 
 
+class OutOfIdentitiesException(Exception):
+    """
+    Thrown when the system has run out of room for new identities.
+    """
+
+    def __init__(self, message):
+        """
+        Default constructor.
+        :param message: The text of the exception detail.
+        """
+        super().__init__(message)
+
+
 # noinspection PyUnresolvedReferences
 class Blockchain(object):
     """
@@ -18,12 +31,12 @@ class Blockchain(object):
         Sets up Ethereum interaction variables and compiles the contract, allowing web3 to call functions directly.
         """
         with open('./.blkchnmsg/contract', 'r') as f:
-            self.addr = f.readline()
+            self.addr = f.readline().strip()
             self.addr_2 = f.readline()
         compiled = compile_files(['./../contract/contracts/blockchain_message.sol'])
-        compiled_manager = compile_files(["./contract/contracts/identity_manager.sol"])
+        compiled_manager = compile_files(["./../contract/contracts/identity_manager.sol"])
         self.contract_interface = compiled['./../contract/contracts/blockchain_message.sol:BlckChnMsgStorage']
-        self.manager_interface = compiled_manager["./contract/contracts/identity_manager.sol:IdentityManager"]
+        self.manager_interface = compiled_manager["./../contract/contracts/identity_manager.sol:IdentityManager"]
         self.w3 = Web3(HTTPProvider("http://localhost:7545"))
         self.contract = self.w3.eth.contract(abi=self.contract_interface['abi'],
                                              bytecode=self.contract_interface['bin'])
@@ -33,12 +46,19 @@ class Blockchain(object):
     def get_identity(self, uname) -> int:
         """
 
-        :param uname:
-        :return:
+        :param uname: The username we need the address for.
+        :return: The unique identifier associated with uname.
         """
-        abi = self.contract_interface['abi']
+        abi = self.manager_interface['abi']
         contract = self.w3.eth.contract(address=self.addr_2, abi=abi, ContractFactoryClass=ConciseContract)
-        return contract.get_identity(uname).call()
+        return contract.get_identity(uname)
+
+    def get_balance(self) -> float:
+        """
+
+        :return: The current ETH balance.
+        """
+        return self.w3.eth.getBalance(self.w3.eth.accounts[0])
 
     def submit(self, message: Message):
         """
