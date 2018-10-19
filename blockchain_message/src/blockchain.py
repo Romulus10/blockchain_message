@@ -43,7 +43,20 @@ class Blockchain(object):
         self.manager_contract = self.w3.eth.contract(abi=self.manager_interface['abi'],
                                                      bytecode=self.manager_interface['bin'])
 
-    def get_identity(self, uname) -> int:
+    def get_my_identity(self, uname: str, password: str) -> int:
+        """
+        Used to either log in or register a new identity.
+
+        :param uname: The username we need the address for.
+        :param email: The user's chosen email address.
+        :param password: The password used for authentication.
+        :return: The unique identifier associated with uname.
+        """
+        abi = self.manager_interface['abi']
+        contract = self.w3.eth.contract(address=self.addr_2, abi=abi, ContractFactoryClass=ConciseContract)
+        return contract.get_my_identity(uname, password)
+
+    def get_identity(self, uname: str) -> int:
         """
 
         :param uname: The username we need the address for.
@@ -51,7 +64,7 @@ class Blockchain(object):
         """
         abi = self.manager_interface['abi']
         contract = self.w3.eth.contract(address=self.addr_2, abi=abi, ContractFactoryClass=ConciseContract)
-        return contract.get_identity(uname)
+        return contract.get_my_identity(uname)
 
     def get_balance(self) -> float:
         """

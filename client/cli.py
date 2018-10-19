@@ -12,6 +12,7 @@ __email__ = "romulus108@protonmail.com"
 __license__ = "GPL"
 
 from blockchain_message import BlockchainMessage
+from blockchain_message import ContactNotFoundException
 
 
 def contacts(msg: BlockchainMessage):
@@ -40,7 +41,10 @@ def write(msg: BlockchainMessage):
     """
     uname = input("send to: ")
     text = input("message text: ")
-    msg.send_message(uname, text)
+    try:
+        msg.send_message(uname, text)
+    except ContactNotFoundException:
+        print("The requested contact doesn't exist.")
 
 
 def read(msg: BlockchainMessage):
@@ -75,11 +79,16 @@ def main():
     """
     uname = input("uname > ")
     email = input("email > ")
+    password = input("password > ")
     msg = BlockchainMessage(uname)
-    addr = msg.get_identity(uname)
+    addr = msg.get_my_identity(uname, password)
     if addr == 9999:
         print(
             "A new contact couldn't be created - the requested username doesn't exist, and the system is out of room.")
+        main()
+    if addr == 99999:
+        print("The password for the given user was incorrect.")
+        main()
     msg.send.add_contact(addr, uname, email)
     msg.recv.add_contact(addr, uname, email)
     done: bool = False

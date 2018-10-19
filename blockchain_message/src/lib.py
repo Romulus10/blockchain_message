@@ -21,13 +21,23 @@ class BlockchainMessage(object):
         self.c = Crypt(uname)
         self.b = Blockchain()
 
-    def get_identity(self, uname) -> int:
+    def get_identity(self, uname: str) -> int:
         """
 
         :param uname:
         :return:
         """
         return self.b.get_identity(uname)
+
+    def get_my_identity(self, uname: str, password: str) -> int:
+        """
+
+        :param uname:
+        :param email:
+        :param password:
+        :return:
+        """
+        return self.b.get_my_identity(uname, password)
 
     def get_balance(self) -> float:
         """
