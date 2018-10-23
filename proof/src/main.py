@@ -3,10 +3,10 @@
 from solc import compile_files
 from web3 import Web3, HTTPProvider
 
-compiled_storage = compile_files(["./contract/contracts/blockchain_message.sol"])
-compiled_manager = compile_files(["./contract/contracts/identity_manager.sol"])
-storage_interface = compiled_storage['./contract/contracts/blockchain_message.sol:BlckChnMsgStorage']
-manager_interface = compiled_manager['./contract/contracts/identity_manager.sol:IdentityManager']
+compiled_storage = compile_files(["./contract/contracts/BlckChnMsgStorage.sol"])
+compiled_manager = compile_files(["./contract/contracts/IdentityManager.sol"])
+storage_interface = compiled_storage['./contract/contracts/BlckChnMsgStorage.sol:BlckChnMsgStorage']
+manager_interface = compiled_manager['./contract/contracts/IdentityManager.sol:IdentityManager']
 
 w3 = Web3(HTTPProvider("http://localhost:7545"))
 

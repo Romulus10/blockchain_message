@@ -33,10 +33,10 @@ class Blockchain(object):
         with open('./.blkchnmsg/contract', 'r') as f:
             self.addr = f.readline().strip()
             self.addr_2 = f.readline()
-        compiled = compile_files(['./../contract/contracts/blockchain_message.sol'])
-        compiled_manager = compile_files(["./../contract/contracts/identity_manager.sol"])
-        self.contract_interface = compiled['./../contract/contracts/blockchain_message.sol:BlckChnMsgStorage']
-        self.manager_interface = compiled_manager["./../contract/contracts/identity_manager.sol:IdentityManager"]
+        compiled = compile_files(['./../contract/contracts/BlckChnMsgStorage.sol'])
+        compiled_manager = compile_files(["./../contract/contracts/IdentityManager.sol"])
+        self.contract_interface = compiled['./../contract/contracts/BlckChnMsgStorage.sol:BlckChnMsgStorage']
+        self.manager_interface = compiled_manager["./../contract/contracts/IdentityManager.sol:IdentityManager"]
         self.w3 = Web3(HTTPProvider("http://localhost:7545"))
         self.contract = self.w3.eth.contract(abi=self.contract_interface['abi'],
                                              bytecode=self.contract_interface['bin'])
@@ -54,7 +54,7 @@ class Blockchain(object):
         """
         abi = self.manager_interface['abi']
         contract = self.w3.eth.contract(address=self.addr_2, abi=abi, ContractFactoryClass=ConciseContract)
-        return contract.get_my_identity(uname, password)
+        return contract.get_my_identity(uname, password, transact={'from': self.w3.eth.accounts[0]})
 
     def get_identity(self, uname: str) -> int:
         """

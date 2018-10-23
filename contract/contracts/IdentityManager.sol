@@ -4,7 +4,7 @@ contract IdentityManager {
     string[3][100] users;
     uint latest;
 
-    function get_identity(string uname) public returns (uint) {
+    function get_identity(string uname) public view returns (uint) {
          uint result = 999;
 
          for (uint i = 0; i < 100; i++) {
