@@ -74,6 +74,7 @@ pip install sphinxcontrib-websupport
 pip install toolz
 pip install urllib3
 pip install web3
+pip install .
 pip install websockets
 pip install .
 
