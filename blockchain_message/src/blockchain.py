@@ -1,3 +1,4 @@
+import hashlib
 from typing import List
 
 from solc import compile_files
@@ -43,6 +44,19 @@ class Blockchain(object):
         self.manager_contract = self.w3.eth.contract(abi=self.manager_interface['abi'],
                                                      bytecode=self.manager_interface['bin'])
 
+    def new_identity(self, uname: str, password: str) -> int:
+        """
+
+        :param uname:
+        :param password:
+        :return:
+        """
+        with open("./.blkchnmsg/{0}".format(uname), "w") as f:
+            f.write(hashlib.sha224(bytes(password, 'utf8')).hexdigest())
+        abi = self.manager_interface['abi']
+        contract = self.w3.eth.contract(address=self.addr_2, abi=abi, ContractFactoryClass=ConciseContract)
+        return contract.new_identity(uname, transact={'from': self.w3.eth.accounts[0]})
+
     def get_my_identity(self, uname: str, password: str) -> int:
         """
         Used to either log in or register a new identity.
@@ -54,7 +68,19 @@ class Blockchain(object):
         """
         abi = self.manager_interface['abi']
         contract = self.w3.eth.contract(address=self.addr_2, abi=abi, ContractFactoryClass=ConciseContract)
-        return contract.get_my_identity(uname, password, transact={'from': self.w3.eth.accounts[0]})
+        addr = contract.get_identity(uname)
+        if addr == 999:
+            self.new_identity(uname, password)
+        else:
+            try:
+                with open("./.blkchnmsg/{0}".format(uname), "r") as f:
+                    pass_hash = f.readline()
+                if hashlib.sha224(bytes(password, 'utf8')).hexdigest() == pass_hash:
+                    return addr
+                else:
+                    return 99999
+            except FileNotFoundError:
+                return 999999
 
     def get_identity(self, uname: str) -> int:
         """
@@ -64,7 +90,7 @@ class Blockchain(object):
         """
         abi = self.manager_interface['abi']
         contract = self.w3.eth.contract(address=self.addr_2, abi=abi, ContractFactoryClass=ConciseContract)
-        return contract.get_my_identity(uname)
+        return contract.get_identity(uname)
 
     def get_balance(self) -> float:
         """

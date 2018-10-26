@@ -89,6 +89,9 @@ def main():
     if addr == 99999:
         print("The password for the given user was incorrect.")
         main()
+    if addr == 999999:
+        print("The given user is connected to a different device.")
+        main()
     msg.send.add_contact(addr, uname, email)
     msg.recv.add_contact(addr, uname, email)
     done: bool = False
@@ -109,17 +112,20 @@ def main():
         if cmd == "exit":
             done = True
         if cmd == "help":
-            print("""
+            print(""" blckchnmsg is a command-line utility for sending short email-like messages over Ethereum.
+            
+            This program is distributed with ABSOLUTELY NO WARRANTY. A copy of the GNU Public License should have been distributed
+along with the source code. If not, the full text can be found at https://www.gnu.org/licenses/gpl-3.0.txt.
             
             
-            \tbalance
-            \tcheck
-            \tread
-            \twrite
-            \tcontacts
-            \tnew-contact
-            \thelp
-            \texit
+            \tbalance - Check the Ethereum account's balance.
+            \tcheck - See if any new messages have been received.
+            \tread - Read all of the messages we've already downloaded.
+            \twrite - Compose and send a new message.
+            \tcontacts - List the system's current contacts.
+            \tnew-contact - Create a new contact object.
+            \thelp - Display this help dialog.
+            \texit - ALWAYS use this to end the program. It's responsible for making sure everything saves right.
             """)
 
 

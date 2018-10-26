@@ -10,6 +10,6 @@ contract TestIdentity {
 
     uint expected = 0;
 
-    Assert.equal(id.get_my_identity("test", "test"), expected, "Owner should have 10000 MetaCoin initially");
+    Assert.equal(id.get_my_identity("test", "test"), expected, "This works.");
   }
 }

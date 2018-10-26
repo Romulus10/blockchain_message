@@ -1,0 +1,70 @@
+\documentclass[titlepage]{report}
+
+\usepackage[toc,page]{appendix}
+\usepackage{glossaries}
+\usepackage{makeidx}
+\usepackage{biblatex}
+\usepackage{graphicx}
+\usepackage{float}
+
+\makeglossaries{}
+\loadglsentries{entries}
+
+\makeindex
+\addbibresource{bib.bib}
+
+\title{blockchain\_message: A Peer-to-Peer Content-Sharing Service Built on the Ethereum Blockchain\\\large System Design}
+\author{Sean T. Batzel\\Dr.\ Bishop}
+\date{\today\endgraf\bigskip Submitted in partial fulfillment of the requirements of CMPS/IT 490 --- Computer Projects}
+
+\begin{document}
+\maketitle
+
+\tableofcontents
+
+\nocite{*}
+
+\begin{abstract}
+
+\end{abstract}
+
+\pagebreak
+
+\section{Progress to Date}
+
+\begin{table}[ht]
+\begin{center}
+\caption{Progress on Individual Project Elements}
+\begin{tabular}{| l | p{5cm} |}
+\hline
+Proposed Project Specifications & \textbf{Complete} \\
+\hline
+Command-line Interface & \textbf{Complete} \\
+Local Database Implementation & \textbf{Complete} \\
+RSA\index{RSA} Encryption/Decryption & \textbf{Complete} \\
+RSA\index{RSA} Signing and Verification & \textbf{Complete} \\
+Smart Contract Message Handling & \textbf{Complete} \\
+\hline
+Identity and Cryptography Stretch Goals & \textbf{In Progress - Previous Goal Delayed} \\
+\hline
+Smart Contract Identity Assignment & \textbf{Debugging} \\
+Public-key Sharing & \textbf{Currently manual} \\
+Key Signing & \textbf{Not Started} \\
+\hline
+Client Implementation Stretch Goals & \textbf{Concept Goal} \\
+\hline
+Server Implementation & \textbf{Not Started} \\
+HTML5 Interface & \textbf{Not Started} \\
+Android Application & \textbf{In Progress} \\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+\listoftables
+\listoffigures
+\printindex
+\printglossaries{}
+\printbibliography{}
+
+\end{document}
