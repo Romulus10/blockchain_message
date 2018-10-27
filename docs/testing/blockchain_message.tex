@@ -6,6 +6,14 @@
 \usepackage{biblatex}
 \usepackage{graphicx}
 \usepackage{float}
+\usepackage{fancyhdr}
+
+\pagestyle{fancy}
+\fancyhead{}
+\renewcommand{\headrulewidth}{0pt}
+\fancyfoot{}
+\fancyfoot[LE,RO]{\thepage}
+\fancyfoot[RE,LO]{v0.1.0-rc.4}
 
 \makeglossaries{}
 \loadglsentries{entries}
@@ -13,7 +21,7 @@
 \makeindex
 \addbibresource{bib.bib}
 
-\title{blockchain\_message: A Peer-to-Peer Content-Sharing Service Built on the Ethereum Blockchain\\\large System Design}
+\title{blockchain\_message: A Peer-to-Peer Content-Sharing Service Built on the Ethereum Blockchain\\\large Testing Design}
 \author{Sean T. Batzel\\Dr.\ Bishop}
 \date{\today\endgraf\bigskip Submitted in partial fulfillment of the requirements of CMPS/IT 490 --- Computer Projects}
 
@@ -24,9 +32,56 @@
 
 \nocite{*}
 
-\begin{abstract}
+\pagebreak
 
-\end{abstract}
+\section{Testing Overview}
+The Python language environment provides several well-constructed frameworks for testing automation. The framework used in this project is \texttt{unittest}\cite{unittest}\index{unittest}, which allows for the creation of structured unit-, class-, and module-level tests. Each level of the application is tested through a dedicated testing module containing logic designed to verify expected behavior on every function and every interconnected set of functionalities. The final product will be considered acceptable for a shipment-ready release when it can be verified that a user can log in, transmit a message\index{message} to another user, and retrieve a message\index{message} sent to them.
+
+\section{Blockchain}
+\subsection{Submit}
+Ensures that a plaintext message\index{message} sent to \gls{Ethereum}\index{Ethereum} will be accepted without any EVM\index{EVM} errors.
+\subsection{Retrieve}
+Ensures that a plaintext message\index{message} sent to \gls{Ethereum}\index{Ethereum} can be acceptably retrieved without any EVM\index{EVM} errors or any corruption of data between the application client and the \gls{Ethereum}\index{Ethereum} client.
+\subsection{Multiple Retrieve}
+If multiple messages are sent to the same person in a row, this test is used to make sure that they will make it to the recipient without corruption and in the correct order.
+\subsection{Retrieve User Address}
+Given a username, this should create a new user object and ensure that the \texttt{get\_identity} function on the IdentityManager contract returns the correct address corresponding to that user.
+\subsection{Create New User}
+Given a username and password, these tests should validate that the local authentication system is working properly and that the IdentityManager contract is correctly creating identity entries in the lookup table.
+
+\section{Crypt}
+\subsection{Encrypt}
+Using a contact\index{contact} object with a correct key, we must verify that a given plaintext payload encrypts without throwing any errors.
+\subsection{Decrypt}
+This test must first encrypt the data for a given \gls{private key}\index{private key}, then verify that it decrypts correctly for that \gls{private key}\index{private key}.
+\subsection{Sign}
+Using a contact\index{contact} object with a correct key, we must verify that a given plaintext payload can be signed without throwing any errors.
+\subsection{Verify}
+If a signature cannot be verified, RSA will throw an exception. It must be verified that a correct signature will not throw an exception. This must call the \texttt{sign} function before calling the \texttt{verify} function on the result.
+
+\section{Database}
+\subsection{Insert}
+Used to ensure that nothing goes catastrophically wrong when inserting a message\index{message} into the database\index{database}, and that it makes it there as expected.
+\subsection{Read}
+Proves that the database\index{database} will retrieve the correct message\index{message} when given a message\index{message} address.
+\subsection{Delete}
+Creates and removes a new message\index{message} entry to ensure that this functionality is in place.
+\subsection{Insert Contact}
+This ensures that a contact\index{contact} can be added correctly, and that an existing contact\index{contact} won't be added redundantly.
+\subsection{Read Contact}
+Verifies that the contact\index{contact} retrieved is always the one that is expected.
+\subsection{Delete Contact}
+Tests that deleting an existing contact\index{contact} will work and that deleting a nonexistent contact\index{contact} will throw an exception correctly.
+
+\section{Integration}
+\subsection{Full Send/Receive Test}
+This test connects the functions of the library together in such a way as they will be called in the working application and verifies that none of them cause any catastrophic failures while interacting with one another. We should, at this point, basically be testing that the functions will all continue behaving as expected when glued together.
+
+\section{Interactive CLI Testing}
+Since successful automated tests cannot be the only factor that is used to judge a system ``ready'', the bulk of testing will be carried out by simply using the application as intended. Messages will be exchanged over an \gls{Ethereum}\index{Ethereum} test node, approximately imitating the behavior of the \gls{smart contract}\index{smart contract} when run ``in the wild''. A set of test uname/email/password combinations will be used to generate test keys, create contact\index{contact} entries, and exchange messages. This will allow for a thorough overview of application function to note where any issues might be occurring. While the automated tests will be more useful for tracking down the sources of such issues, this will be imperative for ensuring that the entire application functions correctly on a system level.
+
+\section{Smart Contract Testing}
+Frameworks for testing \gls{Ethereum}\index{Ethereum} contracts are considerably less mature than for other languages or platforms. Using the Remix IDE\footnote{remix.ethereum.org}, it's possible to develop and debug \glspl{smart contract}\index{smart contracts}, but testing is currently limited to calling individual functions and verifying that they return the expected values. Other solutions exist, but with their own quirks and complications that add to the required software for this project far beyond its original scope.
 
 \pagebreak
 
@@ -62,7 +117,7 @@ Android Application & \textbf{In Progress} \\
 \end{table}
 
 \listoftables
-\listoffigures
+%\listoffigures
 \printindex
 \printglossaries{}
 \printbibliography{}

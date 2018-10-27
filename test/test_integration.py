@@ -8,8 +8,8 @@ class IntegrationTest(unittest.TestCase):
         c = Crypt('test')
         b = Blockchain()
         d = Database()
-        d.add_contact('00000', 'test', 'test@test.com')
-        d.add_contact('00001', 'other', 'other@test.com')
+        d.add_contact('0', 'test', 'test@test.com')
+        d.add_contact('1', 'other', 'other@test.com')
         t = "This is a test."
         t_c = c.encrypt(t, d.read_contact('test'))
         b.submit(Message(0, d.read_contact('test'), d.read_contact('test'), str(t_c), str(c.sign(str(t_c))), False))

@@ -7,15 +7,15 @@ from blockchain_message.src.core import Contact, Message
 class TestChain(unittest.TestCase):
     def test_submit(self):
         b = Blockchain()
-        t = Contact("00000", "test", "test@test.com")
-        o = Contact("00001", "other", "other@test.com")
+        t = Contact("0", "test", "test@test.com")
+        o = Contact("1", "other", "other@test.com")
         m = Message(0, t, o, "This is a test.", '', False)
         b.submit(m)
 
     def test_retrieve(self):
         b = Blockchain()
-        t = Contact("00000", "test", "test@test.com")
-        o = Contact("00001", "other", "other@test.com")
+        t = Contact("0", "test", "test@test.com")
+        o = Contact("1", "other", "other@test.com")
         l = [t, o]
         m = Message(0, t, o, "This is a test.", '', False)
         b.submit(m)
@@ -24,8 +24,8 @@ class TestChain(unittest.TestCase):
 
     def test_multiple_retrieve(self):
         b = Blockchain()
-        t = Contact("00000", "test", "test@test.com")
-        o = Contact("00001", "other", "other@test.com")
+        t = Contact("0", "test", "test@test.com")
+        o = Contact("1", "other", "other@test.com")
         l = [t, o]
         m = Message(0, t, o, "This is a test.", '', False)
         n = Message(1, t, o, "This is another test.", '', False)

@@ -56,6 +56,8 @@ The Blockchain module is used to send and retrieve message packets serialized as
 
 \subsubsection{def get\_identity(self, uname: str) $\rightarrow$ int}
 Either produces a new address by which a new user can be contacted or retrieves an existing user's unique address.
+\subsubsection{def get\_my\_identity(self, uname: str, password: str) $\rightarrow$ int}
+\subsubsection{def new\_identity(self, uname: str, password: str) $\rightarrow$ int}
 \subsubsection{def get\_balance(self) $\rightarrow$ float}
 Returns the volume of \gls{Ether}\index{Ether} (ETH) the user has in their account. This is used to ensure that a user can always keep track of their ETH\index{ETH} and to keep from running out of currency to cover the gas fees associated with sending messages.
 \subsubsection{def submit(self, message: Message)}
@@ -90,6 +92,7 @@ Returns the message with the given unique identifier.
 Removes the message with the given unique identifier. DOES NOT modify the message records on the \gls{blockchain}\index{blockchain}.
 \subsubsection{def new\_contact(addr: int, uname: str, email: str) $\rightarrow$ bool}
 Produces a new contact from the given information and adds it to the in-memory database.
+\subsubsection{def read\_contact(self, uname: str) $\rightarrow$ Contact}
 \subsubsection{def del\_contact(addr: int) $\rightarrow$ bool}
 Removes a given contact (identified by \texttt{addr} from the database.)
 
