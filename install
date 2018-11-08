@@ -1,5 +1,8 @@
 echo 'This version of the install script only works on Ubuntu. If you know what you're doing, you can modify it to work under any Linux distribution.'
 
+mkdir ./client/.blckchnmsg
+mkdir ./client/.keys
+
 if [ "$EUID" -ne 0 ]
   then echo "Please run as root - 'sudo ./install'"
   exit
@@ -74,7 +77,6 @@ pip install sphinxcontrib-websupport
 pip install toolz
 pip install urllib3
 pip install web3
-pip install .
 pip install websockets
 pip install .
 

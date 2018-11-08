@@ -38,6 +38,7 @@
 The Python language environment provides several well-constructed frameworks for testing automation. The framework used in this project is \texttt{unittest}\cite{unittest}\index{unittest}, which allows for the creation of structured unit-, class-, and module-level tests. Each level of the application is tested through a dedicated testing module containing logic designed to verify expected behavior on every function and every interconnected set of functionalities. The final product will be considered acceptable for a shipment-ready release when it can be verified that a user can log in, transmit a message\index{message} to another user, and retrieve a message\index{message} sent to them.
 
 \section{Blockchain}
+Blockchain interaction tests require that a test \gls{node}\index{node} be running during testing with the two blockchain\_message \glspl{smart contract}\index{smart contracts} deployed. These will make a series of transactions\index{transactions} to \gls{Ethereum}\index{Ethereum}, but will not be concerned with testing the behavior of the \glspl{smart contract}\index{smart contracts} themselves, they will only be concerned with verifying that the client library itself handles the results of the transactions\index{transactions} correctly.
 \subsection{Submit}
 Ensures that a plaintext message\index{message} sent to \gls{Ethereum}\index{Ethereum} will be accepted without any EVM\index{EVM} errors.
 \subsection{Retrieve}
@@ -50,6 +51,7 @@ Given a username, this should create a new user object and ensure that the \text
 Given a username and password, these tests should validate that the local authentication system is working properly and that the IdentityManager contract is correctly creating identity entries in the lookup table.
 
 \section{Crypt}
+Since the Crypt module is essentially just a thin wrapper to simplify RSA\index{RSA}, these tests will essentially just verify that the \texttt{rsa} library is being used correctly.
 \subsection{Encrypt}
 Using a contact\index{contact} object with a correct key, we must verify that a given plaintext payload encrypts without throwing any errors.
 \subsection{Decrypt}
@@ -60,6 +62,7 @@ Using a contact\index{contact} object with a correct key, we must verify that a 
 If a signature cannot be verified, RSA will throw an exception. It must be verified that a correct signature will not throw an exception. This must call the \texttt{sign} function before calling the \texttt{verify} function on the result.
 
 \section{Database}
+The database is one of the simplest parts of the program, and as a result these tests will only be required as an automated verification that no breaking changes were made.
 \subsection{Insert}
 Used to ensure that nothing goes catastrophically wrong when inserting a message\index{message} into the database\index{database}, and that it makes it there as expected.
 \subsection{Read}
@@ -74,8 +77,7 @@ Verifies that the contact\index{contact} retrieved is always the one that is exp
 Tests that deleting an existing contact\index{contact} will work and that deleting a nonexistent contact\index{contact} will throw an exception correctly.
 
 \section{Integration}
-\subsection{Full Send/Receive Test}
-This test connects the functions of the library together in such a way as they will be called in the working application and verifies that none of them cause any catastrophic failures while interacting with one another. We should, at this point, basically be testing that the functions will all continue behaving as expected when glued together.
+This module will contain one test which connects the functions of the library together in such a way as they will be called in the working application and verifies that none of them cause any catastrophic failures while interacting with one another. We should, at this point, basically be testing that the functions will all continue behaving as expected when 'glued' together.
 
 \section{Interactive CLI Testing}
 Since successful automated tests cannot be the only factor that is used to judge a system ``ready'', the bulk of testing will be carried out by simply using the application as intended. Messages will be exchanged over an \gls{Ethereum}\index{Ethereum} test node, approximately imitating the behavior of the \gls{smart contract}\index{smart contract} when run ``in the wild''. A set of test uname/email/password combinations will be used to generate test keys, create contact\index{contact} entries, and exchange messages. This will allow for a thorough overview of application function to note where any issues might be occurring. While the automated tests will be more useful for tracking down the sources of such issues, this will be imperative for ensuring that the entire application functions correctly on a system level.

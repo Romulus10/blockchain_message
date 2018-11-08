@@ -1,0 +1,78 @@
+\documentclass[titlepage]{report}
+
+\usepackage[toc,page]{appendix}
+\usepackage{glossaries}
+\usepackage{makeidx}
+\usepackage{biblatex}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{fancyhdr}
+
+\pagestyle{fancy}
+\fancyhead{}
+\renewcommand{\headrulewidth}{0pt}
+\fancyfoot{}
+\fancyfoot[LE,RO]{\thepage}
+\fancyfoot[RE,LO]{v0.1.0-rc.4}
+
+\makeglossaries{}
+\loadglsentries{entries}
+
+\makeindex
+\addbibresource{bib.bib}
+
+\title{blockchain\_message: A Peer-to-Peer Content-Sharing Service Built on the Ethereum Blockchain\\\large User Manual}
+\author{Sean T. Batzel\\Dr.\ Bishop}
+\date{\today\endgraf\bigskip Submitted in partial fulfillment of the requirements of CMPS/IT 490 --- Computer Projects}
+
+\begin{document}
+\maketitle
+
+\tableofcontents
+
+\nocite{*}
+
+\pagebreak
+
+\section{Introduction}
+blockchain\_message provides a simple, usable way to send encrypted messages in a way that saves them irreversibly without needing to rely on a centralized storage location. The program is developed with security, privacy, and decentralization in mind by using the \gls{Ethereum}\index{Ethereum} world computer. It should serve as a warning, however, that a small degree of familiarity with \gls{command-line}\index{command-line} programs is helpful in using blockchain\_message.
+
+\section{Introductory Manual}
+\subsection{General Use}
+The interface consists of eight commands for interacting with the message record and the user's contact database.
+
+\texttt{balance} - Check the Ethereum account's balance.\\
+\texttt{check} - See if any new messages have been received.\\
+\texttt{read} - Read all of the messages we've already downloaded.\\
+\texttt{write} - Compose and send a new message.\\
+\texttt{contacts} - List the system's current contacts.\\
+\texttt{new-contact} - Create a new contact object.\\
+\texttt{help} - Display this command list as a help dialog in the context of the running program.\\
+\texttt{exit} - ALWAYS use this to end the program. It's responsible for making sure everything saves right.\\
+
+\subsection{Help System}
+blockchain\_message's ease of use is a very high priority, so as much of the background functionality as possible has been abstracted down to the 8 commands. The help system is split into a command directory that can be called up by typing \texttt{help}, and a set of helpful error messages when any internal errors (trying to send messages to an unknown contact, failed login, et cetera) occur.
+
+\section{System Reference Manual}
+\subsection{Service Directory}
+
+\subsubsection{Contact/Identity Management}
+\subsubsection{Encryption Key Management}
+Encryption keys are created every time a new user is registered and stored in the \texttt{client/.keys/} directory.
+\subsubsection{Message Send/Receive}
+
+\subsection{Error Recovery}
+There may be some issues which the system cannot handle gracefully, such as any errors in communicating with Ethereum. If such a crash occurs, first check that your \gls{Ethereum}\index{Ethereum} \gls{node}\index{node} is running correctly, not reporting any errors of its own, fully synced, and listening on port 7545. Additionally, ensure that you are running the program through the \texttt{blckchnmsg} script from a terminal emulator\footnote{Terminal on Linux or macOS} or command prompt on Windows\footnote{This can be found by opening the start menu and searching for Command or cmd}. with the current working directory at the root of the program's files.
+
+\subsection{Installation}
+This installation guide assumes an Ubuntu or Debian Linux derivative, but the installation process can be adapted slightly to fit any Linux distribution. Windows and macOS are supported as well, but with some more work required. blockchain\_message requires that Python\footnote{https://www.python.org/} and the PIP package manager\footnote{https://pypi.org/project/pip/} be installed. The application's \glspl{dependency}\index{dependencies} can be secured by running the \texttt{install} script at the root of the project as root. It will also require an Ethereum \gls{node}\index{node} running locally (the program can be modified to allow for using a remote \gls{node}\index{node}), Geth\footnote{https://github.com/ethereum/go-ethereum/wiki/geth} or Parity\footnote{https://www.parity.io/} are both viable options. Once the Ethereum \gls{node}\index{node} is running and \gls{synced}\index{synced} and all of the dependencies installed, the \texttt{blckchnmsg} script will run the program and all first-time setup automatically.
+
+\pagebreak
+
+%\listoftables
+%\listoffigures
+\printindex
+\printglossaries{}
+\printbibliography{}
+
+\end{document}
