@@ -35,20 +35,22 @@
 \pagebreak
 
 \section{Introduction}
-blockchain\_message provides a simple, usable way to send encrypted messages in a way that saves them irreversibly without needing to rely on a centralized storage location. The program is developed with security, privacy, and decentralization in mind by using the \gls{Ethereum}\index{Ethereum} world computer. It should serve as a warning, however, that a small degree of familiarity with \gls{command-line}\index{command-line} programs is helpful in using blockchain\_message.
+blockchain\_message aims to provide a simple, usable way to send encrypted messages in a way that saves them irreversibly without needing to rely on a centralized storage location. The program is developed with security, privacy, and decentralization in mind by using the \gls{Ethereum}\index{Ethereum} world computer. It should serve as a warning, however, that users would be better off if they were somewhat comfortable with \gls{command-line}\index{command-line} programs.
 
 \section{Introductory Manual}
 \subsection{General Use}
-The interface consists of eight commands for interacting with the message record and the user's contact database.
+The interface consists of eight commands for interacting with the message record and the user's contact database.\\
 
-\texttt{balance} - Check the Ethereum account's balance.\\
+{\raggedright{}
+\texttt{balance} - Check the Ethereum account's balance. This volume of Ether is used to fuel the transfer of messages.\\
 \texttt{check} - See if any new messages have been received.\\
 \texttt{read} - Read all of the messages we've already downloaded.\\
-\texttt{write} - Compose and send a new message.\\
-\texttt{contacts} - List the system's current contacts.\\
-\texttt{new-contact} - Create a new contact object.\\
+\texttt{write} - Compose, encrypt, and send a new message. This will prompt for a username to send to, followed by message text. All other steps are handled automatically.\\
+\texttt{contacts} - List the user's current contacts.\\
+\texttt{new-contact} - Create a new contact object. This will prompt for a username and will find the target's address automatically. A public key for the given username must be found in the \texttt{client/.keys/} directory.\\
 \texttt{help} - Display this command list as a help dialog in the context of the running program.\\
-\texttt{exit} - ALWAYS use this to end the program. It's responsible for making sure everything saves right.\\
+\texttt{exit} - \textit{Always} use this to end the program. It's responsible for ensuring the application's internal state saves correctly.\\
+}
 
 \subsection{Help System}
 blockchain\_message's ease of use is a very high priority, so as much of the background functionality as possible has been abstracted down to the 8 commands. The help system is split into a command directory that can be called up by typing \texttt{help}, and a set of helpful error messages when any internal errors (trying to send messages to an unknown contact, failed login, et cetera) occur.
@@ -57,15 +59,23 @@ blockchain\_message's ease of use is a very high priority, so as much of the bac
 \subsection{Service Directory}
 
 \subsubsection{Contact/Identity Management}
+On a user's first login, a new entry is created on \gls{Ethereum}\index{Ethereum} that can be used to look up their address number (think of it as being like an email address or phone number) by their username. This makes it so we can add contacts quickly and easily just by knowing their username, and allows logging in without having to remember your own address number every time.
 \subsubsection{Encryption Key Management}
-Encryption keys are created every time a new user is registered and stored in the \texttt{client/.keys/} directory.
+Encryption keys are created every time a new user is registered and stored in the \texttt{client/.keys/} directory. These are used to encrypt/decrypt messages and ensure that the sender/recipient is provably the person they say they are.
 \subsubsection{Message Send/Receive}
+The send/receive process is fairly abstracted so that none of the details need to be handled by the end user. The sender provides a username and message text, and blockchain\_message handles locating the recipient and encrypting the message for their \gls{public key}\index{public key}, then commits the resulting packet to \gls{Ethereum}\index{Ethereum}.
 
 \subsection{Error Recovery}
-There may be some issues which the system cannot handle gracefully, such as any errors in communicating with Ethereum. If such a crash occurs, first check that your \gls{Ethereum}\index{Ethereum} \gls{node}\index{node} is running correctly, not reporting any errors of its own, fully synced, and listening on port 7545. Additionally, ensure that you are running the program through the \texttt{blckchnmsg} script from a terminal emulator\footnote{Terminal on Linux or macOS} or command prompt on Windows\footnote{This can be found by opening the start menu and searching for Command or cmd}. with the current working directory at the root of the program's files.
+There may be some issues which the system cannot handle gracefully, such as any errors in communicating with \gls{Ethereum}\index{Ethereum}. If such a crash occurs, first check that your \gls{Ethereum}\index{Ethereum} \gls{node}\index{node} is running correctly, not reporting any errors of its own, fully \gls{synced}\index{synced}, and listening on port 7545. Additionally, ensure that you are running the program through the \texttt{blckchnmsg} script from a terminal emulator\footnote{Terminal on Linux or macOS} or command prompt on Windows\footnote{This can be found by opening the start menu and searching for Command or cmd.} with the current working directory at the root of the program's files.
 
 \subsection{Installation}
-This installation guide assumes an Ubuntu or Debian Linux derivative, but the installation process can be adapted slightly to fit any Linux distribution. Windows and macOS are supported as well, but with some more work required. blockchain\_message requires that Python\footnote{https://www.python.org/} and the PIP package manager\footnote{https://pypi.org/project/pip/} be installed. The application's \glspl{dependency}\index{dependencies} can be secured by running the \texttt{install} script at the root of the project as root. It will also require an Ethereum \gls{node}\index{node} running locally (the program can be modified to allow for using a remote \gls{node}\index{node}), Geth\footnote{https://github.com/ethereum/go-ethereum/wiki/geth} or Parity\footnote{https://www.parity.io/} are both viable options. Once the Ethereum \gls{node}\index{node} is running and \gls{synced}\index{synced} and all of the dependencies installed, the \texttt{blckchnmsg} script will run the program and all first-time setup automatically.
+This installation guide assumes an Ubuntu or Debian Linux derivative, but the installation process can be adapted slightly to fit any Linux distribution. Windows and macOS are supported as well, but with some more work required. blockchain\_message requires that Python\footnote{https://www.python.org/} and the PIP package manager\footnote{https://pypi.org/project/pip/} be installed. The application's \glspl{dependency}\index{dependencies} can be secured by running the \texttt{install} script at the root of the project as root. It will also require an \gls{Ethereum}\index{Ethereum} \gls{node}\index{node} running locally (the program can be modified to allow for using a remote \gls{node}\index{node}), Geth\footnote{https://github.com/ethereum/go-ethereum/wiki/geth} or Parity\footnote{https://www.parity.io/} are both viable options. Once the Ethereum \gls{node}\index{node} is running and \gls{synced}\index{synced} and all of the dependencies installed, the \texttt{blckchnmsg} script will run the program and all first-time setup automatically.\footnote{Users familiar with Python may find it useful to know that blockchain\_message must be installed as a Python package in order to be executed through the client script.}
+
+\subsection{Known Issues}
+\paragraph{Message Skip}
+If the state of messages on the \gls{blockchain}\index{blockchain} is mismatched with the database, the database may not download further messages or may skip several before continuing to receive.
+\paragraph{Blockchain out of Message Space}
+When the smart contract's internal message space runs out, the client may become unresponsive. \textbf{Addressed by scaling the message space.}
 
 \pagebreak
 

@@ -1,0 +1,83 @@
+echo 'This version of the install script only works on Ubuntu. If you know what you're doing, you can modify it to work under any Linux distribution.'
+
+mkdir ./client/.blckchnmsg
+mkdir ./client/.keys
+
+if [ "$EUID" -ne 0 ]
+  then echo "Please run as root - 'sudo ./install'"
+  exit
+fi
+
+hash snap 2>/dev/null || {
+    echo >&2 "snap is required, but wasn't found. Aborting."; exit 1;
+}
+
+hash apt 2>/dev/null || {
+    echo >&2 "apt is required, but wasn't found. Aborting."; exit 1;
+}
+
+hash python 2>/dev/null || {
+    apt install -y python3
+    apt install -y python3-pip
+}
+
+hash npm 2>/dev/null || {
+    apt install -y nodejs
+}
+
+hash solc 2>/dev/null || {
+    snap install solc
+}
+
+pip install virtualenv
+
+virtualenv venv
+
+source ./venv/bin/activate
+
+pip install alabaster
+pip install attrdict
+pip install Babel
+pip install base58
+pip install certifi
+pip install chardet
+pip install cytoolz
+pip install docutils
+pip install eth-abi
+pip install eth-account
+pip install eth-hash
+pip install eth-keyfile
+pip install eth-keys
+pip install eth-rlp
+pip install eth-typing
+pip install eth-utils
+pip install hexbytes
+pip install idna
+pip install imagesize
+pip install ipfsapi
+pip install Jinja2
+pip install lru-dict
+pip install MarkupSafe
+pip install packaging
+pip install parsimonious
+pip install py-solc
+pip install pyasn1
+pip install pycryptodome
+pip install Pygments
+pip install pyparsing
+pip install pytz
+pip install requests
+pip install rlp
+pip install rsa
+pip install semantic-version
+pip install six
+pip install snowballstemmer
+pip install Sphinx
+pip install sphinxcontrib-websupport
+pip install toolz
+pip install urllib3
+pip install web3
+pip install websockets
+pip install .
+
+deactivate

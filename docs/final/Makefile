@@ -28,3 +28,4 @@ clean:
 	rm -f texput.log
 	rm -f blockchain_message.lof
 	rm -f blockchain_message.lot
+	rm -f blockchain_message.lol

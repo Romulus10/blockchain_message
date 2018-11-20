@@ -3,8 +3,6 @@
 source ./venv/bin/activate
 export PYTHONPATH="./blockchain_message/src"
 pushd ./client
-mkdir -p .blkchnmsg
-mkdir -p .keys
 python3 -m cli
 popd
 deactivate
