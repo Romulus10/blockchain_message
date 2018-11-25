@@ -298,7 +298,9 @@ The Blockchain module is used to send and retrieve message packets serialized as
 \subsubsection{def get\_identity(self, uname: str) $\rightarrow$ int}
 Either produces a new address by which a new user can be contacted or retrieves an existing user's unique address.
 \subsubsection{def get\_my\_identity(self, uname: str, password: str) $\rightarrow$ int}
+Used as a login function to verify that a request for new messages is valid.
 \subsubsection{def new\_identity(self, uname: str, password: str) $\rightarrow$ int}
+During the initial login, creates local password verification resources and a new identity entry with the IdentityManager smart contract\index{smart contract}.
 \subsubsection{def get\_balance(self) $\rightarrow$ float}
 Returns the volume of \gls{Ether}\index{Ether} (ETH) the user has in their account. This is used to ensure that a user can always keep track of their ETH\index{ETH} and to keep from running out of currency to cover the gas fees associated with sending messages.
 \subsubsection{def submit(self, message: Message)}
@@ -334,6 +336,7 @@ Removes the message with the given unique identifier. DOES NOT modify the messag
 \subsubsection{def new\_contact(addr: int, uname: str, email: str) $\rightarrow$ bool}
 Produces a new contact from the given information and adds it to the in-memory database.
 \subsubsection{def read\_contact(self, uname: str) $\rightarrow$ Contact}
+Queries for a contact given a unique identifier.
 \subsubsection{def del\_contact(addr: int) $\rightarrow$ bool}
 Removes a given contact (identified by \texttt{addr} from the database.)
 
@@ -374,8 +377,6 @@ The user's given email address\index{address}, which will be used to identify pu
 The public key\index{public key} associated with the given email address\index{address}, stored as Java's internal PublicKey\index{PublicKey} class, Python's rsa.PublicKey\index{PublicKey} class, or a similar data structure.
 
 \subsection{Message}
-This data object will be 
-
 \subsubsection{id}
 A unique identifier supplied to each message.
 
