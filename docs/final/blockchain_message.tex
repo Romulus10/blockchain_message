@@ -144,7 +144,7 @@ The first version of the blockchain\_message command-line interface is designed 
 
 The system requires that an Ethereum\index{Ethereum} \gls{node}\index{node} be accessible, which can be either set up on the local machine through Parity or Geth or exposed through a service such as Infura.io. A long-term goal is to leverage the light client specification to create a version that requires less heavy-duty hardware, allowing smaller computers and smartphones to run the system.
 
-The latest version of Python (at the time of writing, 3.6.6 is installed locally) is required, as well a list of Python packages that are installed by the \texttt{install} script. These requirements are laid out in Table 1.
+The latest version of Python (at the time of writing, 3.6.6 is installed locally) is required, as well a list of Python packages that are installed by the \texttt{install} script. These requirements are laid out in Table 1\ref{tab:package}.
 
 \begin{table}
     \begin{center}
@@ -195,6 +195,7 @@ The latest version of Python (at the time of writing, 3.6.6 is installed locally
         \end{tabular}
         \caption{Python environment package requirements.}
     \end{center}
+\label{tab:package}
 \end{table}
 
 \subsection{Hardware Requirements}
@@ -354,7 +355,7 @@ Graphical implementations of blockchain\_message, including the Android applicat
 
 \section{Help System Design}
 
-\subsection{CLI\index{CLI}}
+\subsection{CLI}
 The CLI\index{CLI} version will include a standard \verb|help| directive that will print out the full list of commands available with usage details for every component in the style of classical *nix command help dialogues. The user manual will also contain specific information on the usage of the CLI version, since that will most directly reflect the functionality described in the original proposal.
 
 \subsection{Graphical/Mobile}
