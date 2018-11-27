@@ -55,14 +55,15 @@ class Blockchain(object):
             f.write(hashlib.sha224(bytes(password, 'utf8')).hexdigest())
         abi = self.manager_interface['abi']
         contract = self.w3.eth.contract(address=self.addr_2, abi=abi, ContractFactoryClass=ConciseContract)
-        return contract.new_identity(uname, transact={'from': self.w3.eth.accounts[0]})
+        contract.new_identity(uname, transact={'from': self.w3.eth.accounts[0]})
+        addr = contract.new_identity(uname)
+        return addr
 
     def get_my_identity(self, uname: str, password: str) -> int:
         """
         Used to either log in or register a new identity.
 
         :param uname: The username we need the address for.
-        :param email: The user's chosen email address.
         :param password: The password used for authentication.
         :return: The unique identifier associated with uname.
         """
@@ -70,7 +71,8 @@ class Blockchain(object):
         contract = self.w3.eth.contract(address=self.addr_2, abi=abi, ContractFactoryClass=ConciseContract)
         addr = contract.get_identity(uname)
         if addr == 999:
-            self.new_identity(uname, password)
+            addr = self.new_identity(uname, password)
+            return addr
         else:
             try:
                 with open("./.blkchnmsg/{0}".format(uname), "r") as f:
