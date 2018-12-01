@@ -35,49 +35,6 @@ virtualenv venv
 
 source ./venv/bin/activate
 
-pip install alabaster
-pip install attrdict
-pip install Babel
-pip install base58
-pip install certifi
-pip install chardet
-pip install cytoolz
-pip install docutils
-pip install eth-abi
-pip install eth-account
-pip install eth-hash
-pip install eth-keyfile
-pip install eth-keys
-pip install eth-rlp
-pip install eth-typing
-pip install eth-utils
-pip install hexbytes
-pip install idna
-pip install imagesize
-pip install ipfsapi
-pip install Jinja2
-pip install lru-dict
-pip install MarkupSafe
-pip install packaging
-pip install parsimonious
-pip install py-solc
-pip install pyasn1
-pip install pycryptodome
-pip install Pygments
-pip install pyparsing
-pip install pytz
-pip install requests
-pip install rlp
-pip install rsa
-pip install semantic-version
-pip install six
-pip install snowballstemmer
-pip install Sphinx
-pip install sphinxcontrib-websupport
-pip install toolz
-pip install urllib3
-pip install web3
-pip install websockets
 pip install .
 
 deactivate
