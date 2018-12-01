@@ -56,3 +56,4 @@ blockchain_message/src/__pycache__/
 .keys/
 /contract/build/
 .blkchnmsg/
+client/__pycache__/
