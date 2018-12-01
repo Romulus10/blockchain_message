@@ -80,6 +80,7 @@ class Crypt(object):
         Produces a new keypair for encryption.
         :param uname: The user's chosen username - this will be used as the key's filename.
         """
+        print("Generating a new keypair, one second...")
         (pubkey, privkey) = rsa.newkeys(4096, poolsize=8)
         with open('./.keys/{0}.priv'.format(uname), 'wb') as f:
             f.write(privkey.save_pkcs1('PEM'))
