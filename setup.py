@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='blockchain_message',
-    version='0.1.0rc1',
+    version='0.1.0rc2',
     packages=['test', 'client', 'blockchain_message', 'blockchain_message.src'],
     url='',
     license='GPL',

@@ -1,3 +1,6 @@
+rm -rf ./client/__pycache__
+rm -rf ./client/.keys/*
+rm -rf ./client/.blkchnmsg/*
 source ./venv/bin/activate
 python ./proof/src/main.py
 deactivate

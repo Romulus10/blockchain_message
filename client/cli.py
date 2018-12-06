@@ -21,7 +21,7 @@ def contacts(msg: BlockchainMessage):
     :param msg: A BlockchainMessage object.
     """
     for x in msg.send.contacts:
-        print(x.uname)
+        print("{} - {}".format(x.address, x.uname))
 
 
 def check(msg: BlockchainMessage, uname: str):
