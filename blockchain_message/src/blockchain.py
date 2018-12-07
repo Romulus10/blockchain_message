@@ -118,7 +118,7 @@ class Blockchain(object):
         message_body.encode('utf8')
 
         to_user = int(message.to.address)
-        contract.store(msg_id, to_user, message_body, transact={'from': self.w3.eth.accounts[0]})
+        contract.store(to_user, message_body, transact={'from': self.w3.eth.accounts[0]})
 
     def retrieve(self, user: Contact, last_message: int, contact_list: List[Contact]) -> List[Message]:
         """

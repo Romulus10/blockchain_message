@@ -20,8 +20,9 @@ contract IdentityManager {
 
         if (latest >= 100) return 9999;
 
+        uint ret_val = latest++;
         users[latest] = uname;
-        return latest++;
+        return ret_val;
     }
 
     function stringsEqual(string storage _a, string memory _b) internal view returns (bool) {

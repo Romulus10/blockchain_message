@@ -2,16 +2,16 @@ pragma solidity ^0.4.7;
 
 contract BlckChnMsgStorage {
     string[100][100] db;
-    uint256[100] lengths;
+    uint256 length;
 
-    function store(uint key, uint to_user, string val) public {
-        db[to_user][key] = val;
-        lengths[to_user]++;
+    function store(uint to_user, string val) public {
+        db[to_user][length] = val;
+        length++;
     }
 
     function retrieve(uint to_user, uint key) public view returns (string) {
         string memory messages;
-        uint256 max = lengths[to_user];
+        uint256 max = length;
         for (uint i = key; i < max; i++) {
             messages = strConcat(messages, db[to_user][i], "♠");
         }

@@ -39,9 +39,11 @@ class Database(object):
             try:
                 self.contacts: List[Contact] = db['contacts']
                 self.messages: List[Message] = db['messages']
+                self.max_msgid: int = db['max_msg']
             except KeyError:
                 self.contacts: List[Contact] = list()
                 self.messages: List[Message] = list()
+                self.max_msgid: int = 0
 
     def __pull(self):
         """
@@ -51,6 +53,7 @@ class Database(object):
             db.sync()
             self.contacts: List[Contact] = db['contacts']
             self.messages: List[Message] = db['messages']
+            self.max_msgid: int = db['max_msg']
 
     def __commit(self):
         """
@@ -59,6 +62,7 @@ class Database(object):
         with shelve.open(".blkchnmsg/db") as db:
             db['contacts']: List[Contact] = self.contacts
             db['messages']: List[Message] = self.messages
+            db['max_msg']: int = self.max_msgid
             db.sync()
 
     def __max_msgid(self) -> int:
@@ -70,6 +74,7 @@ class Database(object):
         for x in self.messages:
             if x.id > m:
                 m = x.id
+        self.max_msgid = m
         return m
 
     def add_contact(self, addr: str, uname: str, email: str) -> bool:
